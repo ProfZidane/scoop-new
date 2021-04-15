@@ -1,11 +1,13 @@
 h3 {
-  font-family: 'Train One', cursive;
+  font-family: 'Comfortaa', cursive;
+
   font-size: 30px;
 }
 
 p, label, small, button {
   /*font-family: 'Fredoka One', cursive;*/
-  font-family: 'Roboto Mono', monospace;
+  font-family: 'Comfortaa', cursive;
+
   font-weight: 600;
 }
 
