@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { AuthService } from '../services/auth.service';
 
 @Component({
   selector: 'app-menu',
@@ -7,10 +8,14 @@ import { Router } from '@angular/router';
   styleUrls: ['./menu.component.css']
 })
 export class MenuComponent implements OnInit {
+  userConnected: any;
 
-  constructor(private router: Router) { }
+  constructor(private router: Router, private userService: AuthService) { }
 
   ngOnInit(): void {
+    if (localStorage.getItem('userData') !== null) {
+      this.userConnected = JSON.parse(localStorage.getItem('userData'));
+    }
   }
 
   manageUser() {
@@ -19,6 +24,13 @@ export class MenuComponent implements OnInit {
 
   manageWarehouse() {
     this.router.navigateByUrl("/home/(child1:ware-manage;open=true)");
+  }
+
+  Logout() {
+    if (this.userService.Logout()) {
+      this.router.navigateByUrl('/');
+    }
+
   }
 
 }

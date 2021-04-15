@@ -3,6 +3,18 @@
   background-color: black;
 }
 
+* {
+  font-family: 'Comfortaa', cursive;
+}
 
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+h5, h3, h2, h1, h4, a {
+  /*font-family: 'Train One', cursive;*/
+  font-family: 'Comfortaa', cursive;
+}
+
+p, label, small, button, span, li {
+  /*font-family: 'Fredoka One', cursive;*/
+  /*font-family: 'Roboto Mono', monospace;*/
+  font-family: 'Comfortaa', cursive;
+}

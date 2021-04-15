@@ -1,3 +1,14 @@
+p, label, small, button, span, li, h5, a {
+  /*font-family: 'Fredoka One', cursive;*/
+  /*font-family: 'Roboto Mono', monospace;*/
+  font-family: 'Comfortaa', cursive;
+  font-weight: 600;
+}
+
+button {
+  border-radius: 0;
+}
+
 .principal {
   height: 98vh;
   border-radius: 20px;
@@ -13,6 +24,10 @@
   cursor: pointer;
 }
 
+.card-title {
+  font-size: medium;
+}
+
 .menu-option > .card:hover {
   box-shadow: 2px 2px 5px 5px #f0f0f0;
 }
@@ -22,7 +37,7 @@
   border-radius: 100%;
   width: 44%;
   margin-bottom: 1.5rem;
-  background-color: #ffc107;
+  background-color: #28a745;
 }
 
 .contour i {

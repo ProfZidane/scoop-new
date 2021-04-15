@@ -7,7 +7,7 @@
 .menu-home-option {
   padding: 1rem;
   margin-bottom: 2rem;
-  color: #ffc107 !important;
+  color: #fff !important;
   cursor: pointer;
 }
 
@@ -22,7 +22,7 @@ color: white;
   border: solid;
   border-color: white;
 border-radius: 100%;
-background-color: #ffffff !important;
+background-color: #28a745 !important;
 color: white;
 }
 

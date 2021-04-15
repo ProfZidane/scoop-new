@@ -2,7 +2,10 @@
 
   <!--navbar-->
   <nav class="navbar navbar-expand-lg navbar-lights p-4">
-    <a class="navbar-brand text-dark" href="#">
+    <a class="navbar-brand text-dark">
+      <i class="material-icons" style="cursor: pointer;font-size: 25px;" (click)="ComeBack()">
+        chevron_left
+      </i>
       Gestion Entrepôts
     </a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -32,107 +35,66 @@
         </li>-->
       </ul>
       <form class="form-inline my-2 my-lg-0">
-        <button class="btn btn-outline-info my-2 my-sm-0 mr-5" type="button" data-toggle="modal" data-target="#exampleModal5">
+        <button class="btn btn-outline-info my-2 my-sm-0 mr-5" type="button" data-toggle="modal" data-target="#exampleModal4">
           + Nouvel Entrepôt
         </button>
         <div class="dropdown">
-          <button class="btn btn-warning text-light dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            Mohamed Zidane
+          <button class="btn btn-success text-light dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" *ngIf="userConnected">
+            {{ userConnected.name }}
           </button>
           <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
             <a class="dropdown-item" href="#">Profile</a>
             <a class="dropdown-item" href="#">Support</a>
-            <a class="dropdown-item text-danger" href="#">Déconnexion</a>
+            <a class="dropdown-item text-danger" (click)="Logout()" style="cursor: pointer;">Déconnexion</a>
           </div>
         </div>
       </form>
     </div>
   </nav>
   <!--//nav bar -->
-
-<div class="container mt-4 table-user">
-
-  <table datatable class="row-border hover">
+<div class="container-fluid table-user">
+  <div class="text-center" *ngIf="isLoading.data === true">
+    <div class="spinner-border" role="status">
+      <span class="sr-only">Loading...</span>
+    </div>
+  </div>
+  <table datatable class="row-border hover" [dtTrigger]="dtTrigger" id="table" style="">
     <thead>
       <tr>
         <th>Matricule</th>
         <th>Ville</th>
-        <th>E-mail</th>
         <th>Adresse</th>
+        <th>Téléphone</th>
+        <th>Adresse E-mail</th>
         <th>Status</th>
-        <th>Numéro de téléphone</th>
         <th></th>
         <th></th>
         <th></th>
       </tr>
     </thead>
     <tbody>
-      <tr>
-        <td>1</td>
-        <td>Foo</td>
-        <td>Bar</td>
-        <td>Bar</td>
-        <td>Bar</td>
-        <td>Bar</td>
+      <tr *ngFor="let warehouse of wareHouses">
+        <td>{{ warehouse.matricule }}</td>
+        <td>{{ warehouse.ville}}</td>
+        <td>{{ warehouse.adresse }}</td>
+        <td>{{ warehouse.telephone }}</td>
+        <td>{{ warehouse.email }}</td>
+        <td class="text-success" *ngIf="warehouse.status === 'active'">{{ warehouse.status }}</td>
+        <td class="text-danger" *ngIf="warehouse.status === 'inactive'">{{ warehouse.status }}</td>
         <td>
-          <button class="btn btn-outline-warning" data-toggle="modal" data-target="#exampleModal3">
+          <button class="btn btn-outline-warning" type="submit" data-toggle="modal" data-target="#exampleModal5" (click)="OpenModelUpdated(warehouse)">
             Modifier
           </button>
         </td>
-        <td>
-          <button class="btn btn-outline-info" data-toggle="modal" data-target="#exampleModal3">
-            Details
-          </button>
+        <td *ngIf="warehouse.status === 'active'">
+          <button class="btn btn-outline-danger" data-toggle="modal" data-target="#exampleModal6" (click)="OpenModelDelete(warehouse.id)">Fermer</button>
+        </td>
+        <td *ngIf="warehouse.status === 'inactive'">
+          <button class="btn btn-outline-success" data-toggle="modal" data-target="#exampleModal3">Activer</button>
         </td>
         <td>
-          <button class="btn btn-outline-danger" data-toggle="modal" data-target="#exampleModal4">
-            Fermer
-          </button>
-        </td>
-      </tr>
-      <tr>
-        <td>1</td>
-        <td>Foo</td>
-        <td>Bar</td>
-        <td>Bar</td>
-        <td>Bar</td>
-        <td>Bar</td>
-        <td>
-          <button class="btn btn-outline-warning">
-            Modifier
-          </button>
-        </td>
-        <td>
-          <button class="btn btn-outline-info" data-toggle="modal" data-target="#exampleModal3">
-            Details
-          </button>
-        </td>
-        <td>
-          <button class="btn btn-outline-danger">
-            Fermer
-          </button>
-        </td>
-      </tr>
-      <tr>
-        <td>1</td>
-        <td>Foo</td>
-        <td>Bar</td>
-        <td>Bar</td>
-        <td>Bar</td>
-        <td>Bar</td>
-        <td>
-          <button class="btn btn-outline-warning">
-            Modifier
-          </button>
-        </td>
-        <td>
-          <button class="btn btn-outline-info" data-toggle="modal" data-target="#exampleModal3">
-            Details
-          </button>
-        </td>
-        <td>
-          <button class="btn btn-outline-danger">
-            Fermer
+          <button class="btn btn-outline-info" data-toggle="modal" data-target="#exampleModal7" (click)="DetailToWarehouse(warehouse.id)">
+            Détails
           </button>
         </td>
       </tr>
@@ -145,51 +107,179 @@
 
 
 
-<!-- Modal 3 -->
-<div class="modal fade" id="exampleModal3" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog" role="document">
+<!-- Modal 4 -->
+<div class="modal fade" id="exampleModal4" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg" role="document">
+    <form method="POST" (ngSubmit)="CreateWarehouse($event)">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+        <h5 class="modal-title" id="exampleModalLabel">Création d'un entrepôts</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
       <div class="modal-body">
-        Modifier
+        <div class="clearfix" *ngIf="isLoading.create === true">
+          <span class="text-warning">Création de l'entrepôt .....</span>
+          <div class="spinner-border float-right text-warning" role="status">
+            <span class="sr-only">Loading...</span>
+          </div>
+        </div>
+        <div class="alert alert-danger" *ngIf="error.create_error === true">
+          Une erreur s'est produite. Veuillez vérifiez les informations inscrites svp !
+        </div>
+          <small class="text-muted">Inscrivez les informations suivantes</small>
+          <div class="row">
+            <div class="col">
+              <input type="text" name="ville" [(ngModel)]="wareHouseInfo.ville" class="form-control" placeholder="Entrez la ville">
+            </div>
+            <div class="col">
+              <input type="text" name="adresse" [(ngModel)]="wareHouseInfo.adresse" class="form-control" placeholder="Entrez l'adresse">
+            </div>
+          </div>
+          <br>
+          <div class="row">
+            <div class="col">
+              <input type="text" name="telephone" [(ngModel)]="wareHouseInfo.telephone" class="form-control" placeholder="Entrez le numéro de téléphone">
+            </div>
+            <div class="col">
+              <input type="email" name="email" [(ngModel)]="wareHouseInfo.email" class="form-control" placeholder="Entrez l'adresse e-mail">
+            </div>
+          </div>
+          <br>
+          <div class="row">
+            <div class="col">
+              <div class="input-group mb-3">
+                <select class="custom-select" name="status" [(ngModel)]="wareHouseInfo.status" id="inputGroupSelect01">
+                  <option selected>Choisir un status...</option>
+                  <option value="active">Active</option>
+                  <option value="inactive">Inactive</option>
+                </select>
+              </div>
+            </div>
+          </div>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
-        <button type="button" class="btn btn-success">Enregistrer</button>
+        <button type="submit" class="btn btn-success">Enregistrer</button>
       </div>
     </div>
+  </form>
   </div>
 </div>
 
-<!-- Modal 4 -->
-<div class="modal fade" id="exampleModal4" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        Delete
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
-        <button type="button" class="btn btn-success">Valider</button>
-      </div>
-    </div>
-  </div>
-</div>
 
 <!-- Modal 5 -->
 <div class="modal fade" id="exampleModal5" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog" role="document">
+  <div class="modal-dialog modal-lg" role="document">
+    <form method="POST" (ngSubmit)="UpdateWarehouse($event)">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Modification d'un entrepôts</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="clearfix" *ngIf="isLoading.modify === true">
+          <span class="text-warning">Modification de l'entrepôt .....</span>
+          <div class="spinner-border float-right text-warning" role="status">
+            <span class="sr-only">Loading...</span>
+          </div>
+        </div>
+        <div class="alert alert-danger" *ngIf="error.modify_error === true">
+          Une erreur s'est produite. Veuillez réessayer plus tard svp !
+        </div>
+          <small class="text-muted">Modifier les informations suivantes</small>
+          <div class="row">
+            <div class="col">
+              <label for="">Ville</label>
+              <input type="text" name="ville" [(ngModel)]="wareHouseUpdating.ville" class="form-control" placeholder="Entrez la ville">
+            </div>
+            <div class="col">
+              <label for="">Adresse</label>
+              <input type="text" name="adresse" [(ngModel)]="wareHouseUpdating.adresse" class="form-control" placeholder="Entrez l'adresse">
+            </div>
+          </div>
+          <br>
+          <div class="row">
+            <div class="col">
+              <label for="">Numéro de téléphone</label>
+              <input type="text" name="telephone" [(ngModel)]="wareHouseUpdating.telephone" class="form-control" placeholder="Entrez le numéro de téléphone">
+            </div>
+            <div class="col">
+              <label for="">Adresse E-mail</label>
+              <input type="email" name="email" [(ngModel)]="wareHouseUpdating.email" class="form-control" placeholder="Entrez l'adresse e-mail">
+            </div>
+          </div>
+          <br>
+          <div class="row">
+            <div class="col">
+              <label for="">Status Entrepôt</label>
+              <div class="input-group mb-3">
+                <select class="custom-select" name="status" [(ngModel)]="wareHouseUpdating.status" id="inputGroupSelect01">
+                  <option selected>Choisir un status...</option>
+                  <option value="active">Active</option>
+                  <option value="inactive">Inactive</option>
+                </select>
+              </div>
+            </div>
+          </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
+        <button type="submit" class="btn btn-success">Enregistrer</button>
+      </div>
+    </div>
+  </form>
+  </div>
+</div>
+
+
+<!-- Modal 6 -->
+<div class="modal fade" id="exampleModal6" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg" role="document">
+    <form method="POST" (ngSubmit)="InactiveWare($event)">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Motifs de Fermeture</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="clearfix" *ngIf="isLoading.inactive === true">
+          <span class="text-warning">Fermeture de l'entrepôt .....</span>
+          <div class="spinner-border float-right text-warning" role="status">
+            <span class="sr-only">Loading...</span>
+          </div>
+        </div>
+        <div class="alert alert-danger" *ngIf="error.inactive_error === true">
+          Une erreur s'est produite. Veuillez réessayer plus tard svp !
+        </div>
+          <small class="text-muted">Modifier les informations suivantes</small>
+          <div class="row">
+            <div class="col">
+              <label for="">Motifs</label>
+              <textarea name="motifs" class="form-control" [(ngModel)]="wareHouseDeleting.motif" id="" cols="30" rows="5" ></textarea>
+            </div>
+          </div>
+          <br>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
+        <button type="submit" class="btn btn-success">Enregistrer</button>
+      </div>
+    </div>
+  </form>
+  </div>
+</div>
+
+
+
+<!-- Modal 7 -->
+<div class="modal fade" id="exampleModal7" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg" role="document">
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
@@ -197,12 +287,12 @@
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
-      <div class="modal-body">
-        Create
+      <div class="modal-body" *ngIf='wareHouseInfo'>
+        {{ wareHouseDetail }}
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
-        <button type="button" class="btn btn-success">Enregistrer</button>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-success">Save changes</button>
       </div>
     </div>
   </div>

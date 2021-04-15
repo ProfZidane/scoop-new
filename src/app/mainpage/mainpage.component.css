@@ -1,3 +1,24 @@
+h3, h2, h1, h4, a {
+  /*font-family: 'Train One', cursive;*/
+  font-family: 'Comfortaa', cursive;
+  font-size: 20px;
+}
+
+p, label, small, button, span, li {
+  /*font-family: 'Fredoka One', cursive;*/
+  /*font-family: 'Roboto Mono', monospace;*/
+  font-family: 'Comfortaa', cursive;
+  font-weight: 800;
+}
+
+button {
+  border-radius: 0;
+}
+
+.dropdown-menu > a {
+  font-size: 15px;
+}
+
 .principal {
   height: 98vh;
   border-radius: 20px;
@@ -22,7 +43,32 @@
   border-radius: 20px;
 }
 
+.favoris {
+}
 
+.favoris > i {
+  border-radius: 100%;
+  padding: 0.7rem;
+  background-color: #28a745;
+  color: white;
+  cursor: pointer;
+  margin-bottom: 0rem;
+}
+
+.favoris > span {
+  font-size: 12px;
+}
+
+
+#detail > p {
+  position: relative;
+  bottom: 40px;
+}
+
+#detail > small {
+  position: relative;
+  bottom: 40px;
+}
 
 
 .objectif-grille > div {
@@ -36,5 +82,10 @@
 .objectif-grille > div > ul > li {
   border: none;
   background-color: whitesmoke;
+  font-size: 12px;
+}
 
+.img {
+  height: 35%;
+  background-position-y: -172px;
 }

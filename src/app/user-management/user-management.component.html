@@ -2,7 +2,10 @@
 
   <!--navbar-->
   <nav class="navbar navbar-expand-lg navbar-lights p-4">
-    <a class="navbar-brand text-dark" href="#">
+    <a class="navbar-brand text-dark">
+      <i class="material-icons" style="cursor: pointer;font-size: 25px;" (click)="ComeBack()">
+        chevron_left
+      </i>
       Gestion Utilisateurs
     </a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -36,13 +39,13 @@
           + Nouveau Utilisateurs
         </button>
         <div class="dropdown">
-          <button class="btn btn-warning text-light dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            Mohamed Zidane
+          <button class="btn btn-success text-light dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" *ngIf="userConnected">
+            {{ userConnected.name }}
           </button>
           <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
             <a class="dropdown-item" href="#">Profile</a>
             <a class="dropdown-item" href="#">Support</a>
-            <a class="dropdown-item text-danger" href="#">Déconnexion</a>
+            <a class="dropdown-item text-danger" (click)="Logout()" style="cursor: pointer;">Déconnexion</a>
           </div>
         </div>
       </form>
@@ -50,12 +53,15 @@
   </nav>
   <!--//nav bar -->
 
-<div class="container mt-4 table-user">
-
-  <table datatable class="row-border hover">
+<div class="container-fluid mt-0 table-user">
+  <div class="text-center" *ngIf="isLoading.data === true">
+    <div class="spinner-border" role="status">
+      <span class="sr-only">Loading...</span>
+    </div>
+  </div>
+  <table datatable class="row-border hover" [dtTrigger]="dtTrigger">
     <thead>
       <tr>
-        <th>ID</th>
         <th>Nom</th>
         <th>E-mail</th>
         <th>Rôle</th>
@@ -69,68 +75,31 @@
       </tr>
     </thead>
     <tbody>
-      <tr>
-        <td>1</td>
-        <td>Foo</td>
-        <td>Bar</td>
-        <td>Bar</td>
-        <td>Bar</td>
-        <td>Bar</td>
-        <td>Bar</td>
-        <td>Bar</td>
-        <td>Bar</td>
+      <tr *ngFor="let user of users">
+        <td>{{ user.name }}</td>
+        <td>{{ user.email }}</td>
+        <td>{{ user.role }}</td>
+        <td class="text-success" *ngIf="user.status === 'active'">{{ user.status }}</td>
+        <td class="text-danger" *ngIf="user.status === 'inactive'">{{ user.status }}</td>
+        <td>{{ user.telephone }}</td>
+        <td>{{ user.adresse }}</td>
+        <td>{{ user.ville }}</td>
+        <td>{{ user.fonction }}</td>
         <td>
-          <button class="btn btn-outline-warning" data-toggle="modal" data-target="#exampleModal">
+          <button class="btn btn-outline-warning btn-sm" data-toggle="modal" data-target="#exampleModal" (click)="OpenModalUpdating(user)">
             Modifier
           </button>
-        </td>
-        <td>
-          <button class="btn btn-outline-danger" data-toggle="modal" data-target="#exampleModal2">
-            Fermer
-          </button>
-        </td>
-      </tr>
-      <tr>
-        <td>1</td>
-        <td>Foo</td>
-        <td>Bar</td>
-        <td>Bar</td>
-        <td>Bar</td>
-        <td>Bar</td>
-        <td>Bar</td>
-        <td>Bar</td>
-        <td>Bar</td>
-        <td>
-          <button class="btn btn-outline-warning">
-            Modifier
-          </button>
-        </td>
-        <td>
-          <button class="btn btn-outline-danger">
-            Fermer
-          </button>
-        </td>
-      </tr>
-      <tr>
-        <td>1</td>
-        <td>Foo</td>
-        <td>Bar</td>
-        <td>Bar</td>
-        <td>Bar</td>
-        <td>Bar</td>
-        <td>Bar</td>
-        <td>Bar</td>
-        <td>Bar</td>
-        <td>
-          <button class="btn btn-outline-warning">
-            Modifier
-          </button>
-        </td>
-        <td>
-          <button class="btn btn-outline-danger">
-            Fermer
-          </button>
-        </td>
+      </td>
+      <td *ngIf="user.status === 'active'">
+        <button class="btn btn-outline-danger btn-sm" data-toggle="modal" data-target="#exampleModal2" (click)="OpenModalDeleting(user.id)">
+          Désactiver
+        </button>
+      </td>
+      <td *ngIf="user.status === 'inactive'">
+        <button class="btn btn-outline-success btn-sm" data-toggle="modal" data-target="#exampleModal3">
+          Ouvrir
+        </button>
+      </td>
       </tr>
     </tbody>
   </table>
@@ -141,63 +110,251 @@
 
 <!-- Modal -->
 <div class="modal fade" id="exampleModal0" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog" role="document">
+  <div class="modal-dialog modal-lg" role="document">
+    <form method="POST" (ngSubmit)="CreateUser($event)">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+        <h5 class="modal-title" id="exampleModalLabel">Création d'un Utilisateur</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
       <div class="modal-body">
-        Create
+        <div class="clearfix" *ngIf="isLoading.create === true">
+          <span class="text-warning">Création de l'utilisateur .....</span>
+          <div class="spinner-border float-right text-warning" role="status">
+            <span class="sr-only">Loading...</span>
+          </div>
+        </div>
+        <div class="alert alert-danger" *ngIf="error.create_error === true">
+          Une erreur s'est produite. Veuillez vérifiez les informations inscrites svp !
+        </div>
+        <div class="alert alert-warning" *ngIf="error.email_error">
+          Adresse e-mail invalide ! Veuillez vérifiez votre adresse mail.
+        </div>
+          <small class="text-muted">Inscrivez les informations suivantes</small>
+          <div class="row">
+            <div class="col">
+              <label for="">Entrez le nom</label>
+              <input type="text" name="name" [(ngModel)]="userInfo.name" class="form-control" placeholder="">
+            </div>
+            <div class="col">
+              <label for="">Entrez l'adresse</label>
+              <input type="text" name="adresse" [(ngModel)]="userInfo.adresse" class="form-control" placeholder="">
+            </div>
+          </div>
+          <br>
+          <div class="row">
+            <div class="col">
+              <label for="">Entrez le numéro de téléphone</label>
+              <input type="text" name="telephone" [(ngModel)]="userInfo.telephone" class="form-control" placeholder="">
+            </div>
+            <div class="col">
+              <label for="">Entrez l'adresse e-mail</label>
+              <input type="email" name="email" [(ngModel)]="userInfo.email" class="form-control" placeholder="">
+            </div>
+          </div>
+
+          <br>
+          <div class="row">
+            <div class="col">
+              <label for="">Attribuez le rôle</label>
+              <div class="input-group mb-3">
+                <select class="custom-select" name="role" [(ngModel)]="userInfo.role" id="inputGroupSelect01">
+                  <option value="admin">Admin</option>
+                  <option value="manager">Manager</option>
+                  <option value="financier">Financier</option>
+                  <option value="responsable_stock">Responsable Stock</option>
+                  <option value="superadmin">Super Admin</option>
+                  <option value="responsable_pese">Responsable Pesée</option>
+                </select>
+              </div>
+            </div>
+            <div class="col">
+              <label for="">Attribuez le status</label>
+              <div class="input-group mb-3">
+                <select class="custom-select" name="status" [(ngModel)]="userInfo.status" id="inputGroupSelect01">
+                  <option value="active">Active</option>
+                  <option value="inactive">Inactive</option>
+                </select>
+              </div>
+            </div>
+          </div>
+          <br>
+          <div class="row">
+            <div class="col">
+              <label for="">Sélectionnez l'entrepôt</label>
+              <div class="input-group mb-3" >
+                <select class="custom-select" name="entrepot_id" [(ngModel)]="userInfo.entrepot_id" id="inputGroupSelect01">
+                  <option *ngFor="let entrepot of entrepots" value="{{entrepot.id}}">{{ entrepot.ville }}</option>
+                </select>
+              </div>
+            </div>
+            <div class="col">
+              <label for="">Sélectionnez la fonction dans l'entrepôt</label>
+              <div class="input-group mb-3" >
+                <select class="custom-select" name="fonction" [(ngModel)]="userInfo.fonction" id="inputGroupSelect01">
+                  <option value="gerand">Gérand d'entrepôt</option>
+                  <option value="manager">Manager d'entrepôt</option>
+                  <option value="employe">Employé d'entrepôt</option>
+                  <option value="intervenant">Intervenant</option>
+                </select>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+
+          </div>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
-        <button type="button" class="btn btn-success">Enregistrer</button>
+        <button type="submit" class="btn btn-success">Enregistrer</button>
       </div>
     </div>
+  </form>
   </div>
 </div>
 
 <!-- Modal -->
 <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog" role="document">
+  <div class="modal-dialog modal-lg" role="document">
+    <form method="POST" (ngSubmit)="UpdatingUser($event)">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+        <h5 class="modal-title" id="exampleModalLabel">Modification d'un Utilisateur</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
-      <div class="modal-body">
-        Modifier
+      <div class="modal-body" *ngIf="userUpdating">
+        <div class="clearfix" *ngIf="isLoading.modify === true">
+          <span class="text-warning">Modification de l'utilisateur .....</span>
+          <div class="spinner-border float-right text-warning" role="status">
+            <span class="sr-only">Loading...</span>
+          </div>
+        </div>
+        <div class="alert alert-danger" *ngIf="error.modify_error === true">
+          Une erreur s'est produite. Veuillez vérifiez les informations suivantes svp !
+        </div>
+          <small class="text-muted">Modifier les informations suivantes</small>
+          <div class="row">
+            <div class="col">
+              <label for="">Entrez le nom</label>
+              <input type="text" name="name" [(ngModel)]="userUpdating.name" class="form-control" placeholder="">
+            </div>
+            <div class="col">
+              <label for="">Entrez l'adresse</label>
+              <input type="text" name="adresse" [(ngModel)]="userUpdating.adresse" class="form-control" placeholder="">
+            </div>
+          </div>
+          <br>
+          <div class="row">
+            <div class="col">
+              <label for="">Entrez le numéro de téléphone</label>
+              <input type="text" name="telephone" [(ngModel)]="userUpdating.telephone" class="form-control" placeholder="">
+            </div>
+            <div class="col">
+              <label for="">Entrez l'adresse e-mail</label>
+              <input type="email" name="email" [(ngModel)]="userUpdating.email" class="form-control" placeholder="">
+            </div>
+          </div>
+
+          <br>
+          <div class="row">
+            <div class="col">
+              <label for="">Attribuez le rôle</label>
+              <div class="input-group mb-3" *ngIf="userUpdating.role">
+                <select class="custom-select" name="role" [(ngModel)]="userUpdating.role" id="inputGroupSelect01">
+                  <option value="admin">Admin</option>
+                  <option value="manager">Manager</option>
+                  <option value="financier">Financier</option>
+                  <option value="responsable_stock">Responsable Stock</option>
+                  <option value="superadmin">Super Admin</option>
+                  <option value="responsable_pese">Responsable Pesée</option>
+                </select>
+              </div>
+            </div>
+            <div class="col">
+              <label for="">Attribuez le status</label>
+              <div class="input-group mb-3" *ngIf="userUpdating.status">
+                <select class="custom-select" name="status" [(ngModel)]="userUpdating.status" id="inputGroupSelect01">
+                  <option selected>Choisir un status...</option>
+                  <option value="active">Active</option>
+                  <option value="inactive">Inactive</option>
+                </select>
+              </div>
+            </div>
+          </div>
+          <br>
+          <div class="row">
+            <div class="col">
+              <label for="">Sélectionnez l'entrepôt</label>
+              <div class="input-group mb-3" *ngIf="userUpdating.entrepot_id" >
+                <select class="custom-select" name="entrepot_id" [(ngModel)]="userUpdating.entrepot_id" id="inputGroupSelect01">
+                  <option *ngFor="let entrepot of entrepots" value="{{entrepot.id}}">{{ entrepot.ville }}</option>
+                </select>
+              </div>
+            </div>
+            <div class="col">
+              <label for="">Sélectionnez la fonction dans l'entrepôt</label>
+              <div class="input-group mb-3" *ngIf="userUpdating.fonction">
+                <select class="custom-select" name="fonction" [(ngModel)]="userUpdating.fonction" id="inputGroupSelect01">
+                  <option value="gerand">Gérand d'entrepôt</option>
+                  <option value="manager">Manager d'entrepôt</option>
+                  <option value="employe">Employé d'entrepôt</option>
+                  <option value="intervenant">Intervenant</option>
+                </select>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+
+          </div>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
-        <button type="button" class="btn btn-success">Enregistrer</button>
+        <button type="submit" class="btn btn-success">Valider</button>
       </div>
     </div>
+  </form>
   </div>
 </div>
 
 <!-- Modal 2 -->
 <div class="modal fade" id="exampleModal2" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog" role="document">
+  <div class="modal-dialog modal-lg" role="document">
+    <form method="POST" (ngSubmit)="DeletingUser($event)">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+        <h5 class="modal-title" id="exampleModalLabel">Motifs de désactivation</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
       <div class="modal-body">
-        Delete
+        <div class="clearfix" *ngIf="isLoading.inactive === true">
+          <span class="text-warning">Désactivation de l'utilisateur .....</span>
+          <div class="spinner-border float-right text-warning" role="status">
+            <span class="sr-only">Loading...</span>
+          </div>
+        </div>
+        <div class="alert alert-danger" *ngIf="error.inactive_error === true">
+          Une erreur s'est produite. Veuillez vérifiez les informations suivantes svp !
+        </div>
+        <small class="text-muted">Modifier les informations suivantes</small>
+        <div class="row">
+          <div class="col">
+            <label for="">Motifs</label>
+            <textarea name="motifs" class="form-control" [(ngModel)]="userDeleting.motif" id="" cols="30" rows="5" ></textarea>
+          </div>
+        </div>
+        <br>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
-        <button type="button" class="btn btn-success">Valider</button>
+        <button type="submit" class="btn btn-success">Enregistrer</button>
       </div>
     </div>
+  </form>
   </div>
 </div>

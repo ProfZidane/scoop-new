@@ -1,0 +1,97 @@
+h3 {
+  font-family: 'Train One', cursive;
+  font-size: 30px;
+}
+
+p, label, small, button {
+  /*font-family: 'Fredoka One', cursive;*/
+  font-family: 'Roboto Mono', monospace;
+  font-weight: 600;
+}
+
+input, button {
+  border-radius: 0;
+}
+
+
+
+.login-content {
+  height: 100vh;
+}
+
+.bord {
+  height: 100vh;
+}
+
+.header {
+  padding: 4rem;
+  position: relative;
+  top: 80px;
+}
+
+
+.pww {
+  float: right;
+  padding: 0.5rem;
+}
+
+.pww a {
+  text-decoration: underline;
+}
+
+.login-form {
+  padding: 5rem;
+  width: 65%;
+}
+
+/*.login-form form div label {
+  color: #435a5a;
+}*/
+
+.copyright {
+  text-decoration: underline;
+}
+
+/*.copyright small {
+  color: #435a5a;
+}*/
+
+
+#back-image {
+  /*background-image: url('https://image.freepik.com/photos-gratuite/fruits-cajou-anacardium-occidentale-isoles-fond-blanc_63373-152.jpg');*/
+  /*background-image: url('../../assets/anacarde.jpg');*/
+  background-image: url('https://cdn.pixabay.com/photo/2015/11/26/12/03/cashew-fruit-1063783_960_720.jpg');
+  background-repeat: no-repeat;
+  background-size: contain;
+}
+
+#back-image h3 {
+  margin-top: 3.5rem;
+  margin-bottom: 2.5rem;
+  color: #435a5a;
+  text-align: right;
+  font-weight: 800;
+}
+
+#back-image p {
+  color: #fff;
+  text-align: left;
+
+}
+
+.decorate-text {
+  position: absolute;
+  bottom: 0;
+}
+
+::ng-deep .mat-progress-bar-fill::after {
+  background-color: #5cb85c !important;
+}
+
+::ng-deep .mat-progress-bar-buffer {
+  background: #E4E8EB;
+}
+
+::ng-deep .mat-progress-bar {
+  border-radius: 2px;
+}

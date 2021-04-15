@@ -12,6 +12,13 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { DataTablesModule } from "angular-datatables";
 import { WarehouseManagementComponent } from './warehouse-management/warehouse-management.component';
 import { LoginComponent } from './login/login.component';
+import { HttpClientModule } from '@angular/common/http';
+import { FormsModule } from '@angular/forms';
+import {MatProgressBarModule} from '@angular/material/progress-bar';
+import { AuthService } from './services/auth.service';
+import { WarehouseService } from './services/warehouse.service';
+import { WarehouseDetailComponent } from './warehouse-detail/warehouse-detail.component';
+import { NavbarComponent } from './navbar/navbar.component';
 
 @NgModule({
   declarations: [
@@ -22,15 +29,24 @@ import { LoginComponent } from './login/login.component';
     MenuComponent,
     UserManagementComponent,
     WarehouseManagementComponent,
-    LoginComponent
+    LoginComponent,
+    WarehouseDetailComponent,
+    NavbarComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
-    DataTablesModule
+    DataTablesModule,
+    HttpClientModule,
+    FormsModule,
+    MatProgressBarModule
   ],
-  providers: [],
+  providers: [
+    AuthService,
+    WarehouseService
+
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

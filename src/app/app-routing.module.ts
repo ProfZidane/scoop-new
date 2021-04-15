@@ -5,16 +5,20 @@ import { MainpageComponent } from './mainpage/mainpage.component';
 import { MenuComponent } from './menu/menu.component';
 import { UserManagementComponent } from './user-management/user-management.component';
 import { WarehouseManagementComponent } from './warehouse-management/warehouse-management.component';
+import { LoginComponent } from './login/login.component';
+import { AuthGuard } from './guards/auth.guard';
+import { WarehouseDetailComponent } from './warehouse-detail/warehouse-detail.component';
+
 
 const routes: Routes = [
   {
     path: '',
-    redirectTo: '/home',
-    pathMatch: 'full'
+    component: LoginComponent
   },
   {
     path: 'home',
     component: HomeComponent,
+    canActivate: [AuthGuard],
     children: [
       {
         path: '',
@@ -34,10 +38,16 @@ const routes: Routes = [
       {
         path: 'ware-manage',
         component: WarehouseManagementComponent,
-        outlet: 'child1'
+        outlet: 'child1',
+      },
+      {
+        path: 'ware-detail/:id',
+        component: WarehouseDetailComponent,
+        outlet: 'child1',
+        canActivate: [AuthGuard]
       }
     ]
-  }
+  },
 ];
 
 @NgModule({
