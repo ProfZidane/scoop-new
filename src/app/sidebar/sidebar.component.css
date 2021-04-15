@@ -1,0 +1,38 @@
+.menu-home {
+  padding: 1rem;
+  position: absolute;
+  transform: translateY(27%);
+}
+
+.menu-home-option {
+  padding: 1rem;
+  margin-bottom: 2rem;
+  color: #ffc107 !important;
+  cursor: pointer;
+}
+
+/* .menu-home-option:first-child {
+border: solid;
+border-radius: 100%;
+background-color: #28a745 !important;
+color: white;
+} */
+
+.active {
+  border: solid;
+  border-color: white;
+border-radius: 100%;
+background-color: #ffffff !important;
+color: white;
+}
+
+.round {
+  width: 60px;
+  border: solid;
+  border-radius: 100%;
+}
+
+
+.large {
+  font-size: 40px;
+}

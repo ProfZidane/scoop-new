@@ -1,0 +1,40 @@
+.principal {
+  height: 98vh;
+  border-radius: 20px;
+  background-color: white;
+}
+
+.bord {
+  border: solid;
+}
+
+.objectif-grille {
+  height: 84vh;
+  padding: 0.5rem;
+}
+
+.info-grille {
+  height: 84vh;
+}
+
+.info-grille > div:first-child {
+  background-color: whitesmoke;
+  border-radius: 20px;
+}
+
+
+
+
+.objectif-grille > div {
+  padding: 2.5rem;
+  height: 100%;
+  border-radius: 40px;
+  width: 100%;
+  background-color: whitesmoke;
+}
+
+.objectif-grille > div > ul > li {
+  border: none;
+  background-color: whitesmoke;
+
+}

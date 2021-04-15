@@ -1,0 +1,268 @@
+<div class="container-fluid principal">
+  <!--navbar-->
+    <nav class="navbar navbar-expand-lg navbar-lights p-4">
+      <a class="navbar-brand text-dark" href="#">
+        Menu
+      </a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
+          <!--<li class="nav-item active">
+            <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">Link</a>
+          </li>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              Dropdown
+            </a>
+            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+              <a class="dropdown-item" href="#">Action</a>
+              <a class="dropdown-item" href="#">Another action</a>
+              <div class="dropdown-divider"></div>
+              <a class="dropdown-item" href="#">Something else here</a>
+            </div>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link disabled" href="#">Disabled</a>
+          </li>-->
+        </ul>
+        <form class="form-inline my-2 my-lg-0">
+          <!--button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>-->
+          <div class="dropdown">
+            <button class="btn btn-warning text-light dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              Mohamed Zidane
+            </button>
+            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+              <a class="dropdown-item" href="#">Profile</a>
+              <a class="dropdown-item" href="#">Support</a>
+              <a class="dropdown-item text-danger" href="#">Déconnexion</a>
+            </div>
+          </div>
+        </form>
+      </div>
+    </nav>
+    <!--//nav bar -->
+
+    <div class="container rectangle-menu">
+
+      <div class="row">
+
+        <div class="col-md-3 menu-option p-3">
+          <div class="card" style="width: 15rem;" align="center" (click)="manageUser()">
+            <div class="card-body">
+              <h5 class="card-title">Compte utilisateurs</h5>
+              <div class="contour">
+                <i class="material-icons">
+                  person_outline
+                </i>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-3 menu-option p-3">
+          <div class="card" style="width: 15rem;" align="center" (click)="manageWarehouse()">
+            <div class="card-body">
+              <h5 class="card-title">Entrepôts</h5>
+              <div class="contour">
+                <i class="material-icons">
+                  store_mall_directory
+                </i>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-3 menu-option p-3">
+          <div class="card" style="width: 15rem;" align="center">
+            <div class="card-body">
+              <h5 class="card-title">Financements</h5>
+              <div class="contour">
+                <i class="material-icons">
+                  attach_money
+                </i>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-3 menu-option p-3">
+          <div class="card" style="width: 15rem;" align="center">
+            <div class="card-body">
+              <h5 class="card-title">Pisteurs</h5>
+              <div class="contour">
+                <i class="material-icons">
+                  accessibility
+                </i>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="row">
+        <div class="col-md-3 menu-option p-3">
+          <div class="card" style="width: 15rem;" align="center">
+            <div class="card-body">
+              <h5 class="card-title">Incidents</h5>
+              <div class="contour">
+                <i class="material-icons">
+                  warning
+                </i>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-3 menu-option p-3">
+          <div class="card" style="width: 15rem;" align="center">
+            <div class="card-body">
+              <h5 class="card-title">Stockages</h5>
+              <div class="contour">
+                <i class="material-icons">
+                  storage
+                </i>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-3 menu-option p-3">
+          <div class="card" style="width: 15rem;" align="center">
+            <div class="card-body">
+              <h5 class="card-title">Poids</h5>
+              <div class="contour">
+                <i class="material-icons">
+                  settings_input_svideo
+                </i>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-3 menu-option p-3">
+          <div class="card" style="width: 15rem;" align="center">
+            <div class="card-body">
+              <h5 class="card-title">Fiche de transfert</h5>
+              <div class="contour">
+                <i class="material-icons">
+                  wrap_text
+                </i>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-3 menu-option p-3">
+          <div class="card" style="width: 15rem;" align="center">
+            <div class="card-body">
+              <h5 class="card-title">Objectifs</h5>
+              <div class="contour">
+                <i class="material-icons">
+                  star_border
+                </i>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-3 menu-option p-3">
+          <div class="card" style="width: 15rem;" align="center">
+            <div class="card-body">
+              <h5 class="card-title">Campagnes</h5>
+              <div class="contour">
+                <i class="material-icons">
+                  insert_invitation
+                </i>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-3 menu-option p-3">
+          <div class="card" style="width: 15rem;" align="center">
+            <div class="card-body">
+              <h5 class="card-title">Achats/Ventes</h5>
+              <div class="contour">
+                <i class="material-icons">
+                  compare_arrows
+                </i>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-3 menu-option p-3">
+          <div class="card" style="width: 15rem;" align="center">
+            <div class="card-body">
+              <h5 class="card-title">Inventaires</h5>
+              <div class="contour">
+                <i class="material-icons">
+                  chrome_reader_mode
+                </i>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-3 menu-option p-3">
+          <div class="card" style="width: 15rem;" align="center">
+            <div class="card-body">
+              <h5 class="card-title">Chargements</h5>
+              <div class="contour">
+                <i class="material-icons">
+                  local_shipping
+                </i>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-3 menu-option p-3">
+          <div class="card" style="width: 15rem;" align="center">
+            <div class="card-body">
+              <h5 class="card-title">Logs d'activités</h5>
+              <div class="contour">
+                <i class="material-icons">
+                  receipt
+                </i>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!--<div class="col-md-3 menu-option p-3">
+          <div class="card" style="width: 15rem;" align="center">
+            <div class="card-body">
+              <h5 class="card-title">Poids</h5>
+              <div class="contour">
+                <i class="material-icons">
+                  public
+                </i>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-3 menu-option p-3">
+          <div class="card" style="width: 15rem;" align="center">
+            <div class="card-body">
+              <h5 class="card-title">Fiche de transfert</h5>
+              <div class="contour">
+                <i class="material-icons">
+                  public
+                </i>
+              </div>
+            </div>
+          </div>
+        </div>-->
+      </div>
+
+    </div>
+
+
+
+
+
+
+
+
+  </div>

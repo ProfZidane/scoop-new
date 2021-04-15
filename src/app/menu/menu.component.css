@@ -1,0 +1,42 @@
+.principal {
+  height: 98vh;
+  border-radius: 20px;
+  background-color: white;
+}
+
+.bord {
+  border: solid;
+}
+
+.menu-option > .card {
+  box-shadow: 2px 2px 2px 2px #f0f0f0;
+  cursor: pointer;
+}
+
+.menu-option > .card:hover {
+  box-shadow: 2px 2px 5px 5px #f0f0f0;
+}
+
+.contour {
+  padding: 1rem;
+  border-radius: 100%;
+  width: 44%;
+  margin-bottom: 1.5rem;
+  background-color: #ffc107;
+}
+
+.contour i {
+  color: white;
+  font-size: 50px;
+}
+
+.card-title {
+  margin-bottom: 1.5rem;
+}
+
+.rectangle-menu {
+  height: 84vh;
+  width: 100%;
+  overflow: scroll;
+  padding-right: 1rem;
+}
