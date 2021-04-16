@@ -52,7 +52,7 @@
 
       <div class="row">
 
-        <div class="col-md-3 menu-option p-3">
+        <div class="col-md-3 menu-option p-3" *ngIf="rightContent && (rightContent.administration.state === true || rightContent.manager.state === true)">
           <div class="card" style="width: 15rem;" align="center" (click)="manageUser()">
             <div class="card-body">
               <h5 class="card-title">Compte utilisateurs</h5>
@@ -64,7 +64,7 @@
             </div>
           </div>
         </div>
-        <div class="col-md-3 menu-option p-3">
+        <div class="col-md-3 menu-option p-3"  *ngIf="rightContent && (rightContent.administration.state === true || rightContent.manager.state === true)">
           <div class="card" style="width: 15rem;" align="center" (click)="manageWarehouse()">
             <div class="card-body">
               <h5 class="card-title">Entrepôts</h5>
@@ -76,7 +76,7 @@
             </div>
           </div>
         </div>
-        <div class="col-md-3 menu-option p-3">
+        <div class="col-md-3 menu-option p-3"  *ngIf="rightContent && (rightContent.finance.state === true || rightContent.manager.state === true)">
           <div class="card" style="width: 15rem;" align="center">
             <div class="card-body">
               <h5 class="card-title">Financements</h5>
@@ -88,7 +88,7 @@
             </div>
           </div>
         </div>
-        <div class="col-md-3 menu-option p-3">
+        <div class="col-md-3 menu-option p-3" *ngIf="rightContent && (rightContent.finance.state === true || rightContent.stocks.state === true || rightContent.manager.state === true)">
           <div class="card" style="width: 15rem;" align="center">
             <div class="card-body">
               <h5 class="card-title">Pisteurs</h5>
@@ -101,10 +101,10 @@
           </div>
         </div>
 
-      </div>
+      <!--</div>-->
 
-      <div class="row">
-        <div class="col-md-3 menu-option p-3">
+
+        <div class="col-md-3 menu-option p-3" *ngIf="rightContent && (rightContent.finance.state === true || rightContent.stocks.state === true || rightContent.manager.state === true)">
           <div class="card" style="width: 15rem;" align="center">
             <div class="card-body">
               <h5 class="card-title">Incidents</h5>
@@ -116,7 +116,7 @@
             </div>
           </div>
         </div>
-        <div class="col-md-3 menu-option p-3">
+        <div class="col-md-3 menu-option p-3" *ngIf="rightContent && (rightContent.stocks.state === true || rightContent.manager.state === true)">
           <div class="card" style="width: 15rem;" align="center">
             <div class="card-body">
               <h5 class="card-title">Stockages</h5>
@@ -128,7 +128,7 @@
             </div>
           </div>
         </div>
-        <div class="col-md-3 menu-option p-3">
+        <div class="col-md-3 menu-option p-3" *ngIf="rightContent && (rightContent.stocks.state === true || rightContent.manager.state === true)">
           <div class="card" style="width: 15rem;" align="center">
             <div class="card-body">
               <h5 class="card-title">Poids</h5>
@@ -140,7 +140,7 @@
             </div>
           </div>
         </div>
-        <div class="col-md-3 menu-option p-3">
+        <div class="col-md-3 menu-option p-3" *ngIf="rightContent && (rightContent.stocks.state === true || rightContent.manager.state === true)">
           <div class="card" style="width: 15rem;" align="center">
             <div class="card-body">
               <h5 class="card-title">Fiche de transfert</h5>
@@ -152,10 +152,10 @@
             </div>
           </div>
         </div>
-      </div>
 
-      <div class="row">
-        <div class="col-md-3 menu-option p-3">
+
+
+        <div class="col-md-3 menu-option p-3" *ngIf="rightContent && (rightContent.finance.state === true || rightContent.stocks.state === true || rightContent.manager.state === true)">
           <div class="card" style="width: 15rem;" align="center">
             <div class="card-body">
               <h5 class="card-title">Objectifs</h5>
@@ -167,7 +167,7 @@
             </div>
           </div>
         </div>
-        <div class="col-md-3 menu-option p-3">
+        <div class="col-md-3 menu-option p-3" *ngIf="rightContent && rightContent.default.state === true">
           <div class="card" style="width: 15rem;" align="center">
             <div class="card-body">
               <h5 class="card-title">Campagnes</h5>
@@ -179,7 +179,7 @@
             </div>
           </div>
         </div>
-        <div class="col-md-3 menu-option p-3">
+        <div class="col-md-3 menu-option p-3" *ngIf="rightContent && (rightContent.finance.state === true || rightContent.manager.state === true)">
           <div class="card" style="width: 15rem;" align="center">
             <div class="card-body">
               <h5 class="card-title">Achats/Ventes</h5>
@@ -191,7 +191,7 @@
             </div>
           </div>
         </div>
-        <div class="col-md-3 menu-option p-3">
+        <div class="col-md-3 menu-option p-3" *ngIf="rightContent &&( rightContent.stocks.state === true || rightContent.manager.state === true)">
           <div class="card" style="width: 15rem;" align="center">
             <div class="card-body">
               <h5 class="card-title">Inventaires</h5>
@@ -203,10 +203,10 @@
             </div>
           </div>
         </div>
-      </div>
 
-      <div class="row">
-        <div class="col-md-3 menu-option p-3">
+
+
+        <div class="col-md-3 menu-option p-3" *ngIf="rightContent && (rightContent.stocks.state === true || rightContent.manager.state === true)">
           <div class="card" style="width: 15rem;" align="center">
             <div class="card-body">
               <h5 class="card-title">Chargements</h5>
@@ -218,7 +218,7 @@
             </div>
           </div>
         </div>
-        <div class="col-md-3 menu-option p-3">
+        <div class="col-md-3 menu-option p-3"  *ngIf="rightContent && (rightContent.administration.state === true || rightContent.manager.state === true)">
           <div class="card" style="width: 15rem;" align="center">
             <div class="card-body">
               <h5 class="card-title">Logs d'activités</h5>

@@ -66,10 +66,11 @@
         <th>E-mail</th>
         <th>Rôle</th>
         <th>Status</th>
-        <th>Numéro de téléphone</th>
+        <th>Téléphone</th>
         <th>Adresse</th>
         <th>Entrepôt</th>
         <th>Fonction</th>
+        <th></th>
         <th></th>
         <th></th>
       </tr>
@@ -97,7 +98,12 @@
       </td>
       <td *ngIf="user.status === 'inactive'">
         <button class="btn btn-outline-success btn-sm" data-toggle="modal" data-target="#exampleModal3">
-          Ouvrir
+          Activer
+        </button>
+      </td>
+      <td>
+        <button class="btn btn-outline-info" (click)="AssignRight(user.id)">
+          Droits
         </button>
       </td>
       </tr>

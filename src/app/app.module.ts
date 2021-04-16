@@ -19,6 +19,7 @@ import { AuthService } from './services/auth.service';
 import { WarehouseService } from './services/warehouse.service';
 import { WarehouseDetailComponent } from './warehouse-detail/warehouse-detail.component';
 import { NavbarComponent } from './navbar/navbar.component';
+import { UserChmodComponent } from './user-chmod/user-chmod.component';
 
 @NgModule({
   declarations: [
@@ -31,7 +32,8 @@ import { NavbarComponent } from './navbar/navbar.component';
     WarehouseManagementComponent,
     LoginComponent,
     WarehouseDetailComponent,
-    NavbarComponent
+    NavbarComponent,
+    UserChmodComponent
   ],
   imports: [
     BrowserModule,

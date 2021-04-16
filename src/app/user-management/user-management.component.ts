@@ -184,4 +184,10 @@ export class UserManagementComponent implements OnInit {
 
   }
 
+
+  AssignRight(id) {
+    console.log(id);
+    this.router.navigateByUrl('/home/(child1:user-right/' + id + ';open=true)');
+  }
+
 }

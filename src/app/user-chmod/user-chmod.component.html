@@ -1,0 +1,247 @@
+<div class="container-fluid principal">
+
+  <!--navbar-->
+  <nav class="navbar navbar-expand-lg navbar-lights p-4">
+    <a class="navbar-brand text-dark">
+      <i class="material-icons" style="cursor: pointer;font-size: 25px;" (click)="ComeBack()">
+        chevron_left
+      </i>
+      Attribution des droits
+    </a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav mr-auto">
+        <!--<li class="nav-item active">
+          <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">Link</a>
+        </li>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Dropdown
+          </a>
+          <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <a class="dropdown-item" href="#">Action</a>
+            <a class="dropdown-item" href="#">Another action</a>
+            <div class="dropdown-divider"></div>
+            <a class="dropdown-item" href="#">Something else here</a>
+          </div>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link disabled" href="#">Disabled</a>
+        </li>-->
+      </ul>
+      <form class="form-inline my-2 my-lg-0">
+        <button class="btn btn-outline-info my-2 my-sm-0 mr-5" type="button" data-toggle="modal" data-target="#exampleModal0">
+          + Nouveau Utilisateurs
+        </button>
+        <div class="dropdown">
+          <button class="btn btn-success text-light dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" *ngIf="userConnected">
+            {{ userConnected.name }}
+          </button>
+          <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+            <a class="dropdown-item" href="#">Profile</a>
+            <a class="dropdown-item" href="#">Support</a>
+            <a class="dropdown-item text-danger" (click)="Logout()" style="cursor: pointer;">Déconnexion</a>
+          </div>
+        </div>
+      </form>
+    </div>
+  </nav>
+  <!--//nav bar -->
+
+
+  <div class="container-fluid table-user">
+    <div class="container right-card mt-4" align="center">
+
+      <div class="row">
+
+        <div class="col-md-3">
+          <h2>Droits & Actions</h2>
+        </div>
+        <div class="col-md-3">
+          <h4>Lecture</h4>
+        </div>
+        <div class="col-md-3">
+          <h4>Ecriture</h4>
+        </div>
+        <div class="col-md-3">
+          <h4>Suppression</h4>
+        </div>
+
+      </div>
+
+      <div class="row">
+
+        <div class="col-md-3">
+          <h3>
+            Par défaut
+          </h3>
+        </div>
+        <div class="col-md-3">
+          <label class="switch">
+            <input type="checkbox" name="option" [(ngModel)]="default.read" (change)="eventDefault($event,'read')">
+            <span class="slider round"></span>
+          </label>
+        </div>
+        <div class="col-md-3">
+          <label class="switch">
+            <input type="checkbox" name="option" [(ngModel)]="default.write" (change)="eventDefault($event,'write')">
+            <span class="slider round"></span>
+          </label>
+        </div>
+        <div class="col-md-3">
+          <label class="switch">
+            <input type="checkbox" name="option" [(ngModel)]="default.delete" (change)="eventDefault($event,'delete')">
+            <span class="slider round"></span>
+          </label>
+        </div>
+
+      </div>
+
+      <div class="row">
+
+        <div class="col-md-3">
+          <h3>
+            Administration
+          </h3>
+        </div>
+        <div class="col-md-3">
+          <label class="switch">
+            <input type="checkbox" name="option" [(ngModel)]="administration.read" (change)="eventAdministration($event,'read')">
+            <span class="slider round"></span>
+          </label>
+        </div>
+        <div class="col-md-3">
+          <label class="switch">
+            <input type="checkbox" name="option" [(ngModel)]="administration.write" (change)="eventAdministration($event,'write')">
+            <span class="slider round"></span>
+          </label>
+        </div>
+        <div class="col-md-3">
+          <label class="switch">
+            <input type="checkbox" name="option" [(ngModel)]="administration.delete" (change)="eventAdministration($event,'delete')">
+            <span class="slider round"></span>
+          </label>
+        </div>
+
+      </div>
+
+      <div class="row">
+
+        <div class="col-md-3">
+          <h3>
+            Finances
+          </h3>
+        </div>
+        <div class="col-md-3">
+          <label class="switch">
+            <input type="checkbox" name="option" [(ngModel)]="finance.read" (change)="eventFinance($event,'read')">
+            <span class="slider round"></span>
+          </label>
+        </div>
+        <div class="col-md-3">
+          <label class="switch">
+            <input type="checkbox" name="option" [(ngModel)]="finance.write" (change)="eventFinance($event,'write')">
+            <span class="slider round"></span>
+          </label>
+        </div>
+        <div class="col-md-3">
+          <label class="switch">
+            <input type="checkbox" name="option" [(ngModel)]="finance.delete" (change)="eventFinance($event,'delete')">
+            <span class="slider round"></span>
+          </label>
+        </div>
+
+      </div>
+
+      <div class="row">
+
+        <div class="col-md-3">
+          <h3> Stocks</h3>
+        </div>
+        <div class="col-md-3">
+          <label class="switch">
+            <input type="checkbox" name="option" [(ngModel)]="stock.read" (change)="eventStock($event,'read')">
+            <span class="slider round"></span>
+          </label>
+        </div>
+        <div class="col-md-3">
+          <label class="switch">
+            <input type="checkbox" name="option" [(ngModel)]="stock.write" (change)="eventStock($event,'write')">
+            <span class="slider round"></span>
+          </label>
+        </div>
+        <div class="col-md-3">
+          <label class="switch">
+            <input type="checkbox" name="option" [(ngModel)]="stock.delete" (change)="eventStock($event,'delete')">
+            <span class="slider round"></span>
+          </label>
+        </div>
+
+      </div>
+
+      <div class="row">
+
+        <div class="col-md-3">
+          <h3>
+            Manager
+          </h3>
+        </div>
+        <div class="col-md-3">
+          <label class="switch">
+            <input type="checkbox" name="option" [(ngModel)]="manager.read" (change)="eventManager($event, 'read')">
+            <span class="slider round"></span>
+          </label>
+        </div>
+        <div class="col-md-3">
+          <label class="switch">
+            <input type="checkbox" name="option" [(ngModel)]="manager.write" (change)="eventManager($event, 'write')">
+            <span class="slider round"></span>
+          </label>
+        </div>
+        <div class="col-md-3">
+          <label class="switch">
+            <input type="checkbox" name="option" [(ngModel)]="manager.delete" (change)="eventManager($event, 'delete')">
+            <span class="slider round"></span>
+          </label>
+        </div>
+
+      </div>
+
+      <div class="row">
+
+        <div class="col-md-3">
+          <h3>
+            Pesée
+          </h3>
+        </div>
+        <div class="col-md-3">
+          <label class="switch">
+            <input type="checkbox" name="option" [(ngModel)]="pesee.read" (change)="eventPesee($event, 'read')">
+            <span class="slider round"></span>
+          </label>
+        </div>
+        <div class="col-md-3">
+          <label class="switch">
+            <input type="checkbox" name="option" [(ngModel)]="pesee.write" (change)="eventPesee($event, 'write')">
+            <span class="slider round"></span>
+          </label>
+        </div>
+        <div class="col-md-3">
+          <label class="switch">
+            <input type="checkbox" name="option" [(ngModel)]="pesee.delete" (change)="eventPesee($event, 'delete')">
+            <span class="slider round"></span>
+          </label>
+        </div>
+
+      </div>
+
+
+    </div>
+  </div>
+
+</div>

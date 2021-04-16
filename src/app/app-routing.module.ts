@@ -8,6 +8,7 @@ import { WarehouseManagementComponent } from './warehouse-management/warehouse-m
 import { LoginComponent } from './login/login.component';
 import { AuthGuard } from './guards/auth.guard';
 import { WarehouseDetailComponent } from './warehouse-detail/warehouse-detail.component';
+import { UserChmodComponent } from './user-chmod/user-chmod.component';
 
 
 const routes: Routes = [
@@ -33,6 +34,11 @@ const routes: Routes = [
       {
         path: 'user-manage',
         component: UserManagementComponent,
+        outlet: 'child1'
+      },
+      {
+        path: 'user-right/:id',
+        component: UserChmodComponent,
         outlet: 'child1'
       },
       {

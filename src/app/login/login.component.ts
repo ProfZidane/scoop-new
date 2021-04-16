@@ -29,6 +29,7 @@ error = {
         console.log(success);
         localStorage.setItem('token', success.token);
         localStorage.setItem('userData', JSON.stringify(success.user));
+        localStorage.setItem('right', JSON.stringify(success.droits));
         setTimeout( () => {
           this.loading = true;
           this.router.navigateByUrl('home');
