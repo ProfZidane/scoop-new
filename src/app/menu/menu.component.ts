@@ -42,11 +42,15 @@ export class MenuComponent implements OnInit {
   }
 
   manageUser() {
-    this.router.navigateByUrl("/home/(child1:user-manage;open=true)");
+    this.router.navigateByUrl('/home/(child1:user-manage;open=true)');
   }
 
   manageWarehouse() {
-    this.router.navigateByUrl("/home/(child1:ware-manage;open=true)");
+    this.router.navigateByUrl('/home/(child1:ware-manage;open=true)');
+  }
+
+  manageTracker() {
+    this.router.navigateByUrl('/home/(child1:tracker-manage;open=true)');
   }
 
   Logout() {
@@ -66,7 +70,7 @@ export class MenuComponent implements OnInit {
           } else if (element.libelle === 'default') {
             this.rightContent.default.state = true;
             this.rightContent.default.content = element;
-          } else if (element.libelle === 'finance') {
+          } else if (element.libelle === 'finances') {
             this.rightContent.finance.state = true;
             this.rightContent.finance.content = element;
           } else if (element.libelle === 'stocks') {

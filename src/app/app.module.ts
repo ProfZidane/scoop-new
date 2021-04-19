@@ -20,6 +20,8 @@ import { WarehouseService } from './services/warehouse.service';
 import { WarehouseDetailComponent } from './warehouse-detail/warehouse-detail.component';
 import { NavbarComponent } from './navbar/navbar.component';
 import { UserChmodComponent } from './user-chmod/user-chmod.component';
+import { TrackerManagementComponent } from './tracker-management/tracker-management.component';
+import { OperationManagementComponent } from './operation-management/operation-management.component';
 
 @NgModule({
   declarations: [
@@ -33,7 +35,9 @@ import { UserChmodComponent } from './user-chmod/user-chmod.component';
     LoginComponent,
     WarehouseDetailComponent,
     NavbarComponent,
-    UserChmodComponent
+    UserChmodComponent,
+    TrackerManagementComponent,
+    OperationManagementComponent
   ],
   imports: [
     BrowserModule,

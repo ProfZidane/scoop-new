@@ -1,0 +1,361 @@
+<div class="container-fluid principal">
+
+  <!--navbar-->
+  <nav class="navbar navbar-expand-lg navbar-lights p-4">
+    <a class="navbar-brand text-dark">
+      <i class="material-icons" style="cursor: pointer;font-size: 25px;" (click)="ComeBack()">
+        chevron_left
+      </i>
+      Gestion Pisteurs
+    </a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav mr-auto">
+        <!--<li class="nav-item active">
+          <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">Link</a>
+        </li>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Dropdown
+          </a>
+          <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <a class="dropdown-item" href="#">Action</a>
+            <a class="dropdown-item" href="#">Another action</a>
+            <div class="dropdown-divider"></div>
+            <a class="dropdown-item" href="#">Something else here</a>
+          </div>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link disabled" href="#">Disabled</a>
+        </li>-->
+      </ul>
+      <form class="form-inline my-2 my-lg-0">
+        <button class="btn btn-outline-info my-2 my-sm-0 mr-5" type="button" data-toggle="modal" data-target="#exampleModal8">
+          + Nouveau pisteur
+        </button>
+        <div class="dropdown">
+          <button class="btn btn-success text-light dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" *ngIf="userConnected">
+            {{ userConnected.name }}
+          </button>
+          <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+            <a class="dropdown-item" href="#">Profile</a>
+            <a class="dropdown-item" href="#">Support</a>
+            <a class="dropdown-item text-danger" (click)="Logout()" style="cursor: pointer;">Déconnexion</a>
+          </div>
+        </div>
+      </form>
+    </div>
+  </nav>
+  <!--//nav bar -->
+<div class="container-fluid table-user">
+  <div class="text-center" *ngIf="isLoading.data === true">
+    <div class="spinner-border" role="status">
+      <span class="sr-only">Loading...</span>
+    </div>
+  </div>
+  <table datatable class="row-border hover" [dtTrigger]="dtTrigger" id="table" style="">
+    <thead>
+      <tr>
+        <th>Nom & Prénoms</th>
+        <th>Adresse</th>
+        <th>Sexe</th>
+        <th>Téléphone</th>
+        <th>E-mail</th>
+        <th>Naissance</th>
+        <th>Numéro Pièce</th>
+        <th>Status</th>
+        <th></th>
+        <th></th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let tracker of trackers">
+        <td>{{ tracker.nom + ' ' + tracker.prenom }}</td>
+        <td>{{ tracker.adresse }}</td>
+        <td>{{ tracker.sexe }}</td>
+        <td>{{ tracker.contact }}</td>
+        <td>{{ tracker.email }}</td>
+        <td>{{ tracker.date_naissance }}</td>
+        <td>{{ tracker.num_piece }}</td>
+        <td class="text-success" *ngIf="tracker.status === 'active'">{{ tracker.status }}</td>
+        <td class="text-danger" *ngIf="tracker.status === 'inactive'">{{ tracker.status }}</td>
+        <td>
+          <button class="btn btn-outline-warning btn-sm" type="submit" data-toggle="modal" data-target="#exampleModal9" (click)="OpenModelUpdated(tracker)">
+            Modifier
+          </button>
+        </td>
+        <td *ngIf="tracker.status === 'active'">
+          <button class="btn btn-outline-danger btn-sm" data-toggle="modal" data-target="#exampleModal10" (click)="OpenModelDelete(tracker.id)">Banir</button>
+        </td>
+        <td *ngIf="tracker.status === 'inactive'">
+          <button class="btn btn-outline-success btn-sm" data-toggle="modal" data-target="#exampleModal3">Accueillir</button>
+        </td>
+        <td>
+          <button class="btn btn-outline-info btn-sm" data-toggle="modal" data-target="#exampleModal11" (click)="OpenModelImage(tracker.id)">
+             Pièces
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+</div>
+
+</div>
+
+
+
+<!-- Modal 4 -->
+<div class="modal fade" id="exampleModal8" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg" role="document">
+    <form method="POST" (ngSubmit)="CreateTracker($event)" enctype="multipart/form-data">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Création d'un pisteur</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="clearfix" *ngIf="isLoading.create === true">
+          <span class="text-warning">Création d'un pisteur .....</span>
+          <div class="spinner-border float-right text-warning" role="status">
+            <span class="sr-only">Loading...</span>
+          </div>
+        </div>
+        <div class="alert alert-danger" *ngIf="error === true">
+          Une erreur s'est produite. Veuillez vérifiez les informations inscrites svp !
+        </div>
+          <small class="text-muted">Inscrivez les informations suivantes</small>
+          <div class="row">
+            <div class="col">
+              <label for="">Entrez le nom</label>
+              <input type="text" name="nom" [(ngModel)]="trackerInfo.nom" class="form-control" placeholder="" required>
+            </div>
+            <div class="col">
+              <label for="">Entrez le prénom</label>
+              <input type="text" name="prenom" [(ngModel)]="trackerInfo.prenom" class="form-control" placeholder="" required>
+            </div>
+          </div>
+          <br>
+          <div class="row">
+            <div class="col">
+              <label for="">Entrez le numéro de téléphone</label>
+              <input type="text" name="contact" [(ngModel)]="trackerInfo.contact" class="form-control" placeholder="" required>
+            </div>
+            <div class="col">
+              <label for="">Choisir le sexe</label>
+              <div class="input-group mb-3">
+                <select class="custom-select" name="sexe" [(ngModel)]="trackerInfo.sexe" id="inputGroupSelect01" required>
+                  <option value="masculin">Masculin</option>
+                  <option value="feminin">Féminin</option>
+                  <option value="inconnu">Je ne sais pas</option>
+                </select>
+              </div>
+            </div>
+          </div>
+          <br>
+          <div class="row">
+            <div class="col">
+              <label for="">Entrez la date de naissance</label>
+              <input type="date" name="date_naissance" [(ngModel)]="trackerInfo.date_naissance" class="form-control" placeholder="" required>
+            </div>
+            <div class="col">
+              <label for="">Entrez l'adresse e-mail</label>
+              <input type="email" name="email" [(ngModel)]="trackerInfo.email" class="form-control" placeholder="">
+            </div>
+          </div>
+          <br><br>
+          <div class="row">
+            <div class="col">
+              <label for="">Entrez le numéro de la pièce</label>
+              <input type="text" name="piece" [(ngModel)]="trackerInfo.piece" class="form-control" placeholder="" required>
+            </div>
+            <div class="col">
+              <label for="">Choisir un status</label>
+              <div class="input-group mb-3">
+                <select class="custom-select" name="status" [(ngModel)]="trackerInfo.status" id="inputGroupSelect01" required>
+                  <option value="active">Active</option>
+                  <option value="inactive">Inactive</option>
+                </select>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col">
+              <label for="">Entrez l'adresse</label>
+              <input type="text" name="adresse" [(ngModel)]="trackerInfo.adresse" class="form-control" placeholder="" required>
+            </div>
+            <div class="col">
+              <label for="">Entrez le scan d'une pièce d'identité</label>
+              <input type="file" name="piece_scan" [(ngModel)]="trackerInfo.piece_scan" (change)="OnFileSelected($event)" class="form-control" placeholder="Entrez le numéro de la pièce">
+            </div>
+          </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
+        <button type="submit" class="btn btn-success">Enregistrer</button>
+      </div>
+    </div>
+  </form>
+  </div>
+</div>
+
+
+<!-- Modal 5  -->
+<div class="modal fade" id="exampleModal9" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg" role="document">
+    <form method="post" (ngSubmit)="Updatetracker($event)" enctype="multipart/form-data">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Modification des pisteurs</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body" *ngIf='trackerFictious'>
+        <div class="clearfix" *ngIf="isLoading.modify === true">
+          <span class="text-warning">Modification d'un pisteur .....</span>
+          <div class="spinner-border float-right text-warning" role="status">
+            <span class="sr-only">Loading...</span>
+          </div>
+        </div>
+        <div class="alert alert-danger" *ngIf="errorModify_error === true">
+          Une erreur s'est produite. Veuillez vérifiez les informations inscrites svp !
+        </div>
+          <div class="row">
+            <div class="col">
+              <label for="">Le nom</label>
+              <input type="text" name="nom" [(ngModel)]="trackerFictious.nom" class="form-control" placeholder="">
+            </div>
+            <div class="col">
+              <label for="">Le prénom</label>
+              <input type="text" name="prenom" [(ngModel)]="trackerFictious.prenom" class="form-control" placeholder="">
+            </div>
+          </div>
+          <div class="row">
+            <div class="col">
+              <label for="">L'adresse</label>
+              <input type="text" name="adresse" [(ngModel)]="trackerFictious.adresse" class="form-control" placeholder="">
+            </div>
+            <div class="col">
+              <label for="">Le Sexe</label>
+              <input type="text" name="sexe" [(ngModel)]="trackerFictious.sexe" class="form-control" placeholder="">
+            </div>
+          </div>
+          <div class="row">
+            <div class="col">
+              <label for="">Le téléphone</label>
+              <input type="text" name="contact" [(ngModel)]="trackerFictious.contact" class="form-control" placeholder="">
+            </div>
+            <div class="col">
+              <label for="">L'adresse e-mail</label>
+              <input type="text" name="email" [(ngModel)]="trackerFictious.email" class="form-control" placeholder="">
+            </div>
+          </div>
+          <div class="row">
+            <div class="col">
+              <label for="">Date de naissance</label>
+              <input type="date" name="date_naissance" [(ngModel)]="trackerFictious.date_naissance" class="form-control" placeholder="">
+            </div>
+            <div class="col">
+              <label for="">Status</label>
+              <div class="input-group mb-3">
+                <select class="custom-select" name="status" [(ngModel)]="trackerFictious.status" id="inputGroupSelect01" >
+                  <option value="active">Active</option>
+                  <option value="inactive">Inactive</option>
+                </select>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col">
+              <label for="">Numéro de pièce</label>
+              <input type="text" name="num_piece" [(ngModel)]="trackerFictious.num_piece" class="form-control">
+            </div>
+            <div class="col">
+              <label for="">Photo ou scan de pièce d'identité</label>
+              <input type="file" name="piece_scan" [(ngModel)]="trackerFictious.piece_scan" (change)="OnFileSelectedInUpload($event)" class="form-control">
+            </div>
+          </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
+        <button type="submit" class="btn btn-success">Valider</button>
+      </div>
+    </div>
+  </form>
+  </div>
+</div>
+
+
+<!-- Modal 6 -->
+<div class="modal fade" id="exampleModal10" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg" role="document">
+    <form method="POST" (ngSubmit)="ClosedTracker($event)">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Motifs de banissement</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="clearfix" *ngIf="isLoading.close === true">
+          <span class="text-warning">Banir le pisteur .....</span>
+          <div class="spinner-border float-right text-warning" role="status">
+            <span class="sr-only">Loading...</span>
+          </div>
+        </div>
+        <div class="alert alert-danger" *ngIf="errorClosed === true">
+          Une erreur s'est produite. Veuillez réessayer plus tard svp !
+        </div>
+          <small class="text-muted">Notifier le motif</small>
+          <div class="row">
+            <div class="col">
+              <label for="">Motifs</label>
+              <textarea name="motifs" class="form-control" [(ngModel)]="motif" id="" cols="30" rows="5" ></textarea>
+            </div>
+          </div>
+          <br>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
+        <button type="submit" class="btn btn-success">Enregistrer</button>
+      </div>
+    </div>
+  </form>
+  </div>
+</div>
+
+
+
+<!-- Modal 7 -->
+<div class="modal fade" id="exampleModal11" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Pièce en image</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body" *ngIf='detailPiece'>
+        <p *ngIf="detailPiece.image === ''">
+          En chargement ...
+        </p>
+        <img *ngIf="detailPiece.image !== ''" [src]=detailPiece.image width="100%" height="500px" alt="">
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">OK</button>
+        <!--<button type="button" class="btn btn-success">OK</button>-->
+      </div>
+    </div>
+  </div>
+</div>

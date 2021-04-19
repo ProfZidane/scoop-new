@@ -1,16 +1,16 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-
+import { environment } from '../../environments/environment.prod';
 @Injectable({
   providedIn: 'root'
 })
 export class WarehouseService {
-getWareURL = 'https://scoop-coopraca.lce-test.fr/api/entrepot';
-postWareURL = 'https://scoop-coopraca.lce-test.fr/api/entrepot';
-updateURL = 'https://scoop-coopraca.lce-test.fr/api/entrepot/';
-deleteURL = 'https://scoop-coopraca.lce-test.fr/api/entrepotClosed/';
-detailURL = 'https://scoop-coopraca.lce-test.fr/api/getIntervenants/';
+getWareURL = environment.endPoint + 'entrepot';
+postWareURL = environment.endPoint + 'entrepot';
+updateURL = environment.endPoint + 'entrepot/';
+deleteURL = environment.endPoint + 'entrepotClosed/';
+detailURL = environment.endPoint + 'getIntervenants/';
   constructor(private http: HttpClient) { }
 
   GetHeaders() {

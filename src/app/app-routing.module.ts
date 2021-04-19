@@ -9,6 +9,7 @@ import { LoginComponent } from './login/login.component';
 import { AuthGuard } from './guards/auth.guard';
 import { WarehouseDetailComponent } from './warehouse-detail/warehouse-detail.component';
 import { UserChmodComponent } from './user-chmod/user-chmod.component';
+import { TrackerManagementComponent } from './tracker-management/tracker-management.component';
 
 
 const routes: Routes = [
@@ -24,7 +25,7 @@ const routes: Routes = [
       {
         path: '',
         component: MainpageComponent,
-        outlet: 'child1'
+        outlet: 'child1',
       },
       {
         path: 'menu',
@@ -51,6 +52,11 @@ const routes: Routes = [
         component: WarehouseDetailComponent,
         outlet: 'child1',
         canActivate: [AuthGuard]
+      },
+      {
+        path: 'tracker-manage',
+        component: TrackerManagementComponent,
+        outlet: 'child1'
       }
     ]
   },

@@ -1,19 +1,20 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { environment } from '../../environments/environment.prod';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
-loginURL = 'https://scoop-coopraca.lce-test.fr/api/login';
-registerURL = 'https://scoop-coopraca.lce-test.fr/api/register';
-getURL = 'https://scoop-coopraca.lce-test.fr/api/getAllUsers';
-updateURL = 'https://scoop-coopraca.lce-test.fr/api/updateCompte/';
-deleteURL = 'https://scoop-coopraca.lce-test.fr/api/compteClosed/';
-getRightById = 'https://scoop-coopraca.lce-test.fr/api/getDroitsUser/';
-assignURL = 'https://scoop-coopraca.lce-test.fr/api/addDroit';
-logoutURL = 'https://scoop-coopraca.lce-test.fr/api/logout';
+loginURL = environment.endPoint + 'login';
+registerURL = environment.endPoint + 'register';
+getURL = environment.endPoint + 'getAllUsers';
+updateURL = environment.endPoint + 'updateCompte/';
+deleteURL = environment.endPoint + 'compteClosed/';
+getRightById = environment.endPoint + 'getDroitsUser/';
+assignURL = environment.endPoint + 'addDroit';
+logoutURL = environment.endPoint + 'logout';
 testLogin = {
   email : 'admin@gmail.com',
   password : '1111'

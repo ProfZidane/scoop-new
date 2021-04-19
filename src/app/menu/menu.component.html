@@ -89,7 +89,7 @@
           </div>
         </div>
         <div class="col-md-3 menu-option p-3" *ngIf="rightContent && (rightContent.finance.state === true || rightContent.stocks.state === true || rightContent.manager.state === true)">
-          <div class="card" style="width: 15rem;" align="center">
+          <div class="card" style="width: 15rem;" align="center" (click)="manageTracker()">
             <div class="card-body">
               <h5 class="card-title">Pisteurs</h5>
               <div class="contour">
@@ -230,19 +230,19 @@
             </div>
           </div>
         </div>
-        <!--<div class="col-md-3 menu-option p-3">
+        <div class="col-md-3 menu-option p-3" *ngIf="rightContent && (rightContent.finance.state === true || rightContent.manager.state === true)">
           <div class="card" style="width: 15rem;" align="center">
             <div class="card-body">
-              <h5 class="card-title">Poids</h5>
+              <h5 class="card-title">Opérations</h5>
               <div class="contour">
                 <i class="material-icons">
-                  public
+                  credit_card
                 </i>
               </div>
             </div>
           </div>
         </div>
-        <div class="col-md-3 menu-option p-3">
+        <!--<div class="col-md-3 menu-option p-3">
           <div class="card" style="width: 15rem;" align="center">
             <div class="card-body">
               <h5 class="card-title">Fiche de transfert</h5>
