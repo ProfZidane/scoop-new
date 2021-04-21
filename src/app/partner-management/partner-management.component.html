@@ -6,7 +6,7 @@
       <i class="material-icons" style="cursor: pointer;font-size: 25px;" (click)="ComeBack()">
         chevron_left
       </i>
-      Gestion Entrepôts
+      Gestion Partenaires
     </a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
@@ -35,8 +35,8 @@
         </li>-->
       </ul>
       <form class="form-inline my-2 my-lg-0">
-        <button class="btn btn-outline-info my-2 my-sm-0 mr-5" type="button" data-toggle="modal" data-target="#exampleModal4">
-          + Nouvel Entrepôt
+        <button class="btn btn-outline-info my-2 my-sm-0 mr-5" type="button" data-toggle="modal" data-target="#exampleModal11">
+          + Nouveau partenaires
         </button>
         <div class="dropdown">
           <button class="btn btn-success text-light dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" *ngIf="userConnected">
@@ -61,11 +61,11 @@
   <table datatable class="row-border hover" [dtTrigger]="dtTrigger" id="table" style="">
     <thead>
       <tr>
-        <th>Matricule</th>
-        <th>Ville</th>
-        <th>Adresse</th>
-        <th>Téléphone</th>
-        <th>Adresse E-mail</th>
+        <th>Nom & Prénoms</th>
+        <th>Type</th>
+        <th>Catégorie</th>
+        <th>Description</th>
+        <th>Date</th>
         <th>Status</th>
         <th></th>
         <th></th>
@@ -73,29 +73,29 @@
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let warehouse of wareHouses">
-        <td>{{ warehouse.matricule }}</td>
-        <td>{{ warehouse.ville}}</td>
-        <td>{{ warehouse.adresse }}</td>
-        <td>{{ warehouse.telephone }}</td>
-        <td>{{ warehouse.email }}</td>
-        <td class="text-success" *ngIf="warehouse.status === 'active'">{{ warehouse.status }}</td>
-        <td class="text-danger" *ngIf="warehouse.status === 'inactive'">{{ warehouse.status }}</td>
+      <tr *ngFor="let partner of partnersData">
+        <td>{{ partner.name }}</td>
+        <td>{{ partner.type }}</td>
+        <td>{{ partner.categorie }}</td>
+        <td>{{ partner.description }}</td>
+        <td>{{ partner.created_at | date }}</td>
+        <td class="text-success" *ngIf="partner.status === 'active'">{{ partner.status }}</td>
+        <td class="text-danger" *ngIf="partner.status === 'inactive'">{{ partner.status }}</td>
         <td>
-          <button class="btn btn-outline-warning" type="submit" data-toggle="modal" data-target="#exampleModal5" (click)="OpenModelUpdated(warehouse)">
+          <button class="btn btn-outline-info btn-sm" (click)="goToProfile(partner.id)">
+            Profil
+          </button>
+        </td>
+        <td>
+          <button class="btn btn-outline-warning btn-sm" type="submit" data-toggle="modal" data-target="#exampleModal12" (click)="OpenModalUpdate(partner)">
             Modifier
           </button>
         </td>
-        <td *ngIf="warehouse.status === 'active'">
-          <button class="btn btn-outline-danger" data-toggle="modal" data-target="#exampleModal6" (click)="OpenModelDelete(warehouse.id)">Fermer</button>
+        <td *ngIf="partner.status === 'active'">
+          <button class="btn btn-outline-danger btn-sm" data-toggle="modal" data-target="#exampleModal13" (click)="OpenModelDelete(partner.id)">Désactiver</button>
         </td>
-        <td *ngIf="warehouse.status === 'inactive'">
-          <button class="btn btn-outline-success" data-toggle="modal" data-target="#exampleModal3">Ouvrir</button>
-        </td>
-        <td>
-          <button class="btn btn-outline-info" data-toggle="modal" data-target="#exampleModal7" (click)="DetailToWarehouse(warehouse.id)">
-            Détails
-          </button>
+        <td *ngIf="partner.status === 'inactive'">
+          <button class="btn btn-outline-success btn-sm" data-toggle="modal" data-target="#exampleModal3">Activer</button>
         </td>
       </tr>
     </tbody>
@@ -108,50 +108,67 @@
 
 
 <!-- Modal 4 -->
-<div class="modal fade" id="exampleModal4" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="exampleModal11" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-lg" role="document">
-    <form method="POST" (ngSubmit)="CreateWarehouse($event)">
+    <form method="POST" (ngSubmit)="CreatePartner($event)">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Création d'un entrepôts</h5>
+        <h5 class="modal-title" id="exampleModalLabel">Création d'un partenaire</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
       <div class="modal-body">
         <div class="clearfix" *ngIf="isLoading.create === true">
-          <span class="text-warning">Création de l'entrepôt .....</span>
+          <span class="text-warning">Création d'un partenaire .....</span>
           <div class="spinner-border float-right text-warning" role="status">
             <span class="sr-only">Loading...</span>
           </div>
         </div>
-        <div class="alert alert-danger" *ngIf="error.create_error === true">
+        <div class="alert alert-danger" *ngIf="error.create === true">
           Une erreur s'est produite. Veuillez vérifiez les informations inscrites svp !
         </div>
           <small class="text-muted">Inscrivez les informations suivantes</small>
           <div class="row">
             <div class="col">
-              <input type="text" name="ville" [(ngModel)]="wareHouseInfo.ville" class="form-control" placeholder="Entrez la ville">
-            </div>
-            <div class="col">
-              <input type="text" name="adresse" [(ngModel)]="wareHouseInfo.adresse" class="form-control" placeholder="Entrez l'adresse">
-            </div>
-          </div>
-          <br>
-          <div class="row">
-            <div class="col">
-              <input type="text" name="telephone" [(ngModel)]="wareHouseInfo.telephone" class="form-control" placeholder="Entrez le numéro de téléphone">
-            </div>
-            <div class="col">
-              <input type="email" name="email" [(ngModel)]="wareHouseInfo.email" class="form-control" placeholder="Entrez l'adresse e-mail">
-            </div>
-          </div>
-          <br>
-          <div class="row">
-            <div class="col">
+              <label for="">Choisir le type</label>
               <div class="input-group mb-3">
-                <select class="custom-select" name="status" [(ngModel)]="wareHouseInfo.status" id="inputGroupSelect01">
-                  <option selected>Choisir un status...</option>
+                <select class="custom-select" name="type" [(ngModel)]="partners.type" id="inputGroupSelect01" required>
+                  <option value="personne physique">Personne Physique</option>
+                  <option value="personne morale">Personne Morale</option>
+                  <option value="inconnu">Je ne sais pas</option>
+                </select>
+              </div>
+            </div>
+            <div class="col">
+              <label for="">Entrez le nom</label>
+              <input type="text" name="name" [(ngModel)]="partners.name" class="form-control" placeholder="" required>
+            </div>
+          </div>
+          <br>
+          <div class="row">
+            <div class="col">
+              <label for="">Entrez la description</label>
+              <input type="text" name="description" [(ngModel)]="partners.description" class="form-control" placeholder="" required>
+            </div>
+            <div class="col">
+              <label for="">Choisir la catégorie</label>
+              <div class="input-group mb-3">
+                <select class="custom-select" name="categorie" [(ngModel)]="partners.categorie" id="inputGroupSelect01" required>
+                  <option value="particulier">Particulier</option>
+                  <option value="banque">Banque</option>
+                  <option value="acheteur">Acheteur</option>
+                  <option value="autres">Autres</option>
+                </select>
+              </div>
+            </div>
+          </div>
+          <br><br>
+          <div class="row">
+            <div class="col">
+              <label for="">Choisir un status</label>
+              <div class="input-group mb-3">
+                <select class="custom-select" name="status" [(ngModel)]="partners.status" id="inputGroupSelect01" required>
                   <option value="active">Active</option>
                   <option value="inactive">Inactive</option>
                 </select>
@@ -170,65 +187,77 @@
 
 
 <!-- Modal 5 -->
-<div class="modal fade" id="exampleModal5" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="exampleModal12" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-lg" role="document">
-    <form method="POST" (ngSubmit)="UpdateWarehouse($event)">
+    <form method="POST" (ngSubmit)="UpdatePartner($event)">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Modification d'un entrepôts</h5>
+        <h5 class="modal-title" id="exampleModalLabel">Modification d'un partenaire</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
-      <div class="modal-body">
+      <div class="modal-body" *ngIf="partnersFictious">
         <div class="clearfix" *ngIf="isLoading.modify === true">
-          <span class="text-warning">Modification de l'entrepôt .....</span>
+          <span class="text-warning">Modification d'un partenaire .....</span>
           <div class="spinner-border float-right text-warning" role="status">
             <span class="sr-only">Loading...</span>
           </div>
         </div>
-        <div class="alert alert-danger" *ngIf="error.modify_error === true">
-          Une erreur s'est produite. Veuillez réessayer plus tard svp !
+        <div class="alert alert-danger" *ngIf="error.create === true">
+          Une erreur s'est produite. Veuillez vérifiez les informations inscrites svp !
         </div>
-          <small class="text-muted">Modifier les informations suivantes</small>
+          <small class="text-muted">Inscrivez les informations suivantes</small>
           <div class="row">
             <div class="col">
-              <label for="">Ville</label>
-              <input type="text" name="ville" [(ngModel)]="wareHouseUpdating.ville" class="form-control" placeholder="Entrez la ville">
-            </div>
-            <div class="col">
-              <label for="">Adresse</label>
-              <input type="text" name="adresse" [(ngModel)]="wareHouseUpdating.adresse" class="form-control" placeholder="Entrez l'adresse">
-            </div>
-          </div>
-          <br>
-          <div class="row">
-            <div class="col">
-              <label for="">Numéro de téléphone</label>
-              <input type="text" name="telephone" [(ngModel)]="wareHouseUpdating.telephone" class="form-control" placeholder="Entrez le numéro de téléphone">
-            </div>
-            <div class="col">
-              <label for="">Adresse E-mail</label>
-              <input type="email" name="email" [(ngModel)]="wareHouseUpdating.email" class="form-control" placeholder="Entrez l'adresse e-mail">
-            </div>
-          </div>
-          <br>
-          <div class="row">
-            <!--<div class="col">
-              <label for="">Status Entrepôt</label>
+              <label for="">Le type</label>
               <div class="input-group mb-3">
-                <select class="custom-select" name="status" [(ngModel)]="wareHouseUpdating.status" id="inputGroupSelect01">
-                  <option selected>Choisir un status...</option>
+                <select class="custom-select" name="type" [(ngModel)]="partnersFictious.type" id="inputGroupSelect01" required>
+                  <option value="personne physique">Personne Physique</option>
+                  <option value="personne morale">Personne Morale</option>
+                  <option value="inconnu">Je ne sais pas</option>
+                </select>
+              </div>
+            </div>
+            <div class="col">
+              <label for="">Le nom</label>
+              <input type="text" name="name" [(ngModel)]="partnersFictious.name" class="form-control" placeholder="" required>
+            </div>
+          </div>
+          <br>
+          <div class="row">
+            <div class="col">
+              <label for="">La description</label>
+              <input type="text" name="description" [(ngModel)]="partnersFictious.description" class="form-control" placeholder="" required>
+            </div>
+            <div class="col">
+              <label for="">La catégorie</label>
+              <div class="input-group mb-3">
+                <select class="custom-select" name="categorie" [(ngModel)]="partnersFictious.categorie" id="inputGroupSelect01" required>
+                  <option value="particulier">Particulier</option>
+                  <option value="banque">Banque</option>
+                  <option value="acheteur">Acheteur</option>
+                  <option value="autres">Autres</option>
+                </select>
+              </div>
+            </div>
+          </div>
+          <br><br>
+          <div class="row">
+            <div class="col">
+              <label for="">Le status</label>
+              <div class="input-group mb-3">
+                <select class="custom-select" name="status" [(ngModel)]="partnersFictious.status" id="inputGroupSelect01" required>
                   <option value="active">Active</option>
                   <option value="inactive">Inactive</option>
                 </select>
               </div>
-            </div>-->
+            </div>
           </div>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
-        <button type="submit" class="btn btn-success">Enregistrer</button>
+        <button type="submit" class="btn btn-success">Valider</button>
       </div>
     </div>
   </form>
@@ -237,31 +266,31 @@
 
 
 <!-- Modal 6 -->
-<div class="modal fade" id="exampleModal6" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="exampleModal13" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-lg" role="document">
-    <form method="POST" (ngSubmit)="InactiveWare($event)">
+    <form method="POST" (ngSubmit)="ClosedPartner($event)">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Motifs de Fermeture</h5>
+        <h5 class="modal-title" id="exampleModalLabel">Motifs de désactivation</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
       <div class="modal-body">
-        <div class="clearfix" *ngIf="isLoading.inactive === true">
-          <span class="text-warning">Fermeture de l'entrepôt .....</span>
+        <div class="clearfix" *ngIf="isLoading.close === true">
+          <span class="text-warning">Désactiver le partenaire .....</span>
           <div class="spinner-border float-right text-warning" role="status">
             <span class="sr-only">Loading...</span>
           </div>
         </div>
-        <div class="alert alert-danger" *ngIf="error.inactive_error === true">
+        <div class="alert alert-danger" *ngIf="error.close === true">
           Une erreur s'est produite. Veuillez réessayer plus tard svp !
         </div>
-          <small class="text-muted">Modifier les informations suivantes</small>
+          <small class="text-muted">Notifier le motif</small>
           <div class="row">
             <div class="col">
               <label for="">Motifs</label>
-              <textarea name="motifs" class="form-control" [(ngModel)]="wareHouseDeleting.motif" id="" cols="30" rows="5" ></textarea>
+              <textarea name="motifs" class="form-control" [(ngModel)]="partnerDesactif.motif" id="" cols="30" rows="5" ></textarea>
             </div>
           </div>
           <br>
@@ -277,23 +306,26 @@
 
 
 
-<!-- Modal 7 -->
-<div class="modal fade" id="exampleModal7" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<!--  Modal 7
+<div class="modal fade" id="exampleModal11" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-lg" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+        <h5 class="modal-title" id="exampleModalLabel">Pièce en image</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
-      <div class="modal-body" *ngIf='wareHouseInfo'>
-        {{ wareHouseDetail }}
+      <div class="modal-body" *ngIf='detailPiece'>
+        <p *ngIf="detailPiece.image === ''">
+          En chargement ...
+        </p>
+        <img *ngIf="detailPiece.image !== ''" [src]=detailPiece.image width="100%" height="500px" alt="">
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-success">Save changes</button>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">OK</button>
+        <button type="button" class="btn btn-success">OK</button>
       </div>
     </div>
   </div>
-</div>
+</div> -->

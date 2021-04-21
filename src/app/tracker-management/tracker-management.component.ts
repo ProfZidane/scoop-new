@@ -223,4 +223,8 @@ detailPiece = {
     );
   }
 
+  goToProfile(id) {
+    this.router.navigateByUrl('/home/(child1:tracker-profile/' + id + ';open=true)');
+  }
+
 }

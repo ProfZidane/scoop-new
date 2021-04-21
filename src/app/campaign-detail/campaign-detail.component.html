@@ -1,0 +1,170 @@
+<div class="container-fluid principal">
+
+  <!--navbar-->
+  <nav class="navbar navbar-expand-lg navbar-lights p-4">
+    <a class="navbar-brand text-dark">
+      <i class="material-icons" style="cursor: pointer;font-size: 25px;" (click)="ComeBack()">
+        chevron_left
+      </i>
+      Profile Partenaire
+    </a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav mr-auto">
+        <!--<li class="nav-item active">
+          <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">Link</a>
+        </li>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Dropdown
+          </a>
+          <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <a class="dropdown-item" href="#">Action</a>
+            <a class="dropdown-item" href="#">Another action</a>
+            <div class="dropdown-divider"></div>
+            <a class="dropdown-item" href="#">Something else here</a>
+          </div>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link disabled" href="#">Disabled</a>
+        </li>-->
+      </ul>
+      <form class="form-inline my-2 my-lg-0">
+        <!--<button class="btn btn-outline-info my-2 my-sm-0 mr-5" type="button" data-toggle="modal" data-target="#exampleModal8">
+          + Nouveau pisteur
+        </button> -->
+        <div class="dropdown">
+          <button class="btn btn-success text-light dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" *ngIf="userConnected">
+            {{ userConnected.name }}
+          </button>
+          <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+            <a class="dropdown-item" href="#">Profile</a>
+            <a class="dropdown-item" href="#">Support</a>
+            <a class="dropdown-item text-danger" (click)="Logout()" style="cursor: pointer;">Déconnexion</a>
+          </div>
+        </div>
+      </form>
+    </div>
+  </nav>
+
+  <div class="container-fluid p-2" style="font-weight: 900;">
+    <div class="text-center" *ngIf="isLoading.info === true">
+      <div class="spinner-border text-success" role="status">
+        <span class="sr-only">Loading...</span>
+      </div>
+    </div>
+    <div class="row" *ngIf="infos.basic !== {}" align="center">
+      <div class="col-md-3">
+        {{ infos.basic.title }}
+      </div>
+      <div class="col-md-3">
+        du : {{ infos.basic.date_debut }}
+      </div>
+      <div class="col-md-3">
+        au : {{ infos.basic.date_fin }}
+      </div>
+      <div class="col-md-3">
+        status : {{ infos.basic.status }}
+      </div>
+    </div>
+  </div>
+  <hr>
+  <!--//nav bar
+<div class="container-fluid table-user">
+  <div class="text-center" *ngIf="isLoading.data === true">
+    <div class="spinner-border" role="status">
+      <span class="sr-only">Loading...</span>
+    </div>
+  </div>
+  <table datatable class="row-border hover" [dtTrigger]="dtTrigger" id="table" style="">
+    <thead>
+      <tr>
+        <th>Nom & Prénoms</th>
+        <th>Adresse</th>
+        <th>Sexe</th>
+        <th>Téléphone</th>
+        <th>E-mail</th>
+        <th>Naissance</th>
+        <th>Numéro Pièce</th>
+        <th>Status</th>
+        <th></th>
+        <th></th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let tracker of trackers">
+        <td>{{ tracker.nom + ' ' + tracker.prenom }}</td>
+        <td>{{ tracker.adresse }}</td>
+        <td>{{ tracker.sexe }}</td>
+        <td>{{ tracker.contact }}</td>
+        <td>{{ tracker.email }}</td>
+        <td>{{ tracker.date_naissance }}</td>
+        <td>{{ tracker.num_piece }}</td>
+        <td class="text-success" *ngIf="tracker.status === 'active'">{{ tracker.status }}</td>
+        <td class="text-danger" *ngIf="tracker.status === 'inactive'">{{ tracker.status }}</td>
+        <td>
+          <button class="btn btn-outline-info" (click)="goToProfile(tracker.id)">
+            Profil
+          </button>
+        </td>
+        <td>
+          <button class="btn btn-outline-warning btn-sm" type="submit" data-toggle="modal" data-target="#exampleModal9" (click)="OpenModelUpdated(tracker)">
+            Modifier
+          </button>
+        </td>
+        <td *ngIf="tracker.status === 'active'">
+          <button class="btn btn-outline-danger btn-sm" data-toggle="modal" data-target="#exampleModal10" (click)="OpenModelDelete(tracker.id)">Banir</button>
+        </td>
+        <td *ngIf="tracker.status === 'inactive'">
+          <button class="btn btn-outline-success btn-sm" data-toggle="modal" data-target="#exampleModal3">Accueillir</button>
+        </td>
+        <td>
+          <button class="btn btn-outline-info btn-sm" data-toggle="modal" data-target="#exampleModal11" (click)="OpenModelImage(tracker.id)">
+             Pièces
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+</div> -->
+
+<div class="container-fluid screen-profile ">
+  <div class="row">
+
+    <div class="col-md-3 p-2" style="height: 75vh; border-right: solid 1px rgb(197, 187, 187);" align="center" >
+      <!--<div class="text-center" *ngIf="isLoading.info === true">
+        <div class="spinner-border text-success" role="status">
+          <span class="sr-only">Loading...</span>
+        </div>
+      </div>-->
+
+      <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
+        <a class="nav-link active mb-4" id="v-pills-home-tab" data-toggle="pill" href="#v-pills-home" role="tab" aria-controls="v-pills-home" aria-selected="true">Home</a>
+        <a class="nav-link mb-4" id="v-pills-profile-tab" data-toggle="pill" href="#v-pills-profile" role="tab" aria-controls="v-pills-profile" aria-selected="false">Profile</a>
+        <a class="nav-link mb-4" id="v-pills-messages-tab" data-toggle="pill" href="#v-pills-messages" role="tab" aria-controls="v-pills-messages" aria-selected="false">Messages</a>
+        <a class="nav-link mb-4" id="v-pills-settings-tab" data-toggle="pill" href="#v-pills-settings" role="tab" aria-controls="v-pills-settings" aria-selected="false">Settings</a>
+      </div>
+
+    </div>
+
+    <div class="col-md-9 " style="height: 75vh">
+
+      <div class="tab-content" id="v-pills-tabContent">
+        <div class="tab-pane fade show active" id="v-pills-home" role="tabpanel" aria-labelledby="v-pills-home-tab">.home..</div>
+        <div class="tab-pane fade" id="v-pills-profile" role="tabpanel" aria-labelledby="v-pills-profile-tab">..profile.</div>
+        <div class="tab-pane fade" id="v-pills-messages" role="tabpanel" aria-labelledby="v-pills-messages-tab">..message.</div>
+        <div class="tab-pane fade" id="v-pills-settings" role="tabpanel" aria-labelledby="v-pills-settings-tab">..setting.</div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+</div>

@@ -11,6 +11,7 @@ export class TrackerService {
   getURl = environment.endPoint + 'pisteur';
   deleteURL = environment.endPoint + 'pisteurClosed/';
   getImageURL = environment.endPoint + 'getPisteurPieceScan/';
+  getInfoURL = environment.endPoint + 'pisteur/';
   trackers;
   constructor(private http: HttpClient) { }
 
@@ -43,6 +44,10 @@ export class TrackerService {
 
   GetImageTracker(id): Observable<any> {
     return this.http.get(this.getImageURL + id, { headers: this.GetHeaders() });
+  }
+
+  GetTrackerInfoById(id): Observable<any> {
+    return this.http.get(this.getInfoURL + id, { headers: this.GetHeaders() });
   }
 
   UpdateTrackers(data, id): Observable<any> {

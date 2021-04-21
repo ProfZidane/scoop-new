@@ -53,6 +53,22 @@ export class MenuComponent implements OnInit {
     this.router.navigateByUrl('/home/(child1:tracker-manage;open=true)');
   }
 
+  ManagePartner() {
+    this.router.navigateByUrl('/home/(child1:partner-manage;open=true)');
+  }
+
+  ManageFinance() {
+    this.router.navigateByUrl('/home/(child1:finance-manage;open=true)');
+  }
+
+  ManagePreFinance() {
+    this.router.navigateByUrl('/home/(child1:pre-finance-manage;open=true)');
+  }
+
+  ManageCampaign() {
+    this.router.navigateByUrl('/home/(child1:campaign-manage;open=true)');
+  }
+
   Logout() {
     if (this.userService.Logout()) {
       this.router.navigateByUrl('/');

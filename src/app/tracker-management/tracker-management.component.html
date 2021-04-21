@@ -72,6 +72,7 @@
         <th></th>
         <th></th>
         <th></th>
+        <th></th>
       </tr>
     </thead>
     <tbody>
@@ -85,6 +86,11 @@
         <td>{{ tracker.num_piece }}</td>
         <td class="text-success" *ngIf="tracker.status === 'active'">{{ tracker.status }}</td>
         <td class="text-danger" *ngIf="tracker.status === 'inactive'">{{ tracker.status }}</td>
+        <td>
+          <button class="btn btn-outline-info" (click)="goToProfile(tracker.id)">
+            Profil
+          </button>
+        </td>
         <td>
           <button class="btn btn-outline-warning btn-sm" type="submit" data-toggle="modal" data-target="#exampleModal9" (click)="OpenModelUpdated(tracker)">
             Modifier
@@ -264,7 +270,7 @@
               <label for="">Date de naissance</label>
               <input type="date" name="date_naissance" [(ngModel)]="trackerFictious.date_naissance" class="form-control" placeholder="">
             </div>
-            <div class="col">
+            <!--<div class="col">
               <label for="">Status</label>
               <div class="input-group mb-3">
                 <select class="custom-select" name="status" [(ngModel)]="trackerFictious.status" id="inputGroupSelect01" >
@@ -272,7 +278,7 @@
                   <option value="inactive">Inactive</option>
                 </select>
               </div>
-            </div>
+            </div>-->
           </div>
           <div class="row">
             <div class="col">

@@ -77,12 +77,24 @@
           </div>
         </div>
         <div class="col-md-3 menu-option p-3"  *ngIf="rightContent && (rightContent.finance.state === true || rightContent.manager.state === true)">
-          <div class="card" style="width: 15rem;" align="center">
+          <div class="card" style="width: 15rem;" align="center" (click)="ManageFinance()">
             <div class="card-body">
               <h5 class="card-title">Financements</h5>
               <div class="contour">
                 <i class="material-icons">
                   attach_money
+                </i>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-3 menu-option p-3"  *ngIf="rightContent && (rightContent.finance.state === true || rightContent.manager.state === true)">
+          <div class="card" style="width: 15rem;" align="center" (click)="ManagePreFinance()">
+            <div class="card-body">
+              <h5 class="card-title">Pré-Financements</h5>
+              <div class="contour">
+                <i class="material-icons">
+                  monetization_on
                 </i>
               </div>
             </div>
@@ -168,7 +180,7 @@
           </div>
         </div>
         <div class="col-md-3 menu-option p-3" *ngIf="rightContent && rightContent.default.state === true">
-          <div class="card" style="width: 15rem;" align="center">
+          <div class="card" style="width: 15rem;" align="center" (click)="ManageCampaign()">
             <div class="card-body">
               <h5 class="card-title">Campagnes</h5>
               <div class="contour">
@@ -242,18 +254,18 @@
             </div>
           </div>
         </div>
-        <!--<div class="col-md-3 menu-option p-3">
-          <div class="card" style="width: 15rem;" align="center">
+        <div class="col-md-3 menu-option p-3" *ngIf="rightContent && (rightContent.finance.state === true || rightContent.manager.state === true || rightContent.stocks.state)">
+          <div class="card" style="width: 15rem;" align="center" (click)="ManagePartner()">
             <div class="card-body">
-              <h5 class="card-title">Fiche de transfert</h5>
+              <h5 class="card-title">Partenaires</h5>
               <div class="contour">
                 <i class="material-icons">
-                  public
+                  assignment_ind
                 </i>
               </div>
             </div>
           </div>
-        </div>-->
+        </div>
       </div>
 
     </div>

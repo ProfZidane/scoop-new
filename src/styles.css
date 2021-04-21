@@ -18,3 +18,8 @@ p, label, small, button, span, li {
   /*font-family: 'Roboto Mono', monospace;*/
   font-family: 'Comfortaa', cursive;
 }
+
+
+td {
+  text-transform: capitalize;
+}

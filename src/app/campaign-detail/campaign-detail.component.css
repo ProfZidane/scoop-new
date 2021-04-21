@@ -1,0 +1,62 @@
+.principal {
+  height: 98vh;
+  border-radius: 20px;
+  background-color: white;
+}
+
+h5 {
+  font-size: medium;
+  font-family: 'Comfortaa', cursive;
+
+}
+
+button {
+  border-radius: 0;
+}
+
+.table-user  {
+  height: 85vh;
+  overflow-y: auto;
+
+  padding: 0.5rem;
+}
+
+.table-user > table {
+  height: 8vh;
+
+}
+
+
+.bord {
+  border: solid;
+}
+
+
+.screen-profile {
+  height: 75vh;
+}
+
+.text-center {
+  border-radius: 100%;
+}
+
+.text-center > img {
+  border-radius: 100%;
+  width: 100%;
+  height: 100%;
+}
+
+
+.solde {
+  background-color: #ababab;
+  color: white;
+}
+
+a.nav-link {
+  color: black;
+}
+
+a.nav-link.active {
+  border: solid;
+  background-color: #28a745;
+}

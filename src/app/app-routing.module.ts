@@ -10,6 +10,14 @@ import { AuthGuard } from './guards/auth.guard';
 import { WarehouseDetailComponent } from './warehouse-detail/warehouse-detail.component';
 import { UserChmodComponent } from './user-chmod/user-chmod.component';
 import { TrackerManagementComponent } from './tracker-management/tracker-management.component';
+import { TrackerProfilComponent } from './tracker-profil/tracker-profil.component';
+import { PartnerManagementComponent } from './partner-management/partner-management.component';
+import { PartnerProfileComponent } from './partner-profile/partner-profile.component';
+import { AccountManagementComponent } from './account-management/account-management.component';
+import { FinanceManagementComponent } from './finance-management/finance-management.component';
+import { PreFinanceManagementComponent } from './pre-finance-management/pre-finance-management.component';
+import { CampaignManagementComponent } from './campaign-management/campaign-management.component';
+import { CampaignDetailComponent } from './campaign-detail/campaign-detail.component';
 
 
 const routes: Routes = [
@@ -56,6 +64,46 @@ const routes: Routes = [
       {
         path: 'tracker-manage',
         component: TrackerManagementComponent,
+        outlet: 'child1'
+      },
+      {
+        path: 'tracker-profile/:id',
+        component: TrackerProfilComponent,
+        outlet: 'child1'
+      },
+      {
+        path: 'partner-manage',
+        component: PartnerManagementComponent,
+        outlet: 'child1'
+      },
+      {
+        path: 'partner-profile/:id',
+        component: PartnerProfileComponent,
+        outlet: 'child1'
+      },
+      {
+        path: 'account-manage',
+        component: AccountManagementComponent,
+        outlet: 'child1'
+      },
+      {
+        path: 'finance-manage',
+        component: FinanceManagementComponent,
+        outlet: 'child1'
+      },
+      {
+        path: 'pre-finance-manage',
+        component: PreFinanceManagementComponent,
+        outlet: 'child1'
+      },
+      {
+        path: 'campaign-manage',
+        component: CampaignManagementComponent,
+        outlet: 'child1'
+      },
+      {
+        path: 'campaign-detail/:id',
+        component: CampaignDetailComponent,
         outlet: 'child1'
       }
     ]

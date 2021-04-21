@@ -22,6 +22,14 @@ import { NavbarComponent } from './navbar/navbar.component';
 import { UserChmodComponent } from './user-chmod/user-chmod.component';
 import { TrackerManagementComponent } from './tracker-management/tracker-management.component';
 import { OperationManagementComponent } from './operation-management/operation-management.component';
+import { TrackerProfilComponent } from './tracker-profil/tracker-profil.component';
+import { PartnerManagementComponent } from './partner-management/partner-management.component';
+import { PartnerProfileComponent } from './partner-profile/partner-profile.component';
+import { AccountManagementComponent } from './account-management/account-management.component';
+import { FinanceManagementComponent } from './finance-management/finance-management.component';
+import { CampaignManagementComponent } from './campaign-management/campaign-management.component';
+import { PreFinanceManagementComponent } from './pre-finance-management/pre-finance-management.component';
+import { CampaignDetailComponent } from './campaign-detail/campaign-detail.component';
 
 @NgModule({
   declarations: [
@@ -37,7 +45,15 @@ import { OperationManagementComponent } from './operation-management/operation-m
     NavbarComponent,
     UserChmodComponent,
     TrackerManagementComponent,
-    OperationManagementComponent
+    OperationManagementComponent,
+    TrackerProfilComponent,
+    PartnerManagementComponent,
+    PartnerProfileComponent,
+    AccountManagementComponent,
+    FinanceManagementComponent,
+    CampaignManagementComponent,
+    PreFinanceManagementComponent,
+    CampaignDetailComponent
   ],
   imports: [
     BrowserModule,

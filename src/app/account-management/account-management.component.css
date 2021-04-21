@@ -1,0 +1,25 @@
+.principal {
+  height: 98vh;
+  border-radius: 20px;
+  background-color: white;
+}
+
+h5 {
+  font-size: medium;
+}
+
+button {
+  border-radius: 0;
+}
+
+.table-user  {
+  height: 85vh;
+  overflow-y: auto;
+
+  padding: 0.5rem;
+}
+
+.table-user > table {
+  height: 8vh;
+
+}

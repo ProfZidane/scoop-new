@@ -1,0 +1,176 @@
+<div class="container-fluid principal">
+
+  <!--navbar-->
+  <nav class="navbar navbar-expand-lg navbar-lights p-4">
+    <a class="navbar-brand text-dark">
+      <i class="material-icons" style="cursor: pointer;font-size: 25px;" (click)="ComeBack()">
+        chevron_left
+      </i>
+      Profile Partenaire
+    </a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav mr-auto">
+        <!--<li class="nav-item active">
+          <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">Link</a>
+        </li>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Dropdown
+          </a>
+          <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <a class="dropdown-item" href="#">Action</a>
+            <a class="dropdown-item" href="#">Another action</a>
+            <div class="dropdown-divider"></div>
+            <a class="dropdown-item" href="#">Something else here</a>
+          </div>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link disabled" href="#">Disabled</a>
+        </li>-->
+      </ul>
+      <form class="form-inline my-2 my-lg-0">
+        <!--<button class="btn btn-outline-info my-2 my-sm-0 mr-5" type="button" data-toggle="modal" data-target="#exampleModal8">
+          + Nouveau pisteur
+        </button> -->
+        <div class="dropdown">
+          <button class="btn btn-success text-light dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" *ngIf="userConnected">
+            {{ userConnected.name }}
+          </button>
+          <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+            <a class="dropdown-item" href="#">Profile</a>
+            <a class="dropdown-item" href="#">Support</a>
+            <a class="dropdown-item text-danger" (click)="Logout()" style="cursor: pointer;">Déconnexion</a>
+          </div>
+        </div>
+      </form>
+    </div>
+  </nav>
+  <!--//nav bar
+<div class="container-fluid table-user">
+  <div class="text-center" *ngIf="isLoading.data === true">
+    <div class="spinner-border" role="status">
+      <span class="sr-only">Loading...</span>
+    </div>
+  </div>
+  <table datatable class="row-border hover" [dtTrigger]="dtTrigger" id="table" style="">
+    <thead>
+      <tr>
+        <th>Nom & Prénoms</th>
+        <th>Adresse</th>
+        <th>Sexe</th>
+        <th>Téléphone</th>
+        <th>E-mail</th>
+        <th>Naissance</th>
+        <th>Numéro Pièce</th>
+        <th>Status</th>
+        <th></th>
+        <th></th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let tracker of trackers">
+        <td>{{ tracker.nom + ' ' + tracker.prenom }}</td>
+        <td>{{ tracker.adresse }}</td>
+        <td>{{ tracker.sexe }}</td>
+        <td>{{ tracker.contact }}</td>
+        <td>{{ tracker.email }}</td>
+        <td>{{ tracker.date_naissance }}</td>
+        <td>{{ tracker.num_piece }}</td>
+        <td class="text-success" *ngIf="tracker.status === 'active'">{{ tracker.status }}</td>
+        <td class="text-danger" *ngIf="tracker.status === 'inactive'">{{ tracker.status }}</td>
+        <td>
+          <button class="btn btn-outline-info" (click)="goToProfile(tracker.id)">
+            Profil
+          </button>
+        </td>
+        <td>
+          <button class="btn btn-outline-warning btn-sm" type="submit" data-toggle="modal" data-target="#exampleModal9" (click)="OpenModelUpdated(tracker)">
+            Modifier
+          </button>
+        </td>
+        <td *ngIf="tracker.status === 'active'">
+          <button class="btn btn-outline-danger btn-sm" data-toggle="modal" data-target="#exampleModal10" (click)="OpenModelDelete(tracker.id)">Banir</button>
+        </td>
+        <td *ngIf="tracker.status === 'inactive'">
+          <button class="btn btn-outline-success btn-sm" data-toggle="modal" data-target="#exampleModal3">Accueillir</button>
+        </td>
+        <td>
+          <button class="btn btn-outline-info btn-sm" data-toggle="modal" data-target="#exampleModal11" (click)="OpenModelImage(tracker.id)">
+             Pièces
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+</div> -->
+
+<div class="container-fluid screen-profile ">
+  <div class="row">
+
+    <div class="col-md-3 " style="height: 84vh; border-right: solid 1px; border-color: #ccc;" align="center" >
+      <div class="text-center" *ngIf="isLoading.info === true">
+        <div class="spinner-border text-success" role="status">
+          <span class="sr-only">Loading...</span>
+        </div>
+      </div>
+      <div *ngIf="partner.info !== []">
+        <div class="text-center ">
+          <img src="https://cdn.pixabay.com/photo/2021/01/29/15/34/mask-5961374_960_720.png"  class="" alt="...">
+        </div>
+        <h2 class="mt-2" style="text-transform: capitalize;">{{ partner.info.name }}</h2>
+        <span style="text-transform: capitalize;"><b>{{ partner.info.type }}</b></span>
+        <ul class="list-group list-group-flush" style="text-transform: capitalize;">
+          <li class="list-group-item">{{ partner.info.categorie }}</li>
+          <li class="list-group-item">{{ partner.info.description }}</li>
+          <li class="list-group-item">{{ partner.info.status }}</li>
+        </ul>
+
+      </div>
+
+    </div>
+
+    <div class="col-md-9 " style="height: 84vh">
+      <div class="row">
+        <div class="col-md-10 p-3">
+          <ul class="nav nav-pills nav-justified mb-3" id="pills-tab" role="tablist">
+            <li class="nav-item">
+              <a class="nav-link active" id="pills-home-tab" data-toggle="pill" href="#pills-home" role="tab" aria-controls="pills-home" aria-selected="true">
+                Financements Reçus
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" id="pills-profile-tab" data-toggle="pill" href="#pills-profile" role="tab" aria-controls="pills-profile" aria-selected="false">
+                Produits Livrés
+              </a>
+            </li>
+            <!--<li class="nav-item">
+              <a class="nav-link" id="pills-contact-tab" data-toggle="pill" href="#pills-contact" role="tab" aria-controls="pills-contact" aria-selected="false">Contact</a>
+            </li> -->
+          </ul>
+        </div>
+        <div class="col-md-2 solde bord p-3">
+          <h5>Solde : {{ solde }} FCFA</h5>
+        </div>
+      </div>
+      <div class="tab-content" id="pills-tabContent">
+        <div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
+          Financements recu
+        </div>
+        <div class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">
+          Produits Livrés
+        </div>
+        <!--<div class="tab-pane fade" id="pills-contact" role="tabpanel" aria-labelledby="pills-contact-tab">...</div> -->
+      </div>
+    </div>
+  </div>
+</div>
+
+</div>
