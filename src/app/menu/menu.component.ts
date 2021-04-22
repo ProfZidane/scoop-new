@@ -69,6 +69,10 @@ export class MenuComponent implements OnInit {
     this.router.navigateByUrl('/home/(child1:campaign-manage;open=true)');
   }
 
+  ManagePlanter() {
+    this.router.navigateByUrl('/home/(child1:planter-manage;open=true)');
+  }
+
   Logout() {
     if (this.userService.Logout()) {
       this.router.navigateByUrl('/');

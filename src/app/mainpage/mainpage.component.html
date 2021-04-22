@@ -126,7 +126,7 @@
       </div>
     </div>
     <div class="col-md-4 objectif-grille">
-      <div class="container">
+      <div class="container" *ngIf="state === false">
         <h2 style="font-weight: 700;">Listes des utilisateurs</h2>
         <div align="center" *ngIf="loading === true">
           <div class="spinner-grow justify-content-center" role="status">

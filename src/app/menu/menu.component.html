@@ -266,6 +266,18 @@
             </div>
           </div>
         </div>
+        <div class="col-md-3 menu-option p-3" *ngIf="rightContent && (rightContent.finance.state === true || rightContent.manager.state === true || rightContent.stocks.state)">
+          <div class="card" style="width: 15rem;" align="center" (click)="ManagePlanter()">
+            <div class="card-body">
+              <h5 class="card-title">Planteurs</h5>
+              <div class="contour">
+                <i class="material-icons">
+                  local_florist
+                </i>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
 
     </div>

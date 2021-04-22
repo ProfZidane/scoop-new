@@ -18,6 +18,8 @@ import { FinanceManagementComponent } from './finance-management/finance-managem
 import { PreFinanceManagementComponent } from './pre-finance-management/pre-finance-management.component';
 import { CampaignManagementComponent } from './campaign-management/campaign-management.component';
 import { CampaignDetailComponent } from './campaign-detail/campaign-detail.component';
+import { PlanterManagementComponent } from './planter-management/planter-management.component';
+import { PlanterProfilComponent } from './planter-profil/planter-profil.component';
 
 
 const routes: Routes = [
@@ -104,6 +106,16 @@ const routes: Routes = [
       {
         path: 'campaign-detail/:id',
         component: CampaignDetailComponent,
+        outlet: 'child1'
+      },
+      {
+        path: 'planter-manage',
+        component: PlanterManagementComponent,
+        outlet: 'child1'
+      },
+      {
+        path: 'planter-profil/:id',
+        component: PlanterProfilComponent,
         outlet: 'child1'
       }
     ]

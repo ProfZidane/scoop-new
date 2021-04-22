@@ -35,7 +35,7 @@ button {
 .contour {
   padding: 1rem;
   border-radius: 100%;
-  width: 44%;
+  width: 46%;
   margin-bottom: 1.5rem;
   background-color: #28a745;
 }
@@ -52,6 +52,28 @@ button {
 .rectangle-menu {
   height: 84vh;
   width: 100%;
-  overflow: scroll;
+  overflow-y: scroll;
   padding-right: 1rem;
+}
+
+/* width */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  box-shadow: inset 0 0 5px grey;
+  border-radius: 10px;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #28a745;
+  border-radius: 10px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #28a745;
 }

@@ -11,12 +11,24 @@ export class MainpageComponent implements OnInit {
 users;
 loading = true;
 userConnected;
+right;
+state = false;
   constructor(private userService: AuthService, private router: Router) { }
 
   ngOnInit(): void {
     this.GetUsers();
     if (localStorage.getItem('userData') !== null) {
       this.userConnected = JSON.parse(localStorage.getItem('userData'));
+    }
+    if (localStorage.getItem('right') !== null) {
+      this.right = JSON.parse(localStorage.getItem('right'));
+      this.right.forEach(element => {
+        if (element.libelle === 'administration') {
+          this.state = true;
+        } else {
+          this.state = false;
+        }
+      });
     }
   }
 

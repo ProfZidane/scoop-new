@@ -1,14 +1,14 @@
 import { Injectable } from '@angular/core';
 import { environment } from '../../environments/environment.prod';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root'
 })
-export class PreFinanceService {
-fullURL = environment.endPoint + 'prefinancement';
-deleteURL = environment.endPoint + 'financement/annuler/';
+export class PlanterService {
+fullURL = environment.endPoint + 'planteur';
+pieceURL = environment.endPoint + 'getPlanteurPieceScan/';
   constructor(private http: HttpClient) { }
 
   GetHeaders() {
@@ -22,22 +22,23 @@ deleteURL = environment.endPoint + 'financement/annuler/';
     }
   }
 
-  GetPrefinancement(): Observable<any> {
+  GetPlanter(): Observable<any> {
     return this.http.get(this.fullURL, { headers: this.GetHeaders() });
   }
 
-  SetPrefinancement(data): Observable<any> {
+  SetPlanter(data): Observable<any> {
     return this.http.post(this.fullURL, data, { headers: this.GetHeaders() });
   }
 
-
-  UpdatePreFinancement(id, data): Observable<any> {
+  UpdatePlanter(id, data): Observable<any> {
     return this.http.patch(this.fullURL + '/' + id, data, { headers: this.GetHeaders() });
   }
 
-
-  DeletePreFinancement(id, data): Observable<any> {
-    return this.http.post(this.deleteURL + id, data, { headers: this.GetHeaders() });
+  DeletePlanter(id, data): Observable<any> {
+    return this.http.post(this.fullURL + '/' + id, data, { headers: this.GetHeaders() });
   }
 
+  GetPieceScanPlanter(id): Observable<any> {
+    return this.http.get(this.pieceURL + id, { headers: this.GetHeaders() });
+  }
 }

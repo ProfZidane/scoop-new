@@ -30,6 +30,8 @@ import { FinanceManagementComponent } from './finance-management/finance-managem
 import { CampaignManagementComponent } from './campaign-management/campaign-management.component';
 import { PreFinanceManagementComponent } from './pre-finance-management/pre-finance-management.component';
 import { CampaignDetailComponent } from './campaign-detail/campaign-detail.component';
+import { PlanterManagementComponent } from './planter-management/planter-management.component';
+import { PlanterProfilComponent } from './planter-profil/planter-profil.component';
 
 @NgModule({
   declarations: [
@@ -53,7 +55,9 @@ import { CampaignDetailComponent } from './campaign-detail/campaign-detail.compo
     FinanceManagementComponent,
     CampaignManagementComponent,
     PreFinanceManagementComponent,
-    CampaignDetailComponent
+    CampaignDetailComponent,
+    PlanterManagementComponent,
+    PlanterProfilComponent
   ],
   imports: [
     BrowserModule,

@@ -35,7 +35,7 @@
         </li>-->
       </ul>
       <form class="form-inline my-2 my-lg-0">
-        <button class="btn btn-outline-info my-2 my-sm-0 mr-5" type="button" data-toggle="modal" data-target="#exampleModal14">
+        <button class="btn btn-outline-info my-2 my-sm-0 mr-5" type="button" data-toggle="modal" data-target="#exampleModal18">
           + Nouveau Pré-financement
         </button>
         <div class="dropdown">
@@ -51,7 +51,7 @@
       </form>
     </div>
   </nav>
-  <!--//nav bar
+  <!--//nav bar -->
 <div class="container-fluid table-user">
   <div class="text-center" *ngIf="isLoading.data === true">
     <div class="spinner-border" role="status">
@@ -63,36 +63,60 @@
       <tr>
         <th>Banque</th>
         <th>Compte</th>
-        <th>Partenaire</th>
+        <th>Pisteur</th>
         <th>Montant</th>
         <th>Date</th>
+        <th>Status</th>
+        <th></th>
+        <th></th>
         <th></th>
       </tr>
     </thead>
-    <tbody>
-      <tr *ngFor="let finance of financeList">
-        <td>{{ finance.banque }}</td>
-        <td>{{ finance.compte_number }}</td>
-        <td>{{ finance.partenaire }}</td>
-        <td>{{ finance.montant }}</td>
-        <td>{{ finance.created_at | date }}</td>
+    <tbody *ngIf="data.default !== {}">
+      <tr *ngFor="let prefinance of data.default">
+        <td>{{ prefinance.banque }}</td>
+        <td>{{ prefinance.compte_number }}</td>
+        <td>{{ prefinance.nom + ' ' + prefinance.prenom }}</td>
+        <td>{{ prefinance.montant | number }}</td>
+        <td>{{ prefinance.created_at | date }}</td>
+        <td class="text-success" *ngIf="prefinance.status === 'active'">
+          {{ prefinance.status }}
+        </td>
+        <td class="text-danger" *ngIf="prefinance.status === 'inactive'">
+          {{ prefinance.status }}
+        </td>
         <td>
-          <button class="btn btn-outline-warning btn-sm" type="submit" data-toggle="modal" data-target="#exampleModal15" (click)="OpenModalUpdate(finance)">
+          <button class="btn btn-outline-warning btn-sm" type="submit" data-toggle="modal" data-target="#exampleModal19" (click)="OpenModalUpdate(prefinance)">
             Modifier
+          </button>
+        </td>
+        <td *ngIf="prefinance.status === 'active'">
+          <button class="btn btn-outline-danger btn-sm" type="button" data-toggle="modal" data-target="#exampleModal20" (click)="OpenModalDelete(prefinance.id)">
+            Désactiver
+          </button>
+        </td>
+        <td *ngIf="prefinance.status === 'inactive'">
+          <button class="btn btn-outline-success btn-sm">
+            Activer
+          </button>
+        </td>
+        <td>
+          <button class="btn btn-outline-info btn-sm" type="button" data-toggle="modal" data-target="#exampleModal21" (click)="OpenModalPieceJointe(prefinance.piece_jointe)">
+            Pièces
           </button>
         </td>
       </tr>
     </tbody>
   </table>
 
-</div> -->
+</div>
 
 </div>
 
 
 
-<!-- Modal 4
-<div class="modal fade" id="exampleModal14" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<!-- Modal 4 -->
+<div class="modal fade" id="exampleModal18" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-lg" role="document">
     <form method="POST" (ngSubmit)="Previsualisation($event)">
     <div class="modal-content">
@@ -104,7 +128,7 @@
       </div>
       <div class="modal-body">
         <div class="clearfix" *ngIf="isLoading.create === true">
-          <span class="text-warning">Création d'un financement .....</span>
+          <span class="text-warning">Création d'un pré-financement .....</span>
           <div class="spinner-border float-right text-warning" role="status">
             <span class="sr-only">Loading...</span>
           </div>
@@ -114,23 +138,23 @@
         </div>
         <div class="alert alert-warning" *ngIf="warning.previsual === true">
           {{ warning.text }} <small>{{this.timer }}</small>
-          <button class="btn btn-info btn-sm ml-5" (click)="CreateFinance()">Valider</button>
+          <button class="btn btn-info btn-sm ml-5" (click)="CreatePrefinancement()">Valider</button>
         </div>
           <small class="text-muted">Inscrivez les informations suivantes</small>
           <div class="row">
             <div class="col">
-              <label for="">Entrez le compteur récepteur</label>
+              <label for="">Sélectionnez le compteur récepteur</label>
               <div class="input-group mb-3" *ngIf="accountList">
-                <select class="custom-select" name="account" [(ngModel)]="finance.compte_id" id="inputGroupSelect01" required >
+                <select class="custom-select" name="account" [(ngModel)]="prefinances.compte_id" id="inputGroupSelect01" required >
                   <option *ngFor="let account of accountList" value="{{ account.id }}">{{ account.banque }}</option>
                 </select>
               </div>
             </div>
             <div class="col">
-              <label for="">Entrez le partenaire</label>
-              <div class="input-group mb-3" *ngIf='partnersData'>
-                <select class="custom-select" name="partner" [(ngModel)]="finance.partenaire_id" id="inputGroupSelect01" required>
-                  <option *ngFor="let partner of partnersData" value="{{ partner.id }}">{{ partner.name }}</option>
+              <label for="">Sélectionnez le pisteur</label>
+              <div class="input-group mb-3" *ngIf='trackers'>
+                <select class="custom-select" name="partner" [(ngModel)]="prefinances.pisteur_id" id="inputGroupSelect01" required>
+                  <option *ngFor="let tracker of trackers" value="{{ tracker.id }}">{{ tracker.nom + ' ' + tracker.prenom }}</option>
                 </select>
               </div>
             </div>
@@ -139,18 +163,18 @@
           <div class="row">
             <div class="col">
               <label for="">Entrez le montant</label>
-              <input type="number" name="montant" [(ngModel)]="finance.montant" class="form-control">
+              <input type="number" name="montant" [(ngModel)]="prefinances.montant" class="form-control">
             </div>
             <div class="col">
               <label for="">Sélectionnez la date</label>
-              <input type="date" name="date" [(ngModel)]="finance.date" class="form-control" id="">
+              <input type="date" name="date" [(ngModel)]="prefinances.date" class="form-control" id="">
             </div>
           </div>
           <br>
           <div class="row">
             <div class="col">
-              <label for="">Entrez la preuve</label>
-              <input type="file" name="preuve" [(ngModel)]="finance.preuve" (change)="OnFileSelected($event)" id="" class="form-control">
+              <label for="">Entrez la preuve (pièce jointe)</label>
+              <input type="file" name="piece_jointe" [(ngModel)]="prefinances.piece_jointe" (change)="OnFileSelected($event)" id="" class="form-control">
             </div>
           </div>
       </div>
@@ -161,23 +185,23 @@
     </div>
   </form>
   </div>
-</div> -->
+</div>
 
 
-<!-- Modal 5
-<div class="modal fade" id="exampleModal15" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<!-- Modal 5 -->
+<div class="modal fade" id="exampleModal19" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-lg" role="document">
-    <form method="POST" (ngSubmit)="UpdateFinance($event)">
+    <form method="POST" (ngSubmit)="UpdatePrefinancement($event)">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Modification d'un financement</h5>
+        <h5 class="modal-title" id="exampleModalLabel">Modification d'un préfinancement</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
-      <div class="modal-body" *ngIf='financeFictious'>
+      <div class="modal-body" *ngIf='prefinancementFictious'>
         <div class="clearfix" *ngIf="isLoading.modify === true">
-          <span class="text-warning">Modification d'un financement .....</span>
+          <span class="text-warning">Modification d'un préfinancement .....</span>
           <div class="spinner-border float-right text-warning" role="status">
             <span class="sr-only">Loading...</span>
           </div>
@@ -186,33 +210,15 @@
           Une erreur s'est produite. Veuillez vérifiez les informations inscrites svp !
         </div>
           <small class="text-muted">Inscrivez les informations suivantes</small>
-          <div class="row">
-            <div class="col">
-              <label for="">Le compte récepteur</label>
-              <div class="input-group mb-3" >
-                <select class="custom-select" name="account" [(ngModel)]="financeFictious.compte_id" id="inputGroupSelect01" required *ngIf="accountList" >
-                  <option *ngFor="let account of accountList" value="{{ account.id }}">{{ account.banque }}</option>
-                </select>
-              </div>
-            </div>
-            <div class="col">
-              <label for="">Le partenaire</label>
-              <div class="input-group mb-3" *ngIf='partnersData'>
-                <select class="custom-select" name="partner" [(ngModel)]="financeFictious.partenaire_id" id="inputGroupSelect01" required>
-                  <option *ngFor="let partner of partnersData" value="{{ partner.id }}">{{ partner.name }}</option>
-                </select>
-              </div>
-            </div>
-          </div>
           <br>
           <div class="row">
             <div class="col">
-              <label for="">Le montant</label>
-              <input type="number" name="montant" [(ngModel)]="financeFictious.montant" class="form-control">
+              <label for="">La pièce jointe</label>
+              <input type="file" name="piece_jointe" [(ngModel)]="prefinancementFictious.piece_jointe" class="form-control">
             </div>
             <div class="col">
               <label for="">Sélectionnez la date</label>
-              <input type="date" name="date" [(ngModel)]="financeFictious.date" class="form-control" id="">
+              <input type="date" name="date" [(ngModel)]="prefinancementFictious.date" class="form-control" id="">
             </div>
           </div>
       </div>
@@ -223,13 +229,13 @@
     </div>
   </form>
   </div>
-</div> -->
+</div>
 
 
-<!-- Modal 6
-<div class="modal fade" id="exampleModal13" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<!-- Modal 6 -->
+<div class="modal fade" id="exampleModal20" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-lg" role="document">
-    <form method="POST" (ngSubmit)="DeleteFinance($event)">
+    <form method="POST" (ngSubmit)="DeletePrefinancement($event)">
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title" id="exampleModalLabel">Motifs de désactivation</h5>
@@ -239,7 +245,7 @@
       </div>
       <div class="modal-body">
         <div class="clearfix" *ngIf="isLoading.close === true">
-          <span class="text-warning">Désactiver le financement .....</span>
+          <span class="text-warning">Désactiver le préfinancement .....</span>
           <div class="spinner-border float-right text-warning" role="status">
             <span class="sr-only">Loading...</span>
           </div>
@@ -251,7 +257,7 @@
           <div class="row">
             <div class="col">
               <label for="">Motifs</label>
-              <textarea name="motifs" class="form-control" [(ngModel)]="financeDelete.motif" id="" cols="30" rows="5" ></textarea>
+              <textarea name="motifs" class="form-control" [(ngModel)]="prefinancementDelete.motif" id="" cols="30" rows="5" ></textarea>
             </div>
           </div>
           <br>
@@ -263,12 +269,12 @@
     </div>
   </form>
   </div>
-</div> -->
+</div>
 
 
 
-<!--  Modal 7
-<div class="modal fade" id="exampleModal11" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<!--  Modal 7 -->
+<div class="modal fade" id="exampleModal21" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-lg" role="document">
     <div class="modal-content">
       <div class="modal-header">
@@ -277,16 +283,16 @@
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
-      <div class="modal-body" *ngIf='detailPiece'>
-        <p *ngIf="detailPiece.image === ''">
+      <div class="modal-body">
+        <p *ngIf="!prefinancementDetail">
           En chargement ...
         </p>
-        <img *ngIf="detailPiece.image !== ''" [src]=detailPiece.image width="100%" height="500px" alt="">
+        <img *ngIf="prefinancementDetail" [src]=prefinancementDetail width="100%" height="500px" alt="">
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">OK</button>
-        <button type="button" class="btn btn-success">OK</button>
+        <!-- <button type="button" class="btn btn-success">OK</button> -->
       </div>
     </div>
   </div>
-</div> -->
+</div>
