@@ -19,7 +19,7 @@ favoris = [];
   SetFavoris(menu) {
     console.log(this.favoris);
 
-    if (menu !== null || menu !== '') {
+    if (menu !== null || menu !== {}) {
       if (!this.favoris.includes(menu)) {
         this.favoris.push(menu);
         localStorage.setItem('favoris', JSON.stringify(this.favoris));

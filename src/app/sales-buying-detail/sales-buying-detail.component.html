@@ -1,0 +1,197 @@
+<div class="container-fluid principal">
+
+  <!--navbar-->
+  <nav class="navbar navbar-expand-lg navbar-lights p-4">
+    <a class="navbar-brand text-dark">
+      <i class="material-icons" style="cursor: pointer;font-size: 25px;" (click)="ComeBack()">
+        chevron_left
+      </i>
+      Procédure D'achats/Ventes
+    </a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav mr-auto">
+        <!--<li class="nav-item active">
+          <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">Link</a>
+        </li>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Dropdown
+          </a>
+          <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <a class="dropdown-item" href="#">Action</a>
+            <a class="dropdown-item" href="#">Another action</a>
+            <div class="dropdown-divider"></div>
+            <a class="dropdown-item" href="#">Something else here</a>
+          </div>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link disabled" href="#">Disabled</a>
+        </li>-->
+      </ul>
+      <form class="form-inline my-2 my-lg-0">
+        <button class="btn btn-outline-info my-2 my-sm-0 mr-5" disabled *ngIf="compte">
+          {{ compte.solde }}
+        </button>
+        <div class="dropdown">
+          <button class="btn btn-success text-light dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" *ngIf="userConnected">
+            {{ userConnected.name }}
+          </button>
+          <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+            <a class="dropdown-item" href="#">Profile</a>
+            <a class="dropdown-item" href="#">Support</a>
+            <a class="dropdown-item text-danger" (click)="Logout()" style="cursor: pointer;">Déconnexion</a>
+          </div>
+        </div>
+      </form>
+    </div>
+  </nav>
+  <!--//nav bar
+<div class="container-fluid table-user">
+  <div class="text-center" *ngIf="isLoading.data === true">
+    <div class="spinner-border" role="status">
+      <span class="sr-only">Loading...</span>
+    </div>
+  </div>
+  <table datatable class="row-border hover" [dtTrigger]="dtTrigger" id="table" style="">
+    <thead>
+      <tr>
+        <th>Nom & Prénoms</th>
+        <th>Adresse</th>
+        <th>Sexe</th>
+        <th>Téléphone</th>
+        <th>E-mail</th>
+        <th>Naissance</th>
+        <th>Numéro Pièce</th>
+        <th>Status</th>
+        <th></th>
+        <th></th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let tracker of trackers">
+        <td>{{ tracker.nom + ' ' + tracker.prenom }}</td>
+        <td>{{ tracker.adresse }}</td>
+        <td>{{ tracker.sexe }}</td>
+        <td>{{ tracker.contact }}</td>
+        <td>{{ tracker.email }}</td>
+        <td>{{ tracker.date_naissance }}</td>
+        <td>{{ tracker.num_piece }}</td>
+        <td class="text-success" *ngIf="tracker.status === 'active'">{{ tracker.status }}</td>
+        <td class="text-danger" *ngIf="tracker.status === 'inactive'">{{ tracker.status }}</td>
+        <td>
+          <button class="btn btn-outline-info" (click)="goToProfile(tracker.id)">
+            Profil
+          </button>
+        </td>
+        <td>
+          <button class="btn btn-outline-warning btn-sm" type="submit" data-toggle="modal" data-target="#exampleModal9" (click)="OpenModelUpdated(tracker)">
+            Modifier
+          </button>
+        </td>
+        <td *ngIf="tracker.status === 'active'">
+          <button class="btn btn-outline-danger btn-sm" data-toggle="modal" data-target="#exampleModal10" (click)="OpenModelDelete(tracker.id)">Banir</button>
+        </td>
+        <td *ngIf="tracker.status === 'inactive'">
+          <button class="btn btn-outline-success btn-sm" data-toggle="modal" data-target="#exampleModal3">Accueillir</button>
+        </td>
+        <td>
+          <button class="btn btn-outline-info btn-sm" data-toggle="modal" data-target="#exampleModal11" (click)="OpenModelImage(tracker.id)">
+             Pièces
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+</div> -->
+
+<div class="container-fluid screen-profile ">
+  <div class="row p-5">
+    <h3>Informations Pesée</h3>
+    <div class="container table" align="center">
+      <table class="table table-borderless" align="center">
+        <thead>
+          <tr>
+            <th scope="col">ID</th>
+            <th scope="col">Fournisseur</th>
+            <th scope="col">Type</th>
+            <th scope="col">Poids Brute</th>
+            <th scope="col">Poids Net</th>
+            <th scope="col">Nombres Sacs</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>ID</td>
+            <td>pmpm</td>
+            <td>Mark</td>
+            <td>Otto</td>
+            <td>@mdo</td>
+            <td>@mdo</td>
+          </tr>
+          <tr>
+            <td>ID</td>
+            <td>Jacob</td>
+            <td>Thornton</td>
+            <td>@fat</td>
+            <td>@mdo</td>
+            <td>@mdo</td>
+          </tr>
+          <tr>
+            <td>ID</td>
+            <td>Larry the Bird</td>
+            <td>@twitter</td>
+            <td>@mdo</td>
+            <td>@mdo</td>
+            <td>@mdo</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="container p-4 form">
+
+      <form method="POST" (ngSubmit)="Validation($event)" align="center">
+        <div class="form-group">
+          <label for="exampleInputEmail1">Prix d'achât</label>
+          <input type="number" name="price" [(ngModel)]="buyingPrice" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="">
+        </div>
+        <br>
+        <div class="text-center" *ngIf="isLoading.calcul === true">
+          <div class="spinner-border" role="status">
+            <span class="sr-only">Loading...</span>
+          </div>
+        </div>
+        <br>
+        <div class="form-group" *ngIf="visibility.input === true">
+          <label for="exampleInputEmail1">Montant total</label>
+          <input type="number" name="amount" [(ngModel)]="finalAmount" disabled class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="">
+        </div>
+        <div class="form-group" *ngIf="visibility.input === true">
+          <label for="exampleInputEmail1">Date</label>
+          <input type="date" name="date" [(ngModel)]="date" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="">
+        </div>
+        <div class="form-group" *ngIf="visibility.input === true">
+          <label for="exampleInputEmail1">Compte Bancaire</label>
+          <div class="input-group mb-3" *ngIf="compteList">
+            <select class="custom-select" name="account" [(ngModel)]="compte.id" id="inputGroupSelect01" required >
+              <option *ngFor="let account of compteList" value="{{ account.id }}">{{ account.banque }}</option>
+            </select>
+          </div>
+        </div>
+        <button type="button" (click)="Calculate()" *ngIf="visibility.button === false" class="btn btn-primary">Calculer</button>
+        <button type="submit" class="btn btn-success" *ngIf="visibility.button === true">Valider</button>
+      </form>
+    </div>
+
+  </div>
+</div>
+
+</div>

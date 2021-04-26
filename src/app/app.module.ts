@@ -32,6 +32,9 @@ import { PreFinanceManagementComponent } from './pre-finance-management/pre-fina
 import { CampaignDetailComponent } from './campaign-detail/campaign-detail.component';
 import { PlanterManagementComponent } from './planter-management/planter-management.component';
 import { PlanterProfilComponent } from './planter-profil/planter-profil.component';
+import { SalesBuyingManagementComponent } from './sales-buying-management/sales-buying-management.component';
+import { SalesBuyingDetailComponent } from './sales-buying-detail/sales-buying-detail.component';
+import { SalesHistoryComponent } from './sales-history/sales-history.component';
 
 @NgModule({
   declarations: [
@@ -57,7 +60,10 @@ import { PlanterProfilComponent } from './planter-profil/planter-profil.componen
     PreFinanceManagementComponent,
     CampaignDetailComponent,
     PlanterManagementComponent,
-    PlanterProfilComponent
+    PlanterProfilComponent,
+    SalesBuyingManagementComponent,
+    SalesBuyingDetailComponent,
+    SalesHistoryComponent
   ],
   imports: [
     BrowserModule,

@@ -20,6 +20,9 @@ import { CampaignManagementComponent } from './campaign-management/campaign-mana
 import { CampaignDetailComponent } from './campaign-detail/campaign-detail.component';
 import { PlanterManagementComponent } from './planter-management/planter-management.component';
 import { PlanterProfilComponent } from './planter-profil/planter-profil.component';
+import { SalesBuyingManagementComponent } from './sales-buying-management/sales-buying-management.component';
+import { SalesBuyingDetailComponent } from './sales-buying-detail/sales-buying-detail.component';
+import { SalesHistoryComponent } from './sales-history/sales-history.component';
 
 
 const routes: Routes = [
@@ -116,6 +119,21 @@ const routes: Routes = [
       {
         path: 'planter-profil/:id',
         component: PlanterProfilComponent,
+        outlet: 'child1'
+      },
+      {
+        path: 'sales-manage',
+        component: SalesBuyingManagementComponent,
+        outlet: 'child1'
+      },
+      {
+        path: 'sales-detail/:id',
+        component: SalesBuyingDetailComponent,
+        outlet: 'child1'
+      },
+      {
+        path: 'sales-history',
+        component: SalesHistoryComponent,
         outlet: 'child1'
       }
     ]

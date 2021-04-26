@@ -10,6 +10,8 @@ import { Observable } from 'rxjs';
 export class CampaignService {
   fullURL = environment.endPoint + 'campagne';
   postURL = environment.endPoint + 'campagne';
+  getFinanceURL = environment.endPoint + 'getFinancementsCampagne/';
+  getPrefinanceURL = environment.endPoint + 'getPrefinancementsCampagne/';
   constructor(private http: HttpClient) { }
 
   GetHeaders() {
@@ -26,7 +28,7 @@ export class CampaignService {
     return this.http.get(this.fullURL, { headers: this.GetHeaders() });
   }
 
-  GetCampaignById(id):  Observable<any> {
+  GetCampaignById(id): Observable<any> {
     return this.http.get(this.fullURL + '/' + id, { headers: this.GetHeaders() });
   }
 
@@ -36,5 +38,13 @@ export class CampaignService {
 
   UpdateCampaign(id, data): Observable<any> {
     return this.http.patch(this.fullURL + '/' + id, data, { headers: this.GetHeaders() });
+  }
+
+  GetPrefinancementByCampaign(id): Observable<any> {
+    return this.http.get(this.getPrefinanceURL + id, { headers: this.GetHeaders() });
+  }
+
+  GetFinancementByCampaign(id): Observable<any> {
+    return this.http.get(this.getFinanceURL + id, { headers: this.GetHeaders() });
   }
 }

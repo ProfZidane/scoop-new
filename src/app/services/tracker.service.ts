@@ -12,6 +12,7 @@ export class TrackerService {
   deleteURL = environment.endPoint + 'pisteurClosed/';
   getImageURL = environment.endPoint + 'getPisteurPieceScan/';
   getInfoURL = environment.endPoint + 'pisteur/';
+  getPrefinance = environment.endPoint + 'getPrefinancementsPisteur/';
   trackers;
   constructor(private http: HttpClient) { }
 
@@ -56,6 +57,11 @@ export class TrackerService {
 
   DeleteTrackers(id, data): Observable<any> {
     return this.http.post(this.deleteURL + id, data, { headers: this.GetHeaders() });
+  }
+
+
+  GetPrefinancementByTracker(id): Observable<any> {
+    return this.http.get(this.getPrefinance + id, { headers: this.GetHeaders() });
   }
 
 }

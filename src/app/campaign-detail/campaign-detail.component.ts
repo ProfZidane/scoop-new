@@ -14,18 +14,25 @@ export class CampaignDetailComponent implements OnInit {
   userConnected: any;
   isLoading = {
     info : true,
-    finance : true,
-    product : true
+    prefinance: true,
+    finance : false,
+    product : false
   };
 
   error = {
-    data : false
+    data : false,
+    prefinance: false,
+    finance: false,
   };
   dtTrigger: Subject<any> = new Subject<any>();
+  dtTrigger2: Subject<any> = new Subject<any>();
   id;
   infos = {
     basic : {}
   };
+  prefinances;
+  finances;
+  pieceJointe;
   constructor(private router: Router, private userService: AuthService, private location: Location, private route: ActivatedRoute,
               private campainService: CampaignService) { }
 
@@ -40,6 +47,8 @@ export class CampaignDetailComponent implements OnInit {
     );
     console.log(this.id);
     this.GetInfoCampaign();
+    this.GetPrefinancements();
+    this.GetFinancements();
   }
 
   ComeBack() {
@@ -67,5 +76,47 @@ export class CampaignDetailComponent implements OnInit {
       }
     );
   }
+
+  GetPrefinancements() {
+    console.log('prefinancement');
+    this.error.prefinance = false;
+    this.campainService.GetPrefinancementByCampaign(this.id).subscribe(
+      (data) => {
+        console.log(data);
+        this.prefinances = data.data;
+        this.isLoading.prefinance = false;
+        this.dtTrigger.next();
+      }, (err) => {
+        console.log(err);
+        this.isLoading.prefinance = false;
+        this.error.prefinance = true;
+      }
+    );
+  }
+
+  GetFinancements() {
+    console.log('financement');
+    this.isLoading.finance = true;
+    this.error.finance = false;
+    this.campainService.GetFinancementByCampaign(this.id).subscribe(
+      (data) => {
+        console.log(data);
+        this.finances = data.data;
+        this.isLoading.finance = false;
+        this.dtTrigger2.next();
+      }, (err) => {
+        console.log(err);
+        this.isLoading.finance = false;
+        this.error.finance = true;
+      }
+    );
+  }
+
+  OpenModalImage(piece_jointe) {
+    console.log(piece_jointe);
+    this.pieceJointe = piece_jointe;
+  }
+
+
 
 }

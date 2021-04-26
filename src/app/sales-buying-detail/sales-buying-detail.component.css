@@ -4,7 +4,7 @@
   background-color: white;
 }
 
-h5 {
+h5, h3 {
   font-size: medium;
   font-family: 'Comfortaa', cursive;
 
@@ -31,31 +31,19 @@ button {
   border: solid;
 }
 
-
 .screen-profile {
   height: 84vh;
-}
-
-.text-center {
-  border-radius: 100%;
-}
-
-.text-center > img {
-  border-radius: 100%;
-  width: 100%;
-  height: 100%;
+  overflow-y: auto;
 }
 
 
-.solde {
-  background-color: #ababab;
-  color: white;
+
+.form {
+  width: 50%;
 }
 
-
-a.nav-link.active {
-  border: solid;
-  background-color: #28a745;
+.form > h5 {
+  font-weight: 900;
 }
 
 

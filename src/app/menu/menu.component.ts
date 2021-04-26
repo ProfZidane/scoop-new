@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from '../services/auth.service';
+import { MenuService } from '../services/menu.service';
 
 @Component({
   selector: 'app-menu',
@@ -32,7 +33,7 @@ export class MenuComponent implements OnInit {
       content : []
     }
   };
-  constructor(private router: Router, private userService: AuthService) { }
+  constructor(private router: Router, private userService: AuthService, private menuService: MenuService) { }
 
   ngOnInit(): void {
     if (localStorage.getItem('userData') !== null) {
@@ -43,34 +44,82 @@ export class MenuComponent implements OnInit {
 
   manageUser() {
     this.router.navigateByUrl('/home/(child1:user-manage;open=true)');
+    const indique = {
+      name: 'Compte utilisateurs',
+      route: 'user-manage'
+    };
+    // this.menuService.SetFavoris(indique)
   }
 
   manageWarehouse() {
     this.router.navigateByUrl('/home/(child1:ware-manage;open=true)');
+    const indique = {
+      name: 'Entrepôts',
+      route: 'ware-manage'
+    };
+    // this.menuService.SetFavoris(indique);
   }
 
   manageTracker() {
     this.router.navigateByUrl('/home/(child1:tracker-manage;open=true)');
+    const indique = {
+      name: 'Pisteurs',
+      route: 'tracker-manage'
+    };
+    // this.menuService.SetFavoris(indique);
   }
 
   ManagePartner() {
     this.router.navigateByUrl('/home/(child1:partner-manage;open=true)');
+    const indique = {
+      name: 'Partenaires',
+      route: 'partner-manage'
+    };
+    // this.menuService.SetFavoris(indique);
   }
 
   ManageFinance() {
     this.router.navigateByUrl('/home/(child1:finance-manage;open=true)');
+    const indique = {
+      name: 'Financements',
+      route: 'finance-manage'
+    };
+    // this.menuService.SetFavoris(indique);
   }
 
   ManagePreFinance() {
     this.router.navigateByUrl('/home/(child1:pre-finance-manage;open=true)');
+    const indique = {
+      name: 'Pré-Financements',
+      route: 'pre-finance-manage'
+    };
+    // this.menuService.SetFavoris(indique);
   }
 
   ManageCampaign() {
     this.router.navigateByUrl('/home/(child1:campaign-manage;open=true)');
+    const indique = {
+      name: 'Campagnes',
+      route: 'campaign-manage'
+    };
+    // this.menuService.SetFavoris(indique);
   }
 
   ManagePlanter() {
     this.router.navigateByUrl('/home/(child1:planter-manage;open=true)');
+    const indique = {
+      name: 'Planteurs',
+      route: 'planter-manage'
+    };
+    // this.menuService.SetFavoris(indique);
+  }
+
+  ManageSalesBuying() {
+    this.router.navigateByUrl('/home/(child1:sales-manage;open=true)');
+    const indique = {
+      name: 'Achats',
+      route: 'sales-manage'
+    };
   }
 
   Logout() {

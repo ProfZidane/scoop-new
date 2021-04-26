@@ -118,7 +118,14 @@ export class PartnerManagementComponent implements OnInit {
   }
 
   goToProfile(id) {
-    this.router.navigateByUrl('/home/(child1:partner-profile/' + id + ')');
+    console.log(id);
+
+    this.router.navigateByUrl('/home/(child1:partner-profile/' + id + ');open=true');
+  }
+
+  goToMyProfile(id) {
+    console.log(id);
+
   }
 
   OpenModelDelete(id) {

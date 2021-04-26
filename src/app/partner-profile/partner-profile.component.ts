@@ -15,11 +15,12 @@ export class PartnerProfileComponent implements OnInit {
   isLoading = {
     info : true,
     finance : true,
-    product : true
+    product : false
   };
 
   error = {
-    data : false
+    data : false,
+    finance : false
   };
   dtTrigger: Subject<any> = new Subject<any>();
   id;
@@ -27,6 +28,8 @@ export class PartnerProfileComponent implements OnInit {
     info : []
   };
   solde = 0;
+  finances;
+  pieceJointe;
   constructor(private router: Router, private userService: AuthService, private location: Location,
               private partenerService: PartnerService, private route: ActivatedRoute) { }
 
@@ -41,6 +44,7 @@ export class PartnerProfileComponent implements OnInit {
     );
     console.log(this.id);
     this.GetInfoPartner();
+    this.GetFinances();
   }
 
   ComeBack() {
@@ -66,6 +70,27 @@ export class PartnerProfileComponent implements OnInit {
         this.error.data = true;
       }
     );
+  }
+
+  GetFinances() {
+    this.error.finance = false;
+    this.partenerService.GetFinancementByTracker(this.id).subscribe(
+      (data) => {
+        console.log(data);
+        this.finances = data.data;
+        this.isLoading.finance = false;
+        this.dtTrigger.next();
+      }, (err) => {
+        console.log(err);
+        this.isLoading.finance = false;
+        this.error.finance = true;
+      }
+    );
+  }
+
+  OpenModelImage(piece_jointe) {
+    console.log(piece_jointe);
+    this.pieceJointe = piece_jointe;
   }
 
 }

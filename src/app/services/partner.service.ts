@@ -12,6 +12,7 @@ postURL = environment.endPoint + 'partenaire';
 getByIdURL = environment.endPoint + 'partenaire/';
 patchURL = environment.endPoint + 'partenaire/';
 deleteURL = environment.endPoint + 'partenaireClosed/';
+getFinance = environment.endPoint + 'getFinancementsPartenaire/';
   constructor(private http: HttpClient) { }
 
   GetHeaders() {
@@ -45,5 +46,9 @@ deleteURL = environment.endPoint + 'partenaireClosed/';
 
   DeletePartners(id, data): Observable<any> {
     return this.http.post(this.deleteURL + id, data, { headers: this.GetHeaders() });
+  }
+
+  GetFinancementByTracker(id): Observable<any> {
+    return this.http.get(this.getFinance + id, { headers: this.GetHeaders() });
   }
 }

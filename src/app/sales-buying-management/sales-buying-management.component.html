@@ -1,0 +1,199 @@
+<div class="container-fluid principal">
+
+  <!--navbar-->
+  <nav class="navbar navbar-expand-lg navbar-lights p-4">
+    <a class="navbar-brand text-dark">
+      <i class="material-icons" style="cursor: pointer;font-size: 25px;" (click)="ComeBack()">
+        chevron_left
+      </i>
+      Gestion d'achats
+    </a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav mr-auto">
+        <!--<li class="nav-item active">
+          <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">Link</a>
+        </li>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Dropdown
+          </a>
+          <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <a class="dropdown-item" href="#">Action</a>
+            <a class="dropdown-item" href="#">Another action</a>
+            <div class="dropdown-divider"></div>
+            <a class="dropdown-item" href="#">Something else here</a>
+          </div>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link disabled" href="#">Disabled</a>
+        </li>-->
+      </ul>
+      <form class="form-inline my-2 my-lg-0">
+        <button class="btn btn-outline-info my-2 my-sm-0 mr-5" type="button" data-toggle="modal" data-target="#exampleModal18" (click)="goToHistory()">
+          Historiques
+        </button>
+        <div class="dropdown">
+          <button class="btn btn-success text-light dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" *ngIf="userConnected">
+            {{ userConnected.name }}
+          </button>
+          <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+            <a class="dropdown-item" href="#">Profile</a>
+            <a class="dropdown-item" href="#">Support</a>
+            <a class="dropdown-item text-danger" (click)="Logout()" style="cursor: pointer;">Déconnexion</a>
+          </div>
+        </div>
+      </form>
+    </div>
+  </nav>
+  <!--//nav bar -->
+<div class="container-fluid table-user">
+  <div class="text-center" *ngIf="isLoading.data === true">
+    <div class="spinner-border" role="status">
+      <span class="sr-only">Loading...</span>
+    </div>
+  </div>
+  <div class="alert alert-danger" *ngIf="error.data === true">
+    Une erreur est survenue. Veuillez réessayer s'il vous plait !
+  </div>
+  <table datatable [dtTrigger]="dtTrigger"  class="row-border hover">
+    <thead>
+      <tr>
+        <th>Fournisseur</th>
+        <th>Type Fournisseur</th>
+        <th>Poids Net</th>
+        <th>Action</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>1</td>
+        <td>Foo</td>
+        <td>Bar</td>
+        <td>
+          <button class="btn btn-outline-info btn-sm" (click)="goToDetail(1)">
+            Traiter
+          </button>
+        </td>
+      </tr>
+      <tr>
+        <td>2</td>
+        <td>Someone</td>
+        <td>Youknow</td>
+        <td>
+          <button class="btn btn-outline-info btn-sm">
+            Traiter
+          </button>
+        </td>
+      </tr>
+      <tr>
+        <td>3</td>
+        <td>Iamout</td>
+        <td>Ofinspiration</td>
+        <td>
+          <button class="btn btn-outline-info btn-sm">
+            Traiter
+          </button>
+        </td>
+      </tr>
+      <tr>
+        <td>4</td>
+        <td>Yoda</td>
+        <td>Skywalker</td>
+        <td>
+          <button class="btn btn-outline-info btn-sm">
+            Traiter
+          </button>
+        </td>
+      </tr>
+      <tr>
+        <td>5</td>
+        <td>Patrick</td>
+        <td>Dupont</td>
+        <td>
+          <button class="btn btn-outline-info btn-sm">
+            Traiter
+          </button>
+        </td>
+      </tr>
+      <tr>
+        <td>6</td>
+        <td>Barack</td>
+        <td>Obama</td>
+        <td>
+          <button class="btn btn-outline-info btn-sm">
+            Traiter
+          </button>
+        </td>
+      </tr>
+      <tr>
+        <td>7</td>
+        <td>François</td>
+        <td>Holland</td>
+        <td>
+          <button class="btn btn-outline-info btn-sm">
+            Traiter
+          </button>
+        </td>
+      </tr>
+      <tr>
+        <td>8</td>
+        <td>Michel</td>
+        <td>Popo</td>
+        <td>
+          <button class="btn btn-outline-info btn-sm">
+            Traiter
+          </button>
+        </td>
+      </tr>
+      <tr>
+        <td>9</td>
+        <td>Chuck</td>
+        <td>Norris</td>
+        <td>
+          <button class="btn btn-outline-info btn-sm">
+            Traiter
+          </button>
+        </td>
+      </tr>
+      <tr>
+        <td>10</td>
+        <td>Simon</td>
+        <td>Robin</td>
+        <td>
+          <button class="btn btn-outline-info btn-sm">
+            Traiter
+          </button>
+        </td>
+      </tr>
+      <tr>
+        <td>11</td>
+        <td>Louis</td>
+        <td>Lin</td>
+        <td>
+          <button class="btn btn-outline-info btn-sm">
+            Traiter
+          </button>
+        </td>
+      </tr>
+      <tr>
+        <td>12</td>
+        <td>Zelda</td>
+        <td>Link</td>
+        <td>
+          <button class="btn btn-outline-info btn-sm">
+            Traiter
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+</div>
+
+</div>
