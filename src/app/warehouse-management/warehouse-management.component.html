@@ -129,21 +129,66 @@
           Une erreur s'est produite. Veuillez vérifiez les informations inscrites svp !
         </div>
           <small class="text-muted">Inscrivez les informations suivantes</small>
+          <br><br>
           <div class="row">
             <div class="col">
-              <input type="text" name="ville" [(ngModel)]="wareHouseInfo.ville" class="form-control" placeholder="Entrez la ville">
+              <div class="input-group mb-3">
+                <select class="custom-select" name="region" [(ngModel)]="wareHouseInfo.region" id="inputGroupSelect01">
+                  <option selected>Choisir une région...</option>
+                  <option value="n'zi">N’Zi</option>
+                  <option value="Iffou">Iffou</option>
+                  <option value="Bélier">Bélier</option>
+                  <option value="Moronou">Moronou</option>
+                  <option value="Indénié-Djuablin">Indénié-Djuablin</option>
+                  <option value="Sud-Comoé">Sud-Comoé</option>
+                  <option value="Folon">Folon</option>
+                  <option value="Kabadougou">Kabadougou</option>
+                  <option value="Gôh">Gôh</option>
+                  <option value="Lôh-Djiboua">Lôh-Djiboua</option>
+                  <option value="Agnéby-Tiassa">Agnéby-Tiassa</option>
+                  <option value="Mé">Mé</option>
+                  <option value="Grands Ponts">Grands Ponts</option>
+                  <option value="Tonkpi">Tonkpi</option>
+                  <option value="Cavally">Cavally</option>
+                  <option value="Guémon">Guémon</option>
+                  <option value="Haut-Sassandra">Haut-Sassandra</option>
+                  <option value="Marahoué">Marahoué</option>
+                  <option value="Poro">Poro</option>
+                  <option value="Tchologo">Tchologo</option>
+                  <option value="Bagoué">Bagoué</option>
+                  <option value="Nawa">Nawa</option>
+                  <option value="San-Pédro">San-Pédro</option>
+                  <option value="Gbôklé">Gbôklé</option>
+                  <option value="Hambol">Hambol</option>
+                  <option value="Gbêkê">Gbêkê</option>
+                  <option value="Béré">Béré</option>
+                  <option value="Bafing">Bafing</option>
+                  <option value="Worodougou">Worodougou</option>
+                  <option value="Bounkani">Bounkani</option>
+                  <option value="Gontougo">Gontougo</option>
+                </select>
+              </div>
             </div>
             <div class="col">
-              <input type="text" name="adresse" [(ngModel)]="wareHouseInfo.adresse" class="form-control" placeholder="Entrez l'adresse">
+              <input type="text" name="departement" [(ngModel)]="wareHouseInfo.departement" class="form-control" placeholder="Entrez le département">
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col">
+              <input type="text" name="sous_departement" [(ngModel)]="wareHouseInfo.sous_prefecture" class="form-control" placeholder="Entrez le sous-département">
+            </div>
+            <div class="col">
+              <input type="text" name="village" [(ngModel)]="wareHouseInfo.village" class="form-control" placeholder="Entrez le village">
             </div>
           </div>
           <br>
           <div class="row">
             <div class="col">
-              <input type="text" name="telephone" [(ngModel)]="wareHouseInfo.telephone" class="form-control" placeholder="Entrez le numéro de téléphone">
+              <input type="text" name="adresse" [(ngModel)]="wareHouseInfo.adresse" class="form-control" placeholder="Entrez l'adresse">
             </div>
             <div class="col">
-              <input type="email" name="email" [(ngModel)]="wareHouseInfo.email" class="form-control" placeholder="Entrez l'adresse e-mail">
+              <input type="text" name="telephone" [(ngModel)]="wareHouseInfo.telephone" class="form-control" placeholder="Entrez le numéro de téléphone">
             </div>
           </div>
           <br>
@@ -156,6 +201,9 @@
                   <option value="inactive">Inactive</option>
                 </select>
               </div>
+            </div>
+            <div class="col">
+              <input type="email" name="email" [(ngModel)]="wareHouseInfo.email" class="form-control" placeholder="Entrez l' adresse e-mail">
             </div>
           </div>
       </div>
@@ -193,8 +241,59 @@
           <small class="text-muted">Modifier les informations suivantes</small>
           <div class="row">
             <div class="col">
-              <label for="">Ville</label>
-              <input type="text" name="ville" [(ngModel)]="wareHouseUpdating.ville" class="form-control" placeholder="Entrez la ville">
+              <div class="input-group mb-3">
+                <select class="custom-select" name="region" [(ngModel)]="wareHouseUpdating.region" id="inputGroupSelect01">
+                  <option selected>Choisir une région...</option>
+                  <option value="n'zi">N’Zi</option>
+                  <option value="Iffou">Iffou</option>
+                  <option value="Bélier">Bélier</option>
+                  <option value="Moronou">Moronou</option>
+                  <option value="Indénié-Djuablin">Indénié-Djuablin</option>
+                  <option value="Sud-Comoé">Sud-Comoé</option>
+                  <option value="Folon">Folon</option>
+                  <option value="Kabadougou">Kabadougou</option>
+                  <option value="Gôh">Gôh</option>
+                  <option value="Lôh-Djiboua">Lôh-Djiboua</option>
+                  <option value="Agnéby-Tiassa">Agnéby-Tiassa</option>
+                  <option value="Mé">Mé</option>
+                  <option value="Grands Ponts">Grands Ponts</option>
+                  <option value="Tonkpi">Tonkpi</option>
+                  <option value="Cavally">Cavally</option>
+                  <option value="Guémon">Guémon</option>
+                  <option value="Haut-Sassandra">Haut-Sassandra</option>
+                  <option value="Marahoué">Marahoué</option>
+                  <option value="Poro">Poro</option>
+                  <option value="Tchologo">Tchologo</option>
+                  <option value="Bagoué">Bagoué</option>
+                  <option value="Nawa">Nawa</option>
+                  <option value="San-Pédro">San-Pédro</option>
+                  <option value="Gbôklé">Gbôklé</option>
+                  <option value="Hambol">Hambol</option>
+                  <option value="Gbêkê">Gbêkê</option>
+                  <option value="Béré">Béré</option>
+                  <option value="Bafing">Bafing</option>
+                  <option value="Worodougou">Worodougou</option>
+                  <option value="Bounkani">Bounkani</option>
+                  <option value="Gontougo">Gontougo</option>
+                </select>
+              </div>
+            </div>
+            <div class="col">
+              <input type="text" name="departement" [(ngModel)]="wareHouseUpdating.departement" class="form-control" placeholder="Entrez le département">
+            </div>
+          </div>
+          <br>
+          <div class="row">
+            <div class="col">
+              <label for="">Sous-préfecture</label>
+              <input type="text" name="sous_prefecture" [(ngModel)]="wareHouseUpdating.sous_prefecture" class="form-control" placeholder="Entrez la sous-préfecture">
+            </div>
+          </div>
+          <br>
+          <div class="row">
+            <div class="col">
+              <label for="">Village</label>
+              <input type="text" name="village" [(ngModel)]="wareHouseUpdating.village" class="form-control" placeholder="Entrez la ville">
             </div>
             <div class="col">
               <label for="">Adresse</label>

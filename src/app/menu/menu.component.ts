@@ -46,80 +46,110 @@ export class MenuComponent implements OnInit {
     this.router.navigateByUrl('/home/(child1:user-manage;open=true)');
     const indique = {
       name: 'Compte utilisateurs',
-      route: 'user-manage'
+      route: 'user-manage',
+      icon: 'person_outline',
+      id: JSON.parse(localStorage.getItem('userData')).id
     };
-    // this.menuService.SetFavoris(indique)
+    this.menuService.SetFavoris(indique)
   }
 
   manageWarehouse() {
     this.router.navigateByUrl('/home/(child1:ware-manage;open=true)');
     const indique = {
       name: 'Entrepôts',
-      route: 'ware-manage'
+      route: 'ware-manage',
+      icon: 'store_mall_directory',
+      id: JSON.parse(localStorage.getItem('userData')).id
     };
-    // this.menuService.SetFavoris(indique);
+    this.menuService.SetFavoris(indique);
   }
 
   manageTracker() {
     this.router.navigateByUrl('/home/(child1:tracker-manage;open=true)');
     const indique = {
       name: 'Pisteurs',
-      route: 'tracker-manage'
+      route: 'tracker-manage',
+      icon: 'accessibility',
+      id: JSON.parse(localStorage.getItem('userData')).id
     };
-    // this.menuService.SetFavoris(indique);
+    this.menuService.SetFavoris(indique);
   }
 
   ManagePartner() {
     this.router.navigateByUrl('/home/(child1:partner-manage;open=true)');
     const indique = {
       name: 'Partenaires',
-      route: 'partner-manage'
+      route: 'partner-manage',
+      icon: 'assignment_ind',
+      id: JSON.parse(localStorage.getItem('userData')).id
     };
-    // this.menuService.SetFavoris(indique);
+    this.menuService.SetFavoris(indique);
   }
 
   ManageFinance() {
     this.router.navigateByUrl('/home/(child1:finance-manage;open=true)');
     const indique = {
       name: 'Financements',
-      route: 'finance-manage'
+      route: 'finance-manage',
+      icon: 'attach_money',
+      id: JSON.parse(localStorage.getItem('userData')).id
     };
-    // this.menuService.SetFavoris(indique);
+    this.menuService.SetFavoris(indique);
   }
 
   ManagePreFinance() {
     this.router.navigateByUrl('/home/(child1:pre-finance-manage;open=true)');
     const indique = {
       name: 'Pré-Financements',
-      route: 'pre-finance-manage'
+      route: 'pre-finance-manage',
+      icon: 'monetization_on',
+      id: JSON.parse(localStorage.getItem('userData')).id
     };
-    // this.menuService.SetFavoris(indique);
+    this.menuService.SetFavoris(indique);
   }
 
   ManageCampaign() {
     this.router.navigateByUrl('/home/(child1:campaign-manage;open=true)');
     const indique = {
       name: 'Campagnes',
-      route: 'campaign-manage'
+      route: 'campaign-manage',
+      icon: 'insert_invitation',
+      id: JSON.parse(localStorage.getItem('userData')).id
     };
-    // this.menuService.SetFavoris(indique);
+    this.menuService.SetFavoris(indique);
   }
 
   ManagePlanter() {
     this.router.navigateByUrl('/home/(child1:planter-manage;open=true)');
     const indique = {
       name: 'Planteurs',
-      route: 'planter-manage'
+      route: 'planter-manage',
+      icon: 'local_florist',
+      id: JSON.parse(localStorage.getItem('userData')).id
     };
-    // this.menuService.SetFavoris(indique);
+    this.menuService.SetFavoris(indique);
   }
 
   ManageSalesBuying() {
     this.router.navigateByUrl('/home/(child1:sales-manage;open=true)');
     const indique = {
       name: 'Achats',
-      route: 'sales-manage'
+      route: 'sales-manage',
+      icon: 'compare_arrows',
+      id: JSON.parse(localStorage.getItem('userData')).id
     };
+    this.menuService.SetFavoris(indique);
+  }
+
+  ManageObjectif() {
+    this.router.navigateByUrl('/home/(child1:objectif-manage;open=true)');
+    const indique = {
+      name: 'Objectifs',
+      route: 'objectif-manage',
+      icon: 'star_border',
+      id: JSON.parse(localStorage.getItem('userData')).id
+    };
+    this.menuService.SetFavoris(indique);
   }
 
   Logout() {

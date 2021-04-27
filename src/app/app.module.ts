@@ -35,6 +35,8 @@ import { PlanterProfilComponent } from './planter-profil/planter-profil.componen
 import { SalesBuyingManagementComponent } from './sales-buying-management/sales-buying-management.component';
 import { SalesBuyingDetailComponent } from './sales-buying-detail/sales-buying-detail.component';
 import { SalesHistoryComponent } from './sales-history/sales-history.component';
+import { ObjectiveManagementComponent } from './objective-management/objective-management.component';
+import { ObjectiveDetailComponent } from './objective-detail/objective-detail.component';
 
 @NgModule({
   declarations: [
@@ -63,7 +65,9 @@ import { SalesHistoryComponent } from './sales-history/sales-history.component';
     PlanterProfilComponent,
     SalesBuyingManagementComponent,
     SalesBuyingDetailComponent,
-    SalesHistoryComponent
+    SalesHistoryComponent,
+    ObjectiveManagementComponent,
+    ObjectiveDetailComponent
   ],
   imports: [
     BrowserModule,

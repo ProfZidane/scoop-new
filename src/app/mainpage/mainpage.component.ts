@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../services/auth.service';
 import { Router } from '@angular/router';
+import { MenuService } from '../services/menu.service';
 
 @Component({
   selector: 'app-mainpage',
@@ -13,7 +14,8 @@ loading = true;
 userConnected;
 right;
 state = false;
-  constructor(private userService: AuthService, private router: Router) { }
+favoris;
+  constructor(private userService: AuthService, private router: Router, private menuService: MenuService) { }
 
   ngOnInit(): void {
     this.GetUsers();
@@ -30,6 +32,8 @@ state = false;
         }
       });
     }
+
+    this.GetFavoris();
   }
 
   GetUsers() {
@@ -43,6 +47,20 @@ state = false;
         this.loading = false;
       }
     );
+  }
+
+  GetFavoris() {
+    let favoris = this.menuService.GetFavoris();
+    // console.log(favoris);
+    this.favoris = favoris;
+    this.favoris = this.favoris.reverse();
+    this.favoris = this.favoris.slice(0, 8);
+    console.log(this.favoris);
+  }
+
+  goToRoute(url) {
+    console.log(url);
+    this.router.navigateByUrl('/home/(child1:' + url + ';open=true)');
   }
 
   GoToUserManagement() {

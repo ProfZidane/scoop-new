@@ -6,7 +6,7 @@
       <i class="material-icons" style="cursor: pointer;font-size: 25px;" (click)="ComeBack()">
         chevron_left
       </i>
-      Gestion Partenaires
+      Gestion Objectif
     </a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
@@ -35,8 +35,8 @@
         </li>-->
       </ul>
       <form class="form-inline my-2 my-lg-0">
-        <button class="btn btn-outline-info my-2 my-sm-0 mr-5" type="button" data-toggle="modal" data-target="#exampleModal11" (click)="create()">
-          + Nouveau partenaires
+        <button class="btn btn-outline-info my-2 my-sm-0 mr-5" type="button" data-toggle="modal" data-target="#exampleModal25">
+          + Nouveau objectif
         </button>
         <div class="dropdown">
           <button class="btn btn-success text-light dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" *ngIf="userConnected">
@@ -61,41 +61,31 @@
   <table datatable class="row-border hover" [dtTrigger]="dtTrigger" id="table" style="">
     <thead>
       <tr>
-        <th>Nom & Prénoms</th>
         <th>Type</th>
-        <th>Catégorie</th>
-        <th>Description</th>
-        <th>Date</th>
-        <th>Status</th>
-        <th></th>
+        <th>Quantité</th>
+        <th>Unité</th>
+        <th>Date début</th>
+        <th>Date fin</th>
+        <th>Concerné</th>
         <th></th>
         <th></th>
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let partner of partnersData">
-        <td>{{ partner.name }}</td>
-        <td>{{ partner.type }}</td>
-        <td>{{ partner.categorie }}</td>
-        <td>{{ partner.description }}</td>
-        <td>{{ partner.created_at | date }}</td>
-        <td class="text-success" *ngIf="partner.status === 'active'">{{ partner.status }}</td>
-        <td class="text-danger" *ngIf="partner.status === 'inactive'">{{ partner.status }}</td>
+      <tr *ngFor="let objectif of objectives">
+        <td>{{ objectif.type }}</td>
+        <td>{{ objectif.quantite }}</td>
+        <td>{{ objectif.unite }}</td>
+        <td>{{ objectif.date_debut | date }}</td>
+        <td>{{ objectif.date_fin | date }}</td>
+        <td>{{ objectif.name.nom + ' ' + objectif.name.prenom }}</td>
         <td>
-          <button class="btn btn-outline-info btn-sm" (click)="goToProfile(partner.id)">
-            Profil
-          </button>
-        </td>
-        <td>
-          <button class="btn btn-outline-warning btn-sm" type="submit" data-toggle="modal" data-target="#exampleModal12" (click)="OpenModalUpdate(partner)">
+          <button class="btn btn-outline-warning btn-sm" type="submit" data-toggle="modal" data-target="#exampleModal26" (click)="OpenModalUpdate(objectif)">
             Modifier
           </button>
         </td>
-        <td *ngIf="partner.status === 'active'">
-          <button class="btn btn-outline-danger btn-sm" data-toggle="modal" data-target="#exampleModal13" (click)="OpenModelDelete(partner.id)">Désactiver</button>
-        </td>
-        <td *ngIf="partner.status === 'inactive'">
-          <button class="btn btn-outline-success btn-sm" data-toggle="modal" data-target="#exampleModal3">Activer</button>
+        <td>
+          <button class="btn btn-outline-danger btn-sm" data-toggle="modal" data-target="#exampleModal13" (click)="OpenModalDelete(objectif.id)">Supprimer</button>
         </td>
       </tr>
     </tbody>
@@ -108,19 +98,19 @@
 
 
 <!-- Modal 4 -->
-<div class="modal fade" id="exampleModal11" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="exampleModal25" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-lg" role="document">
-    <form method="POST" (ngSubmit)="CreatePartner($event)">
+    <form method="POST" (ngSubmit)="CreateObjectif($event)">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Création d'un partenaire</h5>
+        <h5 class="modal-title" id="exampleModalLabel">Création d'un objectif</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
       <div class="modal-body">
         <div class="clearfix" *ngIf="isLoading.create === true">
-          <span class="text-warning">Création d'un partenaire .....</span>
+          <span class="text-warning">Création d'un objectif .....</span>
           <div class="spinner-border float-right text-warning" role="status">
             <span class="sr-only">Loading...</span>
           </div>
@@ -133,52 +123,57 @@
             <div class="col">
               <label for="">Choisir le type</label>
               <div class="input-group mb-3">
-                <select class="custom-select" name="type" [(ngModel)]="partners.type" id="inputGroupSelect01"  required>
-                  <option value="personne physique">Personne Physique</option>
-                  <option value="personne morale">Personne Morale</option>
+                <select class="custom-select" name="type" [(ngModel)]="objectif.type" id="inputGroupSelect01" (change)="OnSelected($event)"  required>
+                  <option value="partenaire">Partenaire</option>
+                  <option value="pisteur">Pisteur</option>
                 </select>
               </div>
             </div>
             <div class="col">
-              <label for="">Choisir la catégorie</label>
+              <label for="">Choisir l'unité</label>
               <div class="input-group mb-3">
-                <select class="custom-select" name="categorie" [(ngModel)]="partners.categorie" id="inputGroupSelect01" (change)="OnTyped($event)" required>
-                  <option value="particulier" *ngIf="partners.type === 'personne physique'">Particulier</option>
-                  <option value="organisme de financement" *ngIf="partners.type === 'personne morale'">Organisme de financement</option>
-                  <option value="exportateur" *ngIf="partners.type === 'personne morale'">Exportateur</option>
-                  <option value="autres" *ngIf="partners.type === 'personne morale'">Autres</option>
+                <select class="custom-select" name="unite" [(ngModel)]="objectif.unite" id="inputGroupSelect01" required>
+                  <option value="kg">Kilogramme (kg)</option>
+                  <option value="tonne">Tonne (t)</option>
                 </select>
               </div>
             </div>
           </div>
           <br>
-          <div class="row" *ngIf="stateCode === true">
+          <div class="row">
             <div class="col">
-              <label for="">Inscrivez le code de l'exportateur</label>
-              <input type="text" name="code" [(ngModel)]="partners.code" class="form-control" id="">
+              <label for="">Entrez la quantité</label>
+              <input type="text" name="quantite" [(ngModel)]="objectif.quantite" class="form-control" id="">
             </div>
           </div>
           <br>
           <div class="row">
             <div class="col">
-              <label for="">Choisir un status</label>
+              <label for="">Entrez la date du début</label>
+              <input type="date" name="date_debut" [(ngModel)]="objectif.date_debut" class="form-control" placeholder="" required>
+            </div>
+            <div class="col">
+              <label for="">Entrez la date de fin</label>
+              <input type="date" name="date_fin" [(ngModel)]="objectif.date_fin" class="form-control" placeholder="" required>
+            </div>
+          </div>
+          <br>
+          <div class="row">
+            <div class="col" *ngIf='state.tracker === true'>
+              <label for="">Choisir le pisteur</label>
               <div class="input-group mb-3">
-                <select class="custom-select" name="status" [(ngModel)]="partners.status" id="inputGroupSelect01" required>
-                  <option value="active">Active</option>
-                  <option value="inactive">Inactive</option>
+                <select class="custom-select" name="unite" [(ngModel)]="objectif.personne_id" id="inputGroupSelect01" required>
+                  <option *ngFor="let tracker of trackers" value="{{ tracker.id }}">{{ tracker.nom + ' ' + tracker.prenom }}</option>
                 </select>
               </div>
             </div>
-            <div class="col">
-              <label for="">Entrez le nom</label>
-              <input type="text" name="name" [(ngModel)]="partners.name" class="form-control" placeholder="" required>
-            </div>
-          </div>
-          <br><br>
-          <div class="row">
-            <div class="col">
-              <label for="">Entrez la description</label>
-              <textarea type="text" name="description" [(ngModel)]="partners.description" class="form-control" placeholder="" required>
+            <div class="col" *ngIf='state.partner === true'>
+              <label for="">Choisir le partenaire</label>
+              <div class="input-group mb-3">
+                <select class="custom-select" name="unite" [(ngModel)]="objectif.personne_id" id="inputGroupSelect01" required>
+                  <option *ngFor="let partner of partners" value="{{ partner.id }}">{{ partner.name }}</option>
+                </select>
+              </div>
             </div>
           </div>
       </div>
@@ -193,79 +188,82 @@
 
 
 <!-- Modal 5 -->
-<div class="modal fade" id="exampleModal12" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="exampleModal26" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-lg" role="document">
-    <form method="POST" (ngSubmit)="UpdatePartner($event)">
+    <form method="POST" (ngSubmit)="UpdateObjective($event)">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Modification d'un partenaire</h5>
+        <h5 class="modal-title" id="exampleModalLabel">Modification d'un objectif</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
-      <div class="modal-body" *ngIf="partnersFictious">
+      <div class="modal-body" *ngIf="objectivesFictious">
         <div class="clearfix" *ngIf="isLoading.modify === true">
-          <span class="text-warning">Modification d'un partenaire .....</span>
+          <span class="text-warning">Modification d'un objectif .....</span>
           <div class="spinner-border float-right text-warning" role="status">
             <span class="sr-only">Loading...</span>
           </div>
         </div>
-        <div class="alert alert-danger" *ngIf="error.create === true">
+        <div class="alert alert-danger" *ngIf="error.modify === true">
           Une erreur s'est produite. Veuillez vérifiez les informations inscrites svp !
         </div>
           <small class="text-muted">Inscrivez les informations suivantes</small>
           <div class="row">
             <div class="col">
-              <label for="">Le type</label>
+              <label for="">Choisir le type</label>
               <div class="input-group mb-3">
-                <select class="custom-select" name="type" [(ngModel)]="partnersFictious.type" id="inputGroupSelect01" required>
-                  <option value="personne physique">Personne Physique</option>
-                  <option value="personne morale">Personne Morale</option>
-                  <option value="inconnu">Je ne sais pas</option>
+                <select class="custom-select" name="type" [(ngModel)]="objectivesFictious.type" id="inputGroupSelect01" (change)="OnSelected($event)"  required>
+                  <option value="partenaire">Partenaire</option>
+                  <option value="pisteur">Pisteur</option>
                 </select>
               </div>
             </div>
             <div class="col">
-              <label for="">La catégorie</label>
+              <label for="">Choisir l'unité</label>
               <div class="input-group mb-3">
-                <select class="custom-select" name="categorie" [(ngModel)]="partnersFictious.categorie" id="inputGroupSelect01" required>
-                  <option value="particulier">Particulier</option>
-                  <option value="banque">Banque</option>
-                  <option value="acheteur">Acheteur</option>
-                  <option value="autres">Autres</option>
+                <select class="custom-select" name="unite" [(ngModel)]="objectivesFictious.unite" id="inputGroupSelect01" required>
+                  <option value="kg">Kilogramme (kg)</option>
+                  <option value="tonne">Tonne (t)</option>
                 </select>
               </div>
-            </div>
-
-          </div>
-          <br>
-          <div class="row" *ngIf="partnersFictious.code">
-            <div class="col">
-              <label for="">Le code exportateur</label>
-              <input type="text" name="code" [(ngModel)]="partnersFictious.code" id="">
             </div>
           </div>
           <br>
           <div class="row">
             <div class="col">
-              <label for="">Le status</label>
+              <label for="">Entrez la quantité</label>
+              <input type="text" name="quantite" [(ngModel)]="objectivesFictious.quantite" class="form-control" id="">
+            </div>
+          </div>
+          <br>
+          <div class="row">
+            <div class="col">
+              <label for="">Entrez la date du début</label>
+              <input type="date" name="date_debut" [(ngModel)]="objectivesFictious.date_debut" class="form-control" placeholder="" required>
+            </div>
+            <div class="col">
+              <label for="">Entrez la date de fin</label>
+              <input type="date" name="date_fin" [(ngModel)]="objectivesFictious.date_fin" class="form-control" placeholder="" required>
+            </div>
+          </div>
+          <br>
+          <div class="row">
+            <div class="col" *ngIf="objectivesFictious.type === 'pisteur'">
+              <label for="">Choisir le pisteur</label>
               <div class="input-group mb-3">
-                <select class="custom-select" name="status" [(ngModel)]="partnersFictious.status" id="inputGroupSelect01" required>
-                  <option value="active">Active</option>
-                  <option value="inactive">Inactive</option>
+                <select class="custom-select" name="unite" [(ngModel)]="objectivesFictious.personne_id" id="inputGroupSelect01" required>
+                  <option *ngFor="let tracker of trackers" value="{{ tracker.id }}">{{ tracker.nom + ' ' + tracker.prenom }}</option>
                 </select>
               </div>
             </div>
-            <div class="col">
-              <label for="">Le nom</label>
-              <input type="text" name="name" [(ngModel)]="partnersFictious.name" class="form-control" placeholder="" required>
-            </div>
-          </div>
-          <br><br>
-          <div class="row">
-            <div class="col">
-              <label for="">La description</label>
-              <input type="text" name="description" [(ngModel)]="partnersFictious.description" class="form-control" placeholder="" required>
+            <div class="col" *ngIf="objectivesFictious.type === 'partenaire'">
+              <label for="">Choisir le partenaire</label>
+              <div class="input-group mb-3">
+                <select class="custom-select" name="unite" [(ngModel)]="objectivesFictious.personne_id" id="inputGroupSelect01" required>
+                  <option *ngFor="let partner of partners" value="{{ partner.id }}">{{ partner.name }}</option>
+                </select>
+              </div>
             </div>
           </div>
       </div>
@@ -282,17 +280,17 @@
 <!-- Modal 6 -->
 <div class="modal fade" id="exampleModal13" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-lg" role="document">
-    <form method="POST" (ngSubmit)="ClosedPartner($event)">
+    <form method="POST" (ngSubmit)="DeleteObjectif($event)">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Motifs de désactivation</h5>
+        <h5 class="modal-title" id="exampleModalLabel">ATTENTION</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
       <div class="modal-body">
         <div class="clearfix" *ngIf="isLoading.close === true">
-          <span class="text-warning">Désactiver le partenaire .....</span>
+          <span class="text-warning">Suppression de l'objectif .....</span>
           <div class="spinner-border float-right text-warning" role="status">
             <span class="sr-only">Loading...</span>
           </div>
@@ -300,18 +298,16 @@
         <div class="alert alert-danger" *ngIf="error.close === true">
           Une erreur s'est produite. Veuillez réessayer plus tard svp !
         </div>
-          <small class="text-muted">Notifier le motif</small>
           <div class="row">
-            <div class="col">
-              <label for="">Motifs</label>
-              <textarea name="motifs" class="form-control" [(ngModel)]="partnerDesactif.motif" id="" cols="30" rows="5" ></textarea>
+            <div class="col" align="center">
+              <h2>Votre action est irréversible ! Êtes-vous sûr de vouloir supprimer l'objectif ? </h2>
             </div>
           </div>
           <br>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
-        <button type="submit" class="btn btn-success">Enregistrer</button>
+        <button type="submit" class="btn btn-danger">Confirmer</button>
       </div>
     </div>
   </form>

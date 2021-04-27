@@ -84,7 +84,7 @@
         <td class="text-danger" *ngIf="user.status === 'inactive'">{{ user.status }}</td>
         <td>{{ user.telephone }}</td>
         <td>{{ user.adresse }}</td>
-        <td>{{ user.ville }}</td>
+        <td>{{ user.sous_prefecture }}</td>
         <td>{{ user.fonction }}</td>
         <td>
           <button class="btn btn-outline-warning btn-sm" data-toggle="modal" data-target="#exampleModal" (click)="OpenModalUpdating(user)">
@@ -169,7 +169,7 @@
                 <select class="custom-select" name="role" [(ngModel)]="userInfo.role" id="inputGroupSelect01">
                   <option value="admin">Admin</option>
                   <option value="manager">Manager</option>
-                  <option value="financier">Financier</option>
+                  <option value="financier">Responsable Financier</option>
                   <option value="responsable_stock">Responsable Stock</option>
                   <option value="superadmin">Super Admin</option>
                   <option value="responsable_pese">Responsable Pesée</option>
@@ -192,7 +192,7 @@
               <label for="">Sélectionnez l'entrepôt</label>
               <div class="input-group mb-3" >
                 <select class="custom-select" name="entrepot_id" [(ngModel)]="userInfo.entrepot_id" id="inputGroupSelect01">
-                  <option *ngFor="let entrepot of entrepots" value="{{entrepot.id}}">{{ entrepot.ville }}</option>
+                  <option *ngFor="let entrepot of entrepots" value="{{entrepot.id}}">{{ entrepot.sous_prefecture }}</option>
                 </select>
               </div>
             </div>
@@ -273,7 +273,7 @@
                 <select class="custom-select" name="role" [(ngModel)]="userUpdating.role" id="inputGroupSelect01">
                   <option value="admin">Admin</option>
                   <option value="manager">Manager</option>
-                  <option value="financier">Financier</option>
+                  <option value="financier">Responsable Financier</option>
                   <option value="responsable_stock">Responsable Stock</option>
                   <option value="superadmin">Super Admin</option>
                   <option value="responsable_pese">Responsable Pesée</option>
@@ -297,7 +297,7 @@
               <label for="">Sélectionnez l'entrepôt</label>
               <div class="input-group mb-3" *ngIf="userUpdating.entrepot_id" >
                 <select class="custom-select" name="entrepot_id" [(ngModel)]="userUpdating.entrepot_id" id="inputGroupSelect01">
-                  <option *ngFor="let entrepot of entrepots" value="{{entrepot.id}}">{{ entrepot.ville }}</option>
+                  <option *ngFor="let entrepot of entrepots" value="{{entrepot.id}}">{{ entrepot.sous_prefecture }}</option>
                 </select>
               </div>
             </div>

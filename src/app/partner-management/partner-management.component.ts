@@ -18,7 +18,8 @@ export class PartnerManagementComponent implements OnInit {
     name: '',
     description: '',
     categorie: '',
-    status: 'active'
+    status: 'active',
+    code: ''
   };
   partnersFictious;
   isLoading = {
@@ -38,6 +39,7 @@ export class PartnerManagementComponent implements OnInit {
     id : '',
     motif : ''
   };
+  stateCode = false;
   constructor(private router: Router, private userService: AuthService, private location: Location,
               private partenerService: PartnerService) { }
 
@@ -150,4 +152,18 @@ export class PartnerManagementComponent implements OnInit {
     );
   }
 
+  OnTyped(event) {
+    console.log(event.target.value);
+    const value = event.target.value;
+    if (value === 'exportateur') {
+      this.stateCode = true;
+    } else {
+      this.stateCode = false;
+    }
+  }
+
+  create() {
+    this.partners.type = 'personne morale';
+    this.partners.status = 'active';
+  }
 }

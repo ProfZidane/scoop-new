@@ -168,7 +168,7 @@
 
 
         <div class="col-md-3 menu-option p-3" *ngIf="rightContent && (rightContent.finance.state === true || rightContent.stocks.state === true || rightContent.manager.state === true)">
-          <div class="card" style="width: 15rem;" align="center">
+          <div class="card" style="width: 15rem;" align="center" (click)="ManageObjectif()">
             <div class="card-body">
               <h5 class="card-title">Objectifs</h5>
               <div class="contour">

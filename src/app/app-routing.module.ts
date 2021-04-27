@@ -23,6 +23,7 @@ import { PlanterProfilComponent } from './planter-profil/planter-profil.componen
 import { SalesBuyingManagementComponent } from './sales-buying-management/sales-buying-management.component';
 import { SalesBuyingDetailComponent } from './sales-buying-detail/sales-buying-detail.component';
 import { SalesHistoryComponent } from './sales-history/sales-history.component';
+import { ObjectiveManagementComponent } from './objective-management/objective-management.component';
 
 
 const routes: Routes = [
@@ -134,6 +135,11 @@ const routes: Routes = [
       {
         path: 'sales-history',
         component: SalesHistoryComponent,
+        outlet: 'child1'
+      },
+      {
+        path: 'objectif-manage',
+        component: ObjectiveManagementComponent,
         outlet: 'child1'
       }
     ]
