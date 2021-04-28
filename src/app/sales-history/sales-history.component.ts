@@ -49,6 +49,7 @@ export class SalesHistoryComponent implements OnInit {
         console.log(data);
         this.isLoading.data = false;
         this.histories = data.data;
+        this.dtTrigger.next();
       }, (err) => {
         console.log(err);
         this.isLoading.data = false;

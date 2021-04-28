@@ -152,6 +152,18 @@ export class MenuComponent implements OnInit {
     this.menuService.SetFavoris(indique);
   }
 
+
+  ManageCharge() {
+    this.router.navigateByUrl('/home/(child1:charge-manage;open=true)');
+    const indique = {
+      name: 'Chargements',
+      route: 'charge-manage',
+      icon: 'local_shipping',
+      id: JSON.parse(localStorage.getItem('userData')).id
+    };
+    this.menuService.SetFavoris(indique);
+  }
+
   Logout() {
     if (this.userService.Logout()) {
       this.router.navigateByUrl('/');

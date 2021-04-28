@@ -139,7 +139,7 @@
 
     </div>
 
-    <div class="col-md-9 " style="height: 84vh">
+    <div class="col-md-9" style="height: 84vh">
       <div class="row">
         <div class="col-md-10 p-3">
           <ul class="nav nav-pills nav-justified mb-3" id="pills-tab" role="tablist">
@@ -153,9 +153,9 @@
                 Produits Livrés
               </a>
             </li>
-            <!--<li class="nav-item">
-              <a class="nav-link" id="pills-contact-tab" data-toggle="pill" href="#pills-contact" role="tab" aria-controls="pills-contact" aria-selected="false">Contact</a>
-            </li> -->
+            <li class="nav-item">
+              <a class="nav-link" id="pills-contact-tab" data-toggle="pill" href="#pills-contact" role="tab" aria-controls="pills-contact" aria-selected="false">Objectifs</a>
+            </li>
           </ul>
         </div>
         <div class="col-md-2 solde bord p-3">
@@ -165,7 +165,7 @@
       <div class="tab-content" id="pills-tabContent">
         <div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
           <!-- table -->
-          <div class="container-fluid table-user">
+          <div class="container-fluid bord table-user">
             <div class="text-center" *ngIf="isLoading.finance === true">
               <div class="spinner-border" role="status">
                 <span class="sr-only">Loading...</span>
@@ -196,9 +196,69 @@
           <!-- end table -->
         </div>
         <div class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">
-          Produits Livrés
+          <!-- table -->
+          <div class="container-fluid table-user">
+            <div class="text-center" *ngIf="isLoading.product === true">
+              <div class="spinner-border" role="status">
+                <span class="sr-only">Loading...</span>
+              </div>
+            </div>
+            <table datatable class="row-border hover" [dtTrigger]="dtTrigger2" id="table" style="">
+              <thead>
+                <tr>
+                  <th>Poids Brut</th>
+                  <th>Poids Net</th>
+                  <th>Nbr Sacs</th>
+                  <th>Date</th>
+                  <th>Status</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let product of products">
+                  <td>{{ product.poids_brut }}</td>
+                  <td>{{ product.poids_net }}</td>
+                  <td>{{ product.sacs }}</td>
+                  <td>{{ product.created_at | date }}</td>
+                  <td>{{ product.status }}</td>
+                </tr>
+              </tbody>
+            </table>
+
+          </div>
+          <!-- end table -->
         </div>
-        <!--<div class="tab-pane fade" id="pills-contact" role="tabpanel" aria-labelledby="pills-contact-tab">...</div> -->
+        <div class="tab-pane fade" id="pills-contact" role="tabpanel" aria-labelledby="pills-contact-tab">
+          <!-- table -->
+          <div class="container-fluid table-user">
+            <div class="text-center" *ngIf="isLoading.product === true">
+              <div class="spinner-border" role="status">
+                <span class="sr-only">Loading...</span>
+              </div>
+            </div>
+            <table datatable class="row-border hover" [dtTrigger]="dtTrigger3" id="table" style="">
+              <thead>
+                <tr>
+                  <th>Date Début</th>
+                  <th>Date Fin</th>
+                  <th>Quantité demandée</th>
+                  <th>Quantité Produite</th>
+                  <th>Pourcentage</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let objectif of objectives">
+                  <td>{{ objectif.date_debut | date }}</td>
+                  <td>{{ objectif.date_fin | date }}</td>
+                  <td>{{ objectif.qte_demande }}</td>
+                  <td>{{ objectif.qte_produit }}</td>
+                  <td>{{ objectif.poucentage }}%</td>
+                </tr>
+              </tbody>
+            </table>
+
+          </div>
+          <!-- end table -->
+        </div>
       </div>
     </div>
   </div>

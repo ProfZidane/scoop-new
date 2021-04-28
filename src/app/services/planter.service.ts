@@ -26,6 +26,10 @@ pieceURL = environment.endPoint + 'getPlanteurPieceScan/';
     return this.http.get(this.fullURL, { headers: this.GetHeaders() });
   }
 
+  GetInfoById(id): Observable<any> {
+    return this.http.get(this.fullURL + '/' + id, { headers: this.GetHeaders() });
+  }
+
   SetPlanter(data): Observable<any> {
     return this.http.post(this.fullURL, data, { headers: this.GetHeaders() });
   }

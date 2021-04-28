@@ -64,6 +64,10 @@ export class PlanterManagementComponent implements OnInit {
     }
   }
 
+  goToProfile(id) {
+    this.router.navigateByUrl('/home/(child1:planter-profil/' + id + ';open=true)');
+  }
+
   OnFileSelected(event) {
     console.log('Upload files ...');
     const files = <File>event.target.files[0];

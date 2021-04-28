@@ -25,8 +25,11 @@ error = {
   product : false
 };
 dtTrigger: Subject<any> = new Subject<any>();
+dtTrigger2: Subject<any> = new Subject<any>();
+dtTrigger3: Subject<any> = new Subject<any>();
 finances;
 products;
+objectives;
 solde = 0;
 pieceJointe;
   constructor(private router: Router, private userService: AuthService, private route: ActivatedRoute, private location: Location,
@@ -45,6 +48,8 @@ pieceJointe;
 
     this.GetInfoTracker();
     this.GetPrefinances();
+    this.GetProducts();
+    this.GetBilan();
   }
 
   GetInfoTracker() {
@@ -74,6 +79,35 @@ pieceJointe;
         console.log(err);
         this.isLoading.finance = false;
         this.error.finance = true;
+      }
+    );
+  }
+
+  GetProducts() {
+    this.isLoading.product = true;
+    this.error.product = false;
+    this.trackerService.GetProductDelivered(this.id).subscribe(
+      (data) => {
+        console.log(data);
+        this.products = data.data;
+        this.isLoading.product = false;
+        this.dtTrigger2.next();
+      }, (err) => {
+        console.log(err);
+        this.isLoading.product = false;
+        this.error.product = true;
+      }
+    );
+  }
+
+  GetBilan() {
+    this.trackerService.GetObjectifByTracker(this.id).subscribe(
+      (data) => {
+        console.log(data);
+        this.objectives = data.data;
+        this.dtTrigger3.next();
+      }, (err) => {
+        console.log(err);
       }
     );
   }

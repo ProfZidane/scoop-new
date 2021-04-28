@@ -25,7 +25,8 @@ error = {
 
 visibility = {
   input: false,
-  button: false
+  button: false,
+  loadBtn: false
 };
 
 id;
@@ -39,6 +40,8 @@ finalAmount;
 date;
 compte;
 compteList;
+info;
+ifpaid;
   constructor(private router: Router, private userService: AuthService, private location: Location, private route: ActivatedRoute,
               private compteService: CompteService, private salesService: SalesService) { }
 
@@ -54,6 +57,7 @@ compteList;
     console.log(this.id);
     this.getAccounts();
     this.SetTime();
+    this.getById();
   }
 
   ComeBack() {
@@ -95,10 +99,29 @@ compteList;
     );
   }
 
+  getById() {
+    this.salesService.GetInfoWeighingById(this.id).subscribe(
+      (data) => {
+        console.log(data);
+        this.info = data.data;
+        if (this.info.status === 'paid') {
+          this.ifpaid = true;
+        } else {
+          this.ifpaid = false;
+        }
+        console.log(this.ifpaid);
+
+      }, (err) => {
+        console.log(err);
+      }
+    );
+  }
+
   Calculate() {
     console.log(this.buyingPrice);
     this.isLoading.calcul = true;
 
+    this.finalAmount = Number(this.buyingPrice * this.info.poids_net);
     setTimeout( () =>  {
       this.visibility.input = true;
       this.visibility.button = true;
@@ -107,7 +130,28 @@ compteList;
   }
 
   Validation(event) {
+    this.visibility.loadBtn = true;
     console.log(this.finalAmount);
+    const data = {
+      prix_unitaire: Number(this.buyingPrice),
+      montant_total: Number(this.finalAmount),
+      date: this.date,
+      pesee_id: this.info.id,
+      compte_id: this.compte.id
+    };
+
+    console.log(data);
+
+    this.salesService.ValidationPaid(data).subscribe(
+      (success) => {
+        console.log(success);
+        this.visibility.loadBtn = false;
+        this.router.navigateByUrl('/home/(child1:sales-manage;open=true)');
+      }, (err) => {
+        console.log(err);
+        this.visibility.loadBtn = false;
+      }
+    );
   }
 
 }

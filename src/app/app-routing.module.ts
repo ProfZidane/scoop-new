@@ -24,6 +24,7 @@ import { SalesBuyingManagementComponent } from './sales-buying-management/sales-
 import { SalesBuyingDetailComponent } from './sales-buying-detail/sales-buying-detail.component';
 import { SalesHistoryComponent } from './sales-history/sales-history.component';
 import { ObjectiveManagementComponent } from './objective-management/objective-management.component';
+import { ChargeManagementComponent } from './charge-management/charge-management.component';
 
 
 const routes: Routes = [
@@ -140,6 +141,11 @@ const routes: Routes = [
       {
         path: 'objectif-manage',
         component: ObjectiveManagementComponent,
+        outlet: 'child1'
+      },
+      {
+        path: 'charge-manage',
+        component: ChargeManagementComponent,
         outlet: 'child1'
       }
     ]

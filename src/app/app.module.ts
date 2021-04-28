@@ -37,6 +37,7 @@ import { SalesBuyingDetailComponent } from './sales-buying-detail/sales-buying-d
 import { SalesHistoryComponent } from './sales-history/sales-history.component';
 import { ObjectiveManagementComponent } from './objective-management/objective-management.component';
 import { ObjectiveDetailComponent } from './objective-detail/objective-detail.component';
+import { ChargeManagementComponent } from './charge-management/charge-management.component';
 
 @NgModule({
   declarations: [
@@ -67,7 +68,8 @@ import { ObjectiveDetailComponent } from './objective-detail/objective-detail.co
     SalesBuyingDetailComponent,
     SalesHistoryComponent,
     ObjectiveManagementComponent,
-    ObjectiveDetailComponent
+    ObjectiveDetailComponent,
+    ChargeManagementComponent
   ],
   imports: [
     BrowserModule,

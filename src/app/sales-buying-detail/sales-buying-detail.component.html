@@ -35,8 +35,11 @@
         </li>-->
       </ul>
       <form class="form-inline my-2 my-lg-0">
-        <button class="btn btn-outline-info my-2 my-sm-0 mr-5" disabled *ngIf="compte">
-          {{ compte.solde }}
+        <button class="btn btn-outline-info my-2 my-sm-0 mr-5" disabled *ngIf="compte && compte.solde !== null">
+          {{ compte.solde }} FCFA
+        </button>
+        <button class="btn btn-outline-info my-2 my-sm-0 mr-5" disabled *ngIf="compte && compte.solde === null">
+          0 FCFA
         </button>
         <div class="dropdown">
           <button class="btn btn-success text-light dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" *ngIf="userConnected">
@@ -117,7 +120,7 @@
     <h3>Informations Pesée</h3>
     <div class="container table" align="center">
       <table class="table table-borderless" align="center">
-        <thead>
+        <thead align="center">
           <tr>
             <th scope="col">ID</th>
             <th scope="col">Fournisseur</th>
@@ -128,35 +131,28 @@
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <td>ID</td>
-            <td>pmpm</td>
-            <td>Mark</td>
-            <td>Otto</td>
-            <td>@mdo</td>
-            <td>@mdo</td>
-          </tr>
-          <tr>
-            <td>ID</td>
-            <td>Jacob</td>
-            <td>Thornton</td>
-            <td>@fat</td>
-            <td>@mdo</td>
-            <td>@mdo</td>
-          </tr>
-          <tr>
-            <td>ID</td>
-            <td>Larry the Bird</td>
-            <td>@twitter</td>
-            <td>@mdo</td>
-            <td>@mdo</td>
-            <td>@mdo</td>
+          <div class="text-center" *ngIf="!info">
+            <div class="spinner-border" role="status">
+              <span class="sr-only">Loading...</span>
+            </div>
+          </div>
+          <tr *ngIf="info" align="center">
+            <td>{{ info.id }}</td>
+            <td>{{  info.name }}</td>
+            <td>{{ info.type }}</td>
+            <td>{{ info.poids_brut }}</td>
+            <td>{{ info.poids_net }}</td>
+            <td>{{ info.sacs }}</td>
           </tr>
         </tbody>
       </table>
     </div>
 
-    <div class="container p-4 form">
+    <div class="container" align="center" *ngIf="ifpaid === true">
+      <h2 class="text-danger">Cet achat a déjà été effectuer !</h2>
+    </div>
+
+    <div class="container p-4 form" *ngIf="ifpaid === false">
 
       <form method="POST" (ngSubmit)="Validation($event)" align="center">
         <div class="form-group">
@@ -187,7 +183,11 @@
           </div>
         </div>
         <button type="button" (click)="Calculate()" *ngIf="visibility.button === false" class="btn btn-primary">Calculer</button>
-        <button type="submit" class="btn btn-success" *ngIf="visibility.button === true">Valider</button>
+        <button type="submit" class="btn btn-success" *ngIf="visibility.button === true && visibility.loadBtn === false">Valider</button>
+        <button class="btn btn-primary" type="button" disabled *ngIf="visibility.loadBtn === true">
+          <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+          <span class="sr-only">en cours...</span>
+        </button>
       </form>
     </div>
 

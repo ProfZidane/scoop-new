@@ -35,9 +35,9 @@
         </li>-->
       </ul>
       <form class="form-inline my-2 my-lg-0">
-        <button class="btn btn-outline-info my-2 my-sm-0 mr-5" type="button" data-toggle="modal" data-target="#exampleModal18">
+        <!--<button class="btn btn-outline-info my-2 my-sm-0 mr-5" type="button" data-toggle="modal" data-target="#exampleModal18">
           Historiques
-        </button>
+        </button>-->
         <div class="dropdown">
           <button class="btn btn-success text-light dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" *ngIf="userConnected">
             {{ userConnected.name }}
@@ -61,135 +61,29 @@
   <div class="alert alert-danger" *ngIf="error.data === true">
     Une erreur est survenue. Veuillez réessayer s'il vous plait !
   </div>
-  <table datatable class="row-border hover">
+  <table datatable [dtTrigger]="dtTrigger" class="row-border hover" align="center">
     <thead>
       <tr>
         <th>Fournisseur</th>
         <th>Type Fournisseur</th>
         <th>Poids Net</th>
-        <th>Action</th>
+        <th>Poids Brut</th>
+        <th>Nbr Sacs</th>
+        <th>Prix unitaire</th>
+        <th>Montant total</th>
+        <th>Date</th>
       </tr>
     </thead>
-    <tbody>
-      <tr>
-        <td>1</td>
-        <td>Foo</td>
-        <td>Bar</td>
-        <td>
-          <button class="btn btn-outline-info btn-sm" >
-            Traiter
-          </button>
-        </td>
-      </tr>
-      <tr>
-        <td>2</td>
-        <td>Someone</td>
-        <td>Youknow</td>
-        <td>
-          <button class="btn btn-outline-info btn-sm">
-            Traiter
-          </button>
-        </td>
-      </tr>
-      <tr>
-        <td>3</td>
-        <td>Iamout</td>
-        <td>Ofinspiration</td>
-        <td>
-          <button class="btn btn-outline-info btn-sm">
-            Traiter
-          </button>
-        </td>
-      </tr>
-      <tr>
-        <td>4</td>
-        <td>Yoda</td>
-        <td>Skywalker</td>
-        <td>
-          <button class="btn btn-outline-info btn-sm">
-            Traiter
-          </button>
-        </td>
-      </tr>
-      <tr>
-        <td>5</td>
-        <td>Patrick</td>
-        <td>Dupont</td>
-        <td>
-          <button class="btn btn-outline-info btn-sm">
-            Traiter
-          </button>
-        </td>
-      </tr>
-      <tr>
-        <td>6</td>
-        <td>Barack</td>
-        <td>Obama</td>
-        <td>
-          <button class="btn btn-outline-info btn-sm">
-            Traiter
-          </button>
-        </td>
-      </tr>
-      <tr>
-        <td>7</td>
-        <td>François</td>
-        <td>Holland</td>
-        <td>
-          <button class="btn btn-outline-info btn-sm">
-            Traiter
-          </button>
-        </td>
-      </tr>
-      <tr>
-        <td>8</td>
-        <td>Michel</td>
-        <td>Popo</td>
-        <td>
-          <button class="btn btn-outline-info btn-sm">
-            Traiter
-          </button>
-        </td>
-      </tr>
-      <tr>
-        <td>9</td>
-        <td>Chuck</td>
-        <td>Norris</td>
-        <td>
-          <button class="btn btn-outline-info btn-sm">
-            Traiter
-          </button>
-        </td>
-      </tr>
-      <tr>
-        <td>10</td>
-        <td>Simon</td>
-        <td>Robin</td>
-        <td>
-          <button class="btn btn-outline-info btn-sm">
-            Traiter
-          </button>
-        </td>
-      </tr>
-      <tr>
-        <td>11</td>
-        <td>Louis</td>
-        <td>Lin</td>
-        <td>
-          <button class="btn btn-outline-info btn-sm">
-            Traiter
-          </button>
-        </td>
-      </tr>
-      <tr>
-        <td>12</td>
-        <td>Zelda</td>
-        <td>Link</td>
-        <td>
-          <button class="btn btn-outline-info btn-sm">
-            Traiter
-          </button>
-        </td>
+    <tbody align="center">
+      <tr *ngFor="let history of histories">
+        <td>{{ history.name }}</td>
+        <td>{{ history.type }}</td>
+        <td>{{ history.poids_net}}</td>
+        <td>{{ history.poids_brut}}</td>
+        <td>{{ history.sacs}}</td>
+        <td>{{ history.prix_unitaire}}</td>
+        <td>{{ history.montant_total}}</td>
+        <td>{{ history.date }}</td>
       </tr>
     </tbody>
   </table>

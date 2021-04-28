@@ -15,6 +15,7 @@ userConnected;
 right;
 state = false;
 favoris;
+trueFavoris = [];
   constructor(private userService: AuthService, private router: Router, private menuService: MenuService) { }
 
   ngOnInit(): void {
@@ -50,12 +51,20 @@ favoris;
   }
 
   GetFavoris() {
-    let favoris = this.menuService.GetFavoris();
-    // console.log(favoris);
+    /*let favoris = this.menuService.GetFavoris();
     this.favoris = favoris;
     this.favoris = this.favoris.reverse();
     this.favoris = this.favoris.slice(0, 8);
-    console.log(this.favoris);
+    console.log(this.favoris);*/
+    this.favoris = this.menuService.GetFavoris();
+    this.favoris.forEach(element => {
+      if (element.id === JSON.parse(localStorage.getItem('userData')).id) {
+        if (this.trueFavoris.length < 8) {
+          this.trueFavoris.push(element);
+        }
+      }
+    });
+    console.log(this.trueFavoris);
   }
 
   goToRoute(url) {

@@ -6,8 +6,6 @@
 
 h5 {
   font-size: medium;
-  font-family: 'Comfortaa', cursive;
-
 }
 
 button {
@@ -15,7 +13,7 @@ button {
 }
 
 .table-user  {
-  height: 69vh;
+  height: 85vh;
   overflow-y: auto;
 
   padding: 0.5rem;
@@ -27,35 +25,8 @@ button {
 }
 
 
-.bord {
-  border: solid;
-}
-
-
-.screen-profile {
-  height: 84vh;
-}
-
-.text-center {
-  border-radius: 100%;
-}
-
-.text-center > img {
-  border-radius: 100%;
-  width: 100%;
-  height: 100%;
-}
-
-
-.solde {
-  background-color: #ababab;
-  color: white;
-}
-
-
-a.nav-link.active {
-  border: solid;
-  background-color: #28a745;
+select > option {
+  text-transform: capitalize;
 }
 
 

@@ -13,6 +13,8 @@ export class TrackerService {
   getImageURL = environment.endPoint + 'getPisteurPieceScan/';
   getInfoURL = environment.endPoint + 'pisteur/';
   getPrefinance = environment.endPoint + 'getPrefinancementsPisteur/';
+  getProductFinal = environment.endPoint + 'getStocksPisteur/';
+  getBilanURL = environment.endPoint + 'getBilansPisteur/';
   trackers;
   constructor(private http: HttpClient) { }
 
@@ -62,6 +64,16 @@ export class TrackerService {
 
   GetPrefinancementByTracker(id): Observable<any> {
     return this.http.get(this.getPrefinance + id, { headers: this.GetHeaders() });
+  }
+
+
+  GetProductDelivered(id): Observable<any> {
+    return this.http.get(this.getProductFinal + id, { headers: this.GetHeaders() });
+  }
+
+
+  GetObjectifByTracker(id): Observable<any> {
+    return this.http.get(this.getBilanURL + id, { headers: this.GetHeaders() });
   }
 
 }
