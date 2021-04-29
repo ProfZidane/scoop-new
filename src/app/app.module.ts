@@ -38,6 +38,9 @@ import { SalesHistoryComponent } from './sales-history/sales-history.component';
 import { ObjectiveManagementComponent } from './objective-management/objective-management.component';
 import { ObjectiveDetailComponent } from './objective-detail/objective-detail.component';
 import { ChargeManagementComponent } from './charge-management/charge-management.component';
+import { ChargeDetailComponent } from './charge-detail/charge-detail.component';
+import { EntrystockManagementComponent } from './entrystock-management/entrystock-management.component';
+import { ChargeInsertComponent } from './charge-insert/charge-insert.component';
 
 @NgModule({
   declarations: [
@@ -69,7 +72,10 @@ import { ChargeManagementComponent } from './charge-management/charge-management
     SalesHistoryComponent,
     ObjectiveManagementComponent,
     ObjectiveDetailComponent,
-    ChargeManagementComponent
+    ChargeManagementComponent,
+    ChargeDetailComponent,
+    EntrystockManagementComponent,
+    ChargeInsertComponent
   ],
   imports: [
     BrowserModule,

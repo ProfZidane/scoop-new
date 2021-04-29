@@ -1,1 +1,291 @@
-<p>charge-management works!</p>
+<div class="container-fluid principal">
+
+  <!--navbar-->
+  <nav class="navbar navbar-expand-lg navbar-lights p-4">
+    <a class="navbar-brand text-dark">
+      <i class="material-icons" style="cursor: pointer;font-size: 25px;" (click)="ComeBack()">
+        chevron_left
+      </i>
+      Gestion Chargement
+    </a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav mr-auto">
+        <!--<li class="nav-item active">
+          <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">Link</a>
+        </li>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Dropdown
+          </a>
+          <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <a class="dropdown-item" href="#">Action</a>
+            <a class="dropdown-item" href="#">Another action</a>
+            <div class="dropdown-divider"></div>
+            <a class="dropdown-item" href="#">Something else here</a>
+          </div>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link disabled" href="#">Disabled</a>
+        </li>-->
+      </ul>
+      <form class="form-inline my-2 my-lg-0">
+        <button class="btn btn-outline-info my-2 my-sm-0 mr-5" type="button" disabled data-toggle="modal" data-target="#exampleModal16">
+          4500 <small>Sacs</small>
+        </button>
+        <button class="btn btn-outline-info my-2 my-sm-0 mr-5" type="button" data-toggle="modal" data-target="#exampleModal16" (click)="goToEntry()">
+          Entrée Stock
+        </button>
+        <button class="btn btn-outline-info my-2 my-sm-0 mr-5" type="button" data-toggle="modal" data-target="#exampleModal16" (click)="goToCreate()">
+          + Nouveau Chargement
+        </button>
+        <div class="dropdown">
+          <button class="btn btn-success text-light dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" *ngIf="userConnected">
+            {{ userConnected.name }}
+          </button>
+          <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+            <a class="dropdown-item" href="#">Profile</a>
+            <a class="dropdown-item" href="#">Support</a>
+            <a class="dropdown-item text-danger" (click)="Logout()" style="cursor: pointer;">Déconnexion</a>
+          </div>
+        </div>
+      </form>
+    </div>
+  </nav>
+  <!--//nav bar -->
+<div class="container-fluid table-user">
+  <div class="text-center" *ngIf="isLoading.data === true">
+    <div class="spinner-border" role="status">
+      <span class="sr-only">Loading...</span>
+    </div>
+  </div>
+  <div class="alert alert-danger" *ngIf="error.data === true">
+    Une erreur est survenue. Veuillez réessayez plus tard !
+  </div>
+  <table datatable class="row-border hover" [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" id="table" style="">
+    <thead>
+      <tr>
+        <th>Date</th>
+        <th>Numéro</th>
+        <th>Ville destinatrice</th>
+        <th>Nombres Sacs</th>
+        <th>Poids</th>
+        <th>Status</th>
+        <th>Action 1</th>
+        <th>Action 2</th>
+        <th>Action 3</th>
+        <th>Action 4</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let chargement of chargements">
+        <td>{{ chargement.date_chargement }}</td>
+        <td>{{ chargement.numero_chargement}}</td>
+        <td>{{ chargement.ville_destination }}</td>
+        <td>{{ chargement.nbre_sacs }}</td>
+        <td>{{ chargement.poids_tonne }}</td>
+        <td>{{ chargement.status }}</td>
+        <td>
+          <button class="btn btn-outline-info" (click)="goToDetail(id)">
+            Détails
+          </button>
+        </td>
+        <td>
+          <button class="btn btn-outline-warning" (click)="OpenModalUpdate(chargement)">
+            Modifier
+          </button>
+        </td>
+        <td>
+          <button class="btn btn-outline-primary" data-toggle="modal" data-target="#exampleModal26" (click)="OpenModalChange(chargement.id)">
+            Changer destination
+          </button>
+        </td>
+        <td>
+          <button class="btn btn-outline-danger" data-toggle="modal" data-target="#exampleModal27" (click)="OpenModalDelete(chargement.id)">
+            Annuler
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+</div>
+
+</div>
+
+
+
+<!-- Modal 4 -->
+<div class="modal fade" id="exampleModal26" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg" role="document">
+    <form method="POST" (ngSubmit)="ChangeDestination($event)">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Changement de destination</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="clearfix" *ngIf="isLoading.change === true">
+          <span class="text-warning">Changement de destination .....</span>
+          <div class="spinner-border float-right text-warning" role="status">
+            <span class="sr-only">Loading...</span>
+          </div>
+        </div>
+        <div class="alert alert-danger" *ngIf="error.change === true">
+          {{ error.text }}
+        </div>
+          <small class="text-muted">Inscrivez les informations suivantes</small>
+          <br>
+          <div class="row">
+            <div class="col">
+              <label for="">Entrez la nouvelle ville destinatrice</label>
+              <input type="text" name="ville_destination" [(ngModel)]="destination.content.ville" class="form-control" required>
+            </div>
+            <div class="col">
+              <label for="">Entrez le nouveau partenaire</label>
+              <div class="input-group mb-3">
+                <select class="custom-select" name="partner" [(ngModel)]="destination.content.partenaire_id" id="inputGroupSelect01" required *ngIf="partners">
+                  <option *ngFor="let partner of partners" value="{{ partner.id }}">{{ partner.name }}</option>
+                </select>
+              </div>
+            </div>
+          </div>
+          <br>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
+        <button type="submit" class="btn btn-success">Enregistrer</button>
+      </div>
+    </div>
+  </form>
+  </div>
+</div>
+
+
+<!-- Modal 5
+<div class="modal fade" id="exampleModal15" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg" role="document">
+    <form method="POST" (ngSubmit)="UpdateCampaign($event)">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Modification de campagne</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body" *ngIf='campaignFictious'>
+        <div class="clearfix" *ngIf="isLoading.modify === true">
+          <span class="text-warning">Modification de campagne .....</span>
+          <div class="spinner-border float-right text-warning" role="status">
+            <span class="sr-only">Loading...</span>
+          </div>
+        </div>
+        <div class="alert alert-danger" *ngIf="error.modify === true">
+          Une erreur s'est produite. Veuillez vérifiez les informations inscrites svp !
+        </div>
+          <small class="text-muted">Inscrivez les informations suivantes</small>
+          <div class="row">
+            <div class="col">
+              <label for="">Entrez la date de début</label>
+              <input type="date" name="date_debut" [(ngModel)]="campaignFictious.date_debut" class="form-control" required>
+            </div>
+            <div class="col">
+              <label for="">Entrez la date de fin</label>
+              <input type="date" name="date_fin" [(ngModel)]="campaignFictious.date_fin" class="form-control" id="" required>
+            </div>
+          </div>
+          <br>
+          <div class="row">
+            <div class="col">
+              <label for="">Entrez l'état de la campagne</label>
+              <div class="input-group mb-3">
+                <select class="custom-select" name="account" [(ngModel)]="campaignFictious.status" id="inputGroupSelect01" required >
+                  <option value="ouvert">Ouvert</option>
+                  <option value="fermer">Fermer</option>
+                  <option value="a venir">A venir</option>
+                </select>
+              </div>
+            </div>
+          </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
+        <button type="submit" class="btn btn-success">Valider</button>
+      </div>
+    </div>
+  </form>
+  </div>
+</div> -->
+
+
+<!-- Modal 6
+<div class="modal fade" id="exampleModal13" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg" role="document">
+    <form method="POST" (ngSubmit)="DeleteFinance($event)">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Motifs de désactivation</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="clearfix" *ngIf="isLoading.close === true">
+          <span class="text-warning">Désactiver le financement .....</span>
+          <div class="spinner-border float-right text-warning" role="status">
+            <span class="sr-only">Loading...</span>
+          </div>
+        </div>
+        <div class="alert alert-danger" *ngIf="error.close === true">
+          Une erreur s'est produite. Veuillez réessayer plus tard svp !
+        </div>
+          <small class="text-muted">Notifier le motif</small>
+          <div class="row">
+            <div class="col">
+              <label for="">Motifs</label>
+              <textarea name="motifs" class="form-control" [(ngModel)]="financeDelete.motif" id="" cols="30" rows="5" ></textarea>
+            </div>
+          </div>
+          <br>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
+        <button type="submit" class="btn btn-success">Enregistrer</button>
+      </div>
+    </div>
+  </form>
+  </div>
+</div> -->
+
+
+
+<!--  Modal 7
+<div class="modal fade" id="exampleModal11" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Pièce en image</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body" *ngIf='detailPiece'>
+        <p *ngIf="detailPiece.image === ''">
+          En chargement ...
+        </p>
+        <img *ngIf="detailPiece.image !== ''" [src]=detailPiece.image width="100%" height="500px" alt="">
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">OK</button>
+        <button type="button" class="btn btn-success">OK</button>
+      </div>
+    </div>
+  </div>
+</div> -->

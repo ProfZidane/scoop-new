@@ -1,0 +1,169 @@
+<div class="container-fluid principal">
+
+  <!--navbar-->
+  <nav class="navbar navbar-expand-lg navbar-lights p-4">
+    <a class="navbar-brand text-dark">
+      <i class="material-icons" style="cursor: pointer;font-size: 25px;" (click)="ComeBack()">
+        chevron_left
+      </i>
+      Création chargement
+    </a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav mr-auto">
+        <!--<li class="nav-item active">
+          <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">Link</a>
+        </li>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Dropdown
+          </a>
+          <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <a class="dropdown-item" href="#">Action</a>
+            <a class="dropdown-item" href="#">Another action</a>
+            <div class="dropdown-divider"></div>
+            <a class="dropdown-item" href="#">Something else here</a>
+          </div>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link disabled" href="#">Disabled</a>
+        </li>-->
+      </ul>
+      <form class="form-inline my-2 my-lg-0">
+        <div class="dropdown">
+          <button class="btn btn-success text-light dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" *ngIf="userConnected">
+            {{ userConnected.name }}
+          </button>
+          <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+            <a class="dropdown-item" href="#">Profile</a>
+            <a class="dropdown-item" href="#">Support</a>
+            <a class="dropdown-item text-danger" (click)="Logout()" style="cursor: pointer;">Déconnexion</a>
+          </div>
+        </div>
+      </form>
+    </div>
+  </nav>
+  <!--//nav bar -->
+<div class="container-fluid table-user">
+
+  <div class="container p-3 bord">
+
+    <form method="POST" (ngSubmit)="CreateChargement()">
+      <h2>Origine du produit</h2>
+      <div class="form-row">
+        <div class="form-group col-md-6">
+          <label for="inputEmail4">Entrez le numéro du chargement</label>
+          <input type="text" name="numero_chargement" [(ngModel)]="chargement.numero_chargement" class="form-control" id="inputEmail4" placeholder="">
+        </div>
+        <div class="form-group col-md-6">
+          <label for="inputEmail4">Entrez la date de chargement (<span class="text-danger" style="font-size: larger;">*</span>)</label>
+          <input type="date" name="date_chargement" [(ngModel)]="chargement.date_chargement" class="form-control" id="inputEmail4" placeholder="" required>
+        </div>
+        <div class="form-group col-md-6">
+          <label for="inputPassword4">Choisir l'entrepôt <span class="badge badge-success ml-2" style="cursor: pointer;">Ajouter +</span> (<span class="text-danger" style="font-size: larger;">*</span>)</label>
+          <div class="input-group mb-3">
+            <select class="custom-select" name="entrepôt" [(ngModel)]="chargement.entrepot_id" id="inputGroupSelect01" required *ngIf="wareHouses">
+              <option *ngFor="let warehouse of wareHouses" value="{{ warehouse.id }}">{{ warehouse.sous_prefecture }}</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-group col-md-6">
+          <label for="inputEmail4">Entrez la ville de destination</label>
+          <input type="text" name="ville" [(ngModel)]="chargement.ville_destination" class="form-control" id="inputEmail4" placeholder="" required>
+        </div>
+        <div class="form-group col-md-6">
+          <label for="inputPassword4">Entrez l'exportateur <span class="badge badge-success ml-2" style="cursor: pointer;">Ajouter +</span> (<span class="text-danger" style="font-size: larger;">*</span>)</label>
+          <div class="input-group mb-3">
+            <select class="custom-select" name="exportateur" [(ngModel)]="chargement.partenaire_id" id="inputGroupSelect01" required *ngIf="partners">
+              <option *ngFor="let partner of partners" value="{{ partner.id }}">{{ partner.name }}</option>
+            </select>
+          </div>
+        </div>
+      </div>
+      <br>
+      <h2>Informations acheteur</h2>
+      <div class="form-row">
+        <div class="form-group col-md-6">
+          <label for="inputEmail4">Entrez le nom de l'acheteur</label>
+          <input type="text" name="acheteur_name" [(ngModel)]="chargement.acheteur_name" class="form-control" id="inputEmail4" placeholder="">
+        </div>
+        <div class="form-group col-md-6">
+          <label for="inputPassword4">Entrez le contact</label>
+          <input type="text" name="acheteur_contact" [(ngModel)]="chargement.acheteur_contact" class="form-control" id="inputPassword4" placeholder="">
+        </div>
+        <div class="form-group col-md-6">
+          <label for="inputEmail4">Entrez le code de l'acheteur</label>
+          <input type="text" name="acheteur_code" [(ngModel)]="chargement.acheteur_code" class="form-control" id="inputEmail4" placeholder="">
+        </div>
+        <div class="form-group col-md-6">
+          <label for="inputPassword4">Entrez le nom du magasin</label>
+          <input type="text" name="magasin" [(ngModel)]="chargement.magasin" class="form-control" id="inputPassword4" placeholder="">
+        </div>
+      </div>
+      <br>
+      <h2>Informations sur le transport du produit</h2>
+      <div class="form-row">
+        <div class="form-group col-md-6">
+          <label for="inputEmail4">Entrez la dénomination du produit</label>
+          <input type="text" name="produit" [(ngModel)]="chargement.produit" class="form-control" id="inputEmail4" placeholder="">
+        </div>
+        <div class="form-group col-md-6">
+          <label for="inputEmail4">Entrez le nombre de sacs</label>
+          <input type="text" name="nbre_sacs" [(ngModel)]="chargement.nbre_sacs" class="form-control" id="inputEmail4" placeholder="">
+        </div>
+        <div class="form-group col-md-6">
+          <label for="inputPassword4">Entrez le poids théorique en tonne</label>
+          <input type="text" name="poids_tonne" [(ngModel)]="chargement.poids_tonne" class="form-control" id="inputPassword4" placeholder="">
+        </div>
+        <div class="form-group col-md-6">
+          <label for="inputPassword4">Entrez le nom du transporteur</label>
+          <input type="text" name="transporteur" [(ngModel)]="chargement.transporteur" class="form-control" id="inputPassword4" placeholder="">
+        </div>
+        <div class="form-group col-md-6">
+          <label for="inputPassword4">Entrez la marque du camion</label>
+          <input type="text" name="marque_camion" [(ngModel)]="chargement.marque_camion" class="form-control" id="inputPassword4" placeholder="">
+        </div>
+        <div class="form-group col-md-6">
+          <label for="inputEmail4">Entrez le n° d'immatriculation du camion/remorque</label>
+          <input type="text" name="immatriculation_camion" [(ngModel)]="chargement.immatriculation_camion" class="form-control" id="inputEmail4" placeholder="">
+        </div>
+        <div class="form-group col-md-6">
+          <label for="inputPassword4">Entrez l'avant camion</label>
+          <input type="text" name="avant_camion" [(ngModel)]="chargement.avant_camion" class="form-control" id="inputPassword4" placeholder="">
+        </div>
+        <div class="form-group col-md-6">
+          <label for="inputEmail4">Entrez le nom du chauffeur</label>
+          <input type="text" name="chauffeur" [(ngModel)]="chargement.chauffeur" class="form-control" id="inputEmail4" placeholder="">
+        </div>
+        <div class="form-group col-md-6">
+          <label for="inputPassword4">Entrez le n° du permis de conduire</label>
+          <input type="text" name="num_permis" [(ngModel)]="chargement.num_permis" class="form-control" id="inputPassword4" placeholder="">
+        </div>
+      </div>
+
+      <br>
+      <div class="clearfix" *ngIf="isLoading.create === true">
+        <span class="text-warning">Création d'un chargement .....</span>
+        <div class="spinner-border float-right text-warning" role="status">
+          <span class="sr-only">Loading...</span>
+        </div>
+      </div>
+      <div class="alert alert-danger" *ngIf="error.create === true">
+        Une erreur est survenue. Veuillez réessayez plus tard !
+      </div>
+      <div class="alert alert-success" *ngIf="success.create === true">
+        Opération réussie avec succès
+      </div>
+      <br>
+      <button type="submit" class="btn btn-success btn-block">Enregistrer</button>
+    </form>
+  </div>
+
+</div>
+
+</div>

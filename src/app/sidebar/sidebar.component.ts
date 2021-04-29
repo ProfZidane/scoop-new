@@ -56,18 +56,18 @@ export class SidebarComponent implements OnInit {
   GetHistory() {
     this.salesService.GetInfoWeighing().subscribe(
       (data) => {
-        console.log(data);
+        // console.log(data);
         if (data.data.length > 0) {
           this.histories = data.data.length;
-          console.log(this.histories);
-          console.log("notification reçue");
+          // console.log(this.histories);
+          // console.log("notification reçue");
 
         } else {
-          console.log('aucune notif achat');
+          // console.log('aucune notif achat');
         }
 
       }, (err) => {
-        console.log(err);
+        // console.log(err);
       }
     );
   }

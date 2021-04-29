@@ -1,0 +1,120 @@
+import { Component, OnInit } from '@angular/core';
+import { AuthService } from '../services/auth.service';
+import {Location} from '@angular/common';
+import { Observable, Subject, Subscriber, timer } from 'rxjs';
+import { Router } from '@angular/router';
+import { PartnerService } from '../services/partner.service';
+import { WarehouseService } from '../services/warehouse.service';
+import { ChargeService } from '../services/charge.service';
+
+@Component({
+  selector: 'app-charge-insert',
+  templateUrl: './charge-insert.component.html',
+  styleUrls: ['./charge-insert.component.css']
+})
+export class ChargeInsertComponent implements OnInit {
+  userConnected;
+  dtTrigger: Subject<any> = new Subject<any>();
+  isLoading = {
+    create : false,
+    modify: false,
+    close: false
+  };
+  error = {
+    create : false,
+    modify: false,
+    close: false,
+    text: ''
+  };
+  success = {
+    create: false
+  };
+  chargement = {
+    numero_chargement: '',
+    date_chargement: '',
+    entrepot_id: '',
+    ville_destination: '',
+    partenaire_id: '',
+    acheteur_name: '',
+    acheteur_contact: '',
+    acheteur_code: '',
+    magasin: '',
+    produit: '',
+    nbre_sacs: '',
+    poids_tonne: '',
+    transporteur: '',
+    marque_camion: '',
+    immatriculation_camion: '',
+    avant_camion: '',
+    chauffeur: '',
+    num_permis: ''
+  };
+  partners: any;
+  wareHouses: any;
+  constructor(private router: Router, private userService: AuthService, private location: Location,
+              private partenerService: PartnerService, private wareService: WarehouseService, private chargeService: ChargeService) { }
+
+  ngOnInit(): void {
+    if (localStorage.getItem('userData') !== null) {
+      this.userConnected = JSON.parse(localStorage.getItem('userData'));
+    }
+    this.GetPartner();
+    this.GetWareHouses();
+  }
+
+  ComeBack() {
+    this.location.back();
+  }
+
+
+  Logout() {
+    if (this.userService.Logout()) {
+      this.router.navigateByUrl('/');
+    }
+  }
+
+  GetPartner() {
+    this.partenerService.GetPartners().subscribe(
+      (data) => {
+        console.log(data);
+        this.partners = data.data;
+      }, (err) => {
+        console.log(err);
+      }
+    );
+  }
+
+  GetWareHouses() {
+    this.wareService.GetWarehouse().subscribe(
+      (data) => {
+        console.log(data);
+        this.wareHouses = data.entrepots;
+      }, (err) => {
+        console.log(err);
+        if (err.error.message === 'Unauthenticated') {
+          localStorage.removeItem('token');
+          this.router.navigateByUrl('/');
+        }
+      }
+    );
+  }
+
+  CreateChargement() {
+    console.log(this.chargement);
+    this.isLoading.create = true;
+    this.error.create = false;
+    this.success.create = false;
+    this.chargeService.SetChargements(this.chargement).subscribe(
+      (success) => {
+        console.log(success);
+        this.isLoading.create = false;
+        this.success.create = true;
+      }, (err) => {
+        console.log(err);
+        this.isLoading.create = false;
+        this.error.create = true;
+      }
+    );
+  }
+
+}

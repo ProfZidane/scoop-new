@@ -25,6 +25,9 @@ import { SalesBuyingDetailComponent } from './sales-buying-detail/sales-buying-d
 import { SalesHistoryComponent } from './sales-history/sales-history.component';
 import { ObjectiveManagementComponent } from './objective-management/objective-management.component';
 import { ChargeManagementComponent } from './charge-management/charge-management.component';
+import { ChargeDetailComponent } from './charge-detail/charge-detail.component';
+import { EntrystockManagementComponent } from './entrystock-management/entrystock-management.component';
+import { ChargeInsertComponent } from './charge-insert/charge-insert.component';
 
 
 const routes: Routes = [
@@ -146,6 +149,21 @@ const routes: Routes = [
       {
         path: 'charge-manage',
         component: ChargeManagementComponent,
+        outlet: 'child1'
+      },
+      {
+        path: 'charge-detail',
+        component: ChargeDetailComponent,
+        outlet: 'child1'
+      },
+      {
+        path: 'entry-stock',
+        component: EntrystockManagementComponent,
+        outlet: 'child1'
+      },
+      {
+        path: 'charge-insert',
+        component: ChargeInsertComponent,
         outlet: 'child1'
       }
     ]

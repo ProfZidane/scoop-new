@@ -24,7 +24,7 @@
   </div>
 </div>
 
-<div class="row menu-home" align="center">
+<div class="row menu-home" align="center" *ngIf="rightContent.administration.state === true">
   <div class="col-md-12 menu-home-option active" id="home" (click)="isSelected('home')">
     <i class="large material-icons">
       home
@@ -37,7 +37,7 @@
   </div>
   <div class="col-md-12 menu-home-option" id="example" (click)="isSelected('example')">
     <i class="large material-icons" (click)="goToSalesPage()">
-      compare_arrows
+      home
     </i>
     <span style="font-weight: 800;" *ngIf="histories">
       {{ histories }}
