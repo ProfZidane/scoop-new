@@ -18,6 +18,7 @@ export class ChargeManagementComponent implements OnInit {
   isLoading = {
     data : true,
     create : false,
+    create2: false,
     change: false,
     close: false
   };
@@ -43,6 +44,7 @@ export class ChargeManagementComponent implements OnInit {
     }
   };
   statePartner = false;
+
   partner = {
     type: 'personne morale',
     categorie: 'exportateur',
@@ -177,8 +179,28 @@ export class ChargeManagementComponent implements OnInit {
     );
   }
 
+  OpenCreationPartner() {
+    this.statePartner = true;
+  }
+
+  CloseCreationPartner() {
+    this.statePartner = false;
+  }
+
   CreatePartner() {
     console.log(this.partner);
+    this.isLoading.create2 = true;
+    this.partenerService.SetPartners(this.partner).subscribe(
+      (success) => {
+        console.log(success);
+        this.isLoading.create2 = false;
+        this.statePartner = false;
+        this.GetPartner();
+      }, (err) => {
+        console.log(err);
+        this.isLoading.create2 = false;
+      }
+    );
   }
 
 }

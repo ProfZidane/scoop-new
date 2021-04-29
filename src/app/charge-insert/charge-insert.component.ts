@@ -17,6 +17,7 @@ export class ChargeInsertComponent implements OnInit {
   dtTrigger: Subject<any> = new Subject<any>();
   isLoading = {
     create : false,
+    create2: false,
     modify: false,
     close: false
   };
@@ -51,6 +52,18 @@ export class ChargeInsertComponent implements OnInit {
   };
   partners: any;
   wareHouses: any;
+  partner = {
+    type: 'personne morale',
+    categorie: 'exportateur',
+    code: '',
+    status: 'active',
+    name: '',
+    description: ''
+  };
+  state = {
+    partner: false,
+    partnerSuccess: false
+  };
   constructor(private router: Router, private userService: AuthService, private location: Location,
               private partenerService: PartnerService, private wareService: WarehouseService, private chargeService: ChargeService) { }
 
@@ -113,6 +126,24 @@ export class ChargeInsertComponent implements OnInit {
         console.log(err);
         this.isLoading.create = false;
         this.error.create = true;
+      }
+    );
+  }
+
+  CreatePartner(event) {
+    console.log(this.partner);
+    this.isLoading.create2 = true;
+    this.state.partnerSuccess = false;
+    this.partenerService.SetPartners(this.partner).subscribe(
+      (success) => {
+        console.log(success);
+        this.isLoading.create2 = false;
+        this.state.partner = false;
+        this.state.partnerSuccess = true;
+        this.GetPartner();
+      }, (err) => {
+        console.log(err);
+        this.isLoading.create2 = false;
       }
     );
   }

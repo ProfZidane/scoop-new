@@ -77,7 +77,7 @@
           <input type="text" name="ville" [(ngModel)]="chargement.ville_destination" class="form-control" id="inputEmail4" placeholder="" required>
         </div>
         <div class="form-group col-md-6">
-          <label for="inputPassword4">Entrez l'exportateur <span class="badge badge-success ml-2" style="cursor: pointer;">Ajouter +</span> (<span class="text-danger" style="font-size: larger;">*</span>)</label>
+          <label for="inputPassword4">Entrez l'exportateur <span class="badge badge-success ml-2" style="cursor: pointer;" data-toggle="modal" data-target="#exampleModal27">Ajouter +</span> (<span class="text-danger" style="font-size: larger;">*</span>)</label>
           <div class="input-group mb-3">
             <select class="custom-select" name="exportateur" [(ngModel)]="chargement.partenaire_id" id="inputGroupSelect01" required *ngIf="partners">
               <option *ngFor="let partner of partners" value="{{ partner.id }}">{{ partner.name }}</option>
@@ -166,4 +166,49 @@
 
 </div>
 
+</div>
+
+
+<!-- Modal 4 -->
+<div class="modal fade" id="exampleModal27" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg" role="document">
+    <form method="POST" (ngSubmit)="CreatePartner($event)">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Création de partenaire</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="alert alert-success" *ngIf="state.partnerSuccess === true">
+          Création réussie !
+        </div>
+          <br>
+          <div class="row">
+            <div class="col-12">
+              <div class="float-left" style="font-size: 20px; color: cadetblue;" *ngIf="isLoading.create2 === true">
+                Création ....
+              </div>
+              <br>
+            </div>
+              <div class="col">
+                <label for="">Le code exportateur</label>
+                <input type="text" class="form-control" name="code" [(ngModel)]="partner.code" id="">
+              </div>
+              <div class="col">
+                <label for="">Le nom</label>
+                <input type="text" name="name" [(ngModel)]="partner.name" class="form-control" placeholder="" required>
+              </div>
+
+          </div>
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
+        <button type="submit" class="btn btn-success">Enregistrer</button>
+      </div>
+    </div>
+  </form>
+  </div>
 </div>

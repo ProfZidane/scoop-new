@@ -149,7 +149,7 @@
               <input type="text" name="ville_destination" [(ngModel)]="destination.content.ville" class="form-control" required>
             </div>
             <div class="col">
-              <label for="">Entrez le nouveau partenaire <span class="badge badge-success ml-2" style="cursor: pointer;">Ajouter +</span></label>
+              <label for="">Entrez le nouveau partenaire <span class="badge badge-success ml-2" style="cursor: pointer;" (click)="OpenCreationPartner()">Ajouter +</span></label>
               <div class="input-group mb-3">
                 <select class="custom-select" name="partner" [(ngModel)]="destination.content.partenaire_id" id="inputGroupSelect01" required *ngIf="partners">
                   <option *ngFor="let partner of partners" value="{{ partner.id }}">{{ partner.name }}</option>
@@ -159,17 +159,28 @@
           </div>
           <br>
           <div class="row" *ngIf="statePartner === true">
-            <form method="post">
+            <div class="col-12">
+              <div class="float-left" style="font-size: 20px; color: cadetblue;" *ngIf="isLoading.create2 === true">
+                Création ....
+              </div>
+              <div class="float-right text-danger">
+                <i class="large material-icons" style="cursor: pointer;" (click)="CloseCreationPartner()">
+                  clear
+                </i>
+              </div>
+            </div>
               <div class="col">
                 <label for="">Le code exportateur</label>
-                <input type="text" name="code" [(ngModel)]="partner.code" id="">
+                <input type="text" class="form-control" name="code" [(ngModel)]="partner.code" id="">
               </div>
               <div class="col">
                 <label for="">Le nom</label>
                 <input type="text" name="name" [(ngModel)]="partner.name" class="form-control" placeholder="" required>
               </div>
-              <button (click)="CreatePartner()" class="btn btn-success">Valider</button>
-            </form>
+              <div class="col-12">
+                <br>
+                <button type="button" (click)="CreatePartner()" class="btn btn-outline-success btn-block">Valider</button>
+              </div>
           </div>
 
       </div>

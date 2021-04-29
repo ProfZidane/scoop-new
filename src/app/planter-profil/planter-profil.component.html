@@ -85,16 +85,16 @@
       <div class="row">
         <div class="col-md-12 p-3">
           <ul class="nav nav-pills nav-justified mb-3" id="pills-tab" role="tablist">
-            <!--<li class="nav-item">
-              <a class="nav-link active" id="pills-home-tab" data-toggle="pill" href="#pills-home" role="tab" aria-controls="pills-home" aria-selected="true">
-                Financements Reçus
-              </a>
-            </li> -->
             <li class="nav-item">
+              <a class="nav-link active" id="pills-home-tab" data-toggle="pill" href="#pills-home" role="tab" aria-controls="pills-home" aria-selected="true">
+                  Produits Livrés
+              </a>
+            </li>
+            <!--<li class="nav-item">
               <a class="nav-link active" id="pills-profile-tab" data-toggle="pill" href="#pills-profile" role="tab" aria-controls="pills-profile" aria-selected="false">
                 Produits Livrés
               </a>
-            </li>
+            </li>-->
             <!--<li class="nav-item">
               <a class="nav-link" id="pills-contact-tab" data-toggle="pill" href="#pills-contact" role="tab" aria-controls="pills-contact" aria-selected="false">Contact</a>
             </li> -->
@@ -105,9 +105,9 @@
         </div>-->
       </div>
       <div class="tab-content" id="pills-tabContent">
-        <!--<div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
+        <div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
           <div class="container-fluid table-user">
-            <div class="text-center" *ngIf="isLoading.finance === true">
+            <div class="text-center" *ngIf="isLoading.product === true">
               <div class="spinner-border" role="status">
                 <span class="sr-only">Loading...</span>
               </div>
@@ -115,29 +115,29 @@
             <table datatable class="row-border hover" [dtTrigger]="dtTrigger" id="table" style="">
               <thead>
                 <tr>
+                  <th>Poids Brut</th>
+                  <th>Poids Net</th>
+                  <th>Nbr Sacs</th>
+                  <th>Status</th>
                   <th>Date</th>
-                  <th>Montant</th>
-                  <th></th>
                 </tr>
               </thead>
               <tbody>
-                <tr *ngFor="let finance of finances">
-                  <td>{{ finance.date }}</td>
-                  <td>{{ finance.montant | number }}</td>
-                  <td>
-                    <button class="btn btn-outline-info btn-sm" data-toggle="modal" data-target="#exampleModal25" (click)="OpenModelImage(finance.piece_jointe)">
-                       Pièces
-                    </button>
-                  </td>
+                <tr *ngFor="let stock of stockage">
+                  <td>{{ stock.poids_brut }}</td>
+                  <td>{{ stock.poids_net }}</td>
+                  <td>{{ stock.sacs}}</td>
+                  <td>{{ stock.status}}</td>
+                  <td>{{ stock.created_at }}</td>
                 </tr>
               </tbody>
             </table>
 
           </div>
-        </div>-->
-        <div class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">
-          Produits Livrés
         </div>
+        <!--<div class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">
+          Produits Livrés .;
+        </div> -->
         <!--<div class="tab-pane fade" id="pills-contact" role="tabpanel" aria-labelledby="pills-contact-tab">...</div> -->
       </div>
     </div>

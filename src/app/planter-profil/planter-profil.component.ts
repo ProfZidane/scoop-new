@@ -17,16 +17,17 @@ export class PlanterProfilComponent implements OnInit {
   pieceJointe;
   isLoading = {
     info : true,
-    finance : true,
-    product : false
+    finance : false,
+    product : true
   };
 
   error = {
     data : false,
-    finance : false
+    product : false
   };
   id
   planterInfo;
+  stockage;
   constructor(private planterService: PlanterService, private userService: AuthService, private location: Location,
               private router: Router, private route: ActivatedRoute) { }
 
@@ -41,6 +42,7 @@ export class PlanterProfilComponent implements OnInit {
     );
     console.log(this.id);
     this.GetPlanterInfo();
+    this.GetStock();
   }
 
   ComeBack() {
@@ -63,6 +65,23 @@ export class PlanterProfilComponent implements OnInit {
       }, (err) => {
         console.log(err);
         this.isLoading.info = false;
+      }
+    );
+  }
+
+  GetStock() {
+    this.isLoading.product = true;
+    this.error.product = false;
+    this.planterService.GetStockageById(this.id).subscribe(
+      (data) => {
+        console.log(data);
+        this.isLoading.product = false;
+        this.stockage = data.data;
+        this.dtTrigger.next();
+      }, (err) => {
+        console.log(err);
+        this.isLoading.product = false;
+        this.error.product = true;
       }
     );
   }

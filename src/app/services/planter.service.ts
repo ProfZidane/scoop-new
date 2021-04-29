@@ -9,6 +9,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 export class PlanterService {
 fullURL = environment.endPoint + 'planteur';
 pieceURL = environment.endPoint + 'getPlanteurPieceScan/';
+stockURL = environment.endPoint + 'getStocksPlanteur/';
   constructor(private http: HttpClient) { }
 
   GetHeaders() {
@@ -44,5 +45,9 @@ pieceURL = environment.endPoint + 'getPlanteurPieceScan/';
 
   GetPieceScanPlanter(id): Observable<any> {
     return this.http.get(this.pieceURL + id, { headers: this.GetHeaders() });
+  }
+
+  GetStockageById(id): Observable<any> {
+    return this.http.get(this.stockURL + id, { headers: this.GetHeaders() });
   }
 }
