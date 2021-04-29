@@ -24,7 +24,7 @@
   </div>
 </div>
 
-<div class="row menu-home" align="center" *ngIf="rightContent.administration.state === true">
+<div class="row menu-home" align="center">
   <div class="col-md-12 menu-home-option active" id="home" (click)="isSelected('home')">
     <i class="large material-icons">
       home
@@ -36,12 +36,12 @@
     </i>
   </div>
   <div class="col-md-12 menu-home-option" id="example" (click)="isSelected('example')">
-    <i class="large material-icons" (click)="goToSalesPage()">
+    <i class="large material-icons">
       home
     </i>
-    <span style="font-weight: 800;" *ngIf="histories">
+    <!--<span style="font-weight: 800;" *ngIf="histories">
       {{ histories }}
-    </span>
+    </span> -->
   </div>
   <div class="col-md-12 menu-home-option" id="menu" (click)="isSelected('menu')">
     <i class="large material-icons">

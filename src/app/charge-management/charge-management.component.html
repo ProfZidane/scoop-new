@@ -145,11 +145,11 @@
           <br>
           <div class="row">
             <div class="col">
-              <label for="">Entrez la nouvelle ville destinatrice</label>
+              <label for="">Entrez la nouvelle ville destinatrice </label>
               <input type="text" name="ville_destination" [(ngModel)]="destination.content.ville" class="form-control" required>
             </div>
             <div class="col">
-              <label for="">Entrez le nouveau partenaire</label>
+              <label for="">Entrez le nouveau partenaire <span class="badge badge-success ml-2" style="cursor: pointer;">Ajouter +</span></label>
               <div class="input-group mb-3">
                 <select class="custom-select" name="partner" [(ngModel)]="destination.content.partenaire_id" id="inputGroupSelect01" required *ngIf="partners">
                   <option *ngFor="let partner of partners" value="{{ partner.id }}">{{ partner.name }}</option>
@@ -158,6 +158,20 @@
             </div>
           </div>
           <br>
+          <div class="row" *ngIf="statePartner === true">
+            <form method="post">
+              <div class="col">
+                <label for="">Le code exportateur</label>
+                <input type="text" name="code" [(ngModel)]="partner.code" id="">
+              </div>
+              <div class="col">
+                <label for="">Le nom</label>
+                <input type="text" name="name" [(ngModel)]="partner.name" class="form-control" placeholder="" required>
+              </div>
+              <button (click)="CreatePartner()" class="btn btn-success">Valider</button>
+            </form>
+          </div>
+
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
@@ -222,7 +236,7 @@
     </div>
   </form>
   </div>
-</div> -->
+</div>-->
 
 
 <!-- Modal 6

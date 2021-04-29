@@ -41,6 +41,7 @@ import { ChargeManagementComponent } from './charge-management/charge-management
 import { ChargeDetailComponent } from './charge-detail/charge-detail.component';
 import { EntrystockManagementComponent } from './entrystock-management/entrystock-management.component';
 import { ChargeInsertComponent } from './charge-insert/charge-insert.component';
+import { ChargeModificationComponent } from './charge-modification/charge-modification.component';
 
 @NgModule({
   declarations: [
@@ -75,7 +76,8 @@ import { ChargeInsertComponent } from './charge-insert/charge-insert.component';
     ChargeManagementComponent,
     ChargeDetailComponent,
     EntrystockManagementComponent,
-    ChargeInsertComponent
+    ChargeInsertComponent,
+    ChargeModificationComponent
   ],
   imports: [
     BrowserModule,

@@ -42,6 +42,15 @@ export class ChargeManagementComponent implements OnInit {
       partenaire_id: ''
     }
   };
+  statePartner = false;
+  partner = {
+    type: 'personne morale',
+    categorie: 'exportateur',
+    code: '',
+    status: 'active',
+    name: '',
+    description: ''
+  };
   partners: any;
   wareHouses: any;
   constructor(private router: Router, private userService: AuthService, private location: Location,
@@ -166,6 +175,10 @@ export class ChargeManagementComponent implements OnInit {
         this.error.change = true;
       }
     );
+  }
+
+  CreatePartner() {
+    console.log(this.partner);
   }
 
 }
