@@ -14,6 +14,7 @@ export class WarehouseManagementComponent implements OnInit {
   wareHouses;
   dtTrigger: Subject<any> = new Subject<any>();
   wareHouseInfo = {
+    name: '',
     region: 'Choisir une région...',
     departement: '',
     sous_prefecture: '',
@@ -25,6 +26,7 @@ export class WarehouseManagementComponent implements OnInit {
   };
   wareHouseUpdating = {
     id : '',
+    name: '',
     village : '',
     adresse : '',
     telephone : '',

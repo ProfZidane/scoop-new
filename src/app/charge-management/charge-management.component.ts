@@ -81,9 +81,6 @@ export class ChargeManagementComponent implements OnInit {
     }
   }
 
-  CreateChargement() {
-
-  }
 
   GetPartner() {
     this.partenerService.GetPartners().subscribe(
@@ -130,12 +127,10 @@ export class ChargeManagementComponent implements OnInit {
   }
 
 
-  DeleteChargement() {
 
-  }
 
-  OpenModalUpdate(object) {
-    this.chargementFictious = object;
+  OpenUpdate(id) {
+    this.router.navigateByUrl('/home/(child1:charge-modify/' + id + ';open=true)');
   }
 
   OpenModalDelete(id) {
@@ -151,7 +146,7 @@ export class ChargeManagementComponent implements OnInit {
   }
 
   goToDetail(id) {
-    this.router.navigateByUrl('/home/(child1:charge-detail;open=true)');
+    this.router.navigateByUrl('/home/(child1:charge-detail/' + id + ';open=true)');
   }
 
   goToEntry() {
@@ -199,6 +194,23 @@ export class ChargeManagementComponent implements OnInit {
       }, (err) => {
         console.log(err);
         this.isLoading.create2 = false;
+      }
+    );
+  }
+
+
+  DeleteChargement(event) {
+    this.isLoading.close = true;
+    this.error.close = false;
+    this.chargeService.DisableChargement(this.chargementDelete.id, { motif: this.chargementDelete.motif }).subscribe(
+      (success) => {
+        console.log(success);
+        this.isLoading.close = false;
+      }, (err) => {
+        console.log(err);
+        this.isLoading.close = false;
+        this.error.close = true;
+
       }
     );
   }

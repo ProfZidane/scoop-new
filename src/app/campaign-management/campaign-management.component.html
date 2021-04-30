@@ -140,6 +140,10 @@
           <br>
           <div class="row">
             <div class="col">
+              <label for="">Nommer la campagne</label>
+              <input type="text" name="title" [(ngModel)]="campaign.title" id="" class="form-control">
+            </div>
+            <div class="col">
               <label for="">Entrez l'état de la campagne</label>
               <div class="input-group mb-3">
                 <select class="custom-select" name="account" [(ngModel)]="campaign.status" id="inputGroupSelect01" required >

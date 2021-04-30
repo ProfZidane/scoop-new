@@ -38,6 +38,7 @@ export class CampaignManagementComponent implements OnInit {
     motif : ''
   };
   campaign = {
+    title: '',
     status: 'ouvert',
     date_debut: '',
     date_fin: ''

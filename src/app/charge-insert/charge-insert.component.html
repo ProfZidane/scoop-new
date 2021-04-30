@@ -65,7 +65,7 @@
           <input type="date" name="date_chargement" [(ngModel)]="chargement.date_chargement" class="form-control" id="inputEmail4" placeholder="" required>
         </div>
         <div class="form-group col-md-6">
-          <label for="inputPassword4">Choisir l'entrepôt <span class="badge badge-success ml-2" style="cursor: pointer;">Ajouter +</span> (<span class="text-danger" style="font-size: larger;">*</span>)</label>
+          <label for="inputPassword4">Choisir l'entrepôt <span class="badge badge-success ml-2"  data-toggle="modal" data-target="#exampleModal28" style="cursor: pointer;">Ajouter +</span> (<span class="text-danger" style="font-size: larger;">*</span>)</label>
           <div class="input-group mb-3">
             <select class="custom-select" name="entrepôt" [(ngModel)]="chargement.entrepot_id" id="inputGroupSelect01" required *ngIf="wareHouses">
               <option *ngFor="let warehouse of wareHouses" value="{{ warehouse.id }}">{{ warehouse.sous_prefecture }}</option>
@@ -203,6 +203,117 @@
 
           </div>
 
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
+        <button type="submit" class="btn btn-success">Enregistrer</button>
+      </div>
+    </div>
+  </form>
+  </div>
+</div>
+
+<!-- Modal 5 -->
+<div class="modal fade" id="exampleModal28" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg" role="document">
+    <form method="POST" (ngSubmit)="CreateWarehouse($event)">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Création de la base</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="alert alert-success" *ngIf="state.warehousSuccess === true">
+          Création réussie !
+        </div>
+        <div class="clearfix" *ngIf="state.warehouse === true">
+          <span class="text-warning">Création de la base  .....</span>
+          <div class="spinner-border float-right text-warning" role="status">
+            <span class="sr-only">Loading...</span>
+          </div>
+        </div>
+
+          <small class="text-muted">Inscrivez les informations suivantes</small>
+          <br>
+          <br>
+          <div class="row">
+            <div class="col">
+              <div class="input-group mb-3">
+                <select class="custom-select" name="region" [(ngModel)]="warehouse.region" id="inputGroupSelect01">
+                  <option selected>Choisir une région...</option>
+                  <option value="n'zi">N’Zi</option>
+                  <option value="Iffou">Iffou</option>
+                  <option value="Bélier">Bélier</option>
+                  <option value="Moronou">Moronou</option>
+                  <option value="Indénié-Djuablin">Indénié-Djuablin</option>
+                  <option value="Sud-Comoé">Sud-Comoé</option>
+                  <option value="Folon">Folon</option>
+                  <option value="Kabadougou">Kabadougou</option>
+                  <option value="Gôh">Gôh</option>
+                  <option value="Lôh-Djiboua">Lôh-Djiboua</option>
+                  <option value="Agnéby-Tiassa">Agnéby-Tiassa</option>
+                  <option value="Mé">Mé</option>
+                  <option value="Grands Ponts">Grands Ponts</option>
+                  <option value="Tonkpi">Tonkpi</option>
+                  <option value="Cavally">Cavally</option>
+                  <option value="Guémon">Guémon</option>
+                  <option value="Haut-Sassandra">Haut-Sassandra</option>
+                  <option value="Marahoué">Marahoué</option>
+                  <option value="Poro">Poro</option>
+                  <option value="Tchologo">Tchologo</option>
+                  <option value="Bagoué">Bagoué</option>
+                  <option value="Nawa">Nawa</option>
+                  <option value="San-Pédro">San-Pédro</option>
+                  <option value="Gbôklé">Gbôklé</option>
+                  <option value="Hambol">Hambol</option>
+                  <option value="Gbêkê">Gbêkê</option>
+                  <option value="Béré">Béré</option>
+                  <option value="Bafing">Bafing</option>
+                  <option value="Worodougou">Worodougou</option>
+                  <option value="Bounkani">Bounkani</option>
+                  <option value="Gontougo">Gontougo</option>
+                </select>
+              </div>
+            </div>
+            <div class="col">
+              <input type="text" name="departement" [(ngModel)]="warehouse.departement" class="form-control" placeholder="Entrez le département">
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col">
+              <input type="text" name="sous_departement" [(ngModel)]="warehouse.sous_prefecture" class="form-control" placeholder="Entrez la sous-préfecture">
+            </div>
+            <div class="col">
+              <input type="text" name="village" [(ngModel)]="warehouse.village" class="form-control" placeholder="Entrez le village">
+            </div>
+          </div>
+          <br>
+          <div class="row">
+            <div class="col">
+              <input type="text" name="adresse" [(ngModel)]="warehouse.adresse" class="form-control" placeholder="Entrez le nom de la base">
+            </div>
+            <div class="col">
+              <input type="text" name="telephone" [(ngModel)]="warehouse.telephone" class="form-control" placeholder="Entrez le numéro de téléphone">
+            </div>
+          </div>
+          <br>
+          <div class="row">
+            <div class="col">
+              <div class="input-group mb-3">
+                <select class="custom-select" name="status" [(ngModel)]="warehouse.status" id="inputGroupSelect01">
+                  <option selected>Choisir un status...</option>
+                  <option value="active">Active</option>
+                  <option value="inactive">Inactive</option>
+                </select>
+              </div>
+            </div>
+            <div class="col">
+              <input type="email" name="email" [(ngModel)]="warehouse.email" class="form-control" placeholder="Entrez l' adresse e-mail">
+            </div>
+          </div>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>

@@ -125,8 +125,8 @@
             <th scope="col">ID</th>
             <th scope="col">Fournisseur</th>
             <th scope="col">Type</th>
-            <th scope="col">Poids Brute</th>
-            <th scope="col">Poids Net</th>
+            <th scope="col">Poids Brute (kg)</th>
+            <th scope="col">Poids Net (kg)</th>
             <th scope="col">Nombres Sacs</th>
           </tr>
         </thead>
@@ -156,7 +156,7 @@
 
       <form method="POST" (ngSubmit)="Validation($event)" align="center">
         <div class="form-group">
-          <label for="exampleInputEmail1">Prix d'achât</label>
+          <label for="exampleInputEmail1">Prix d'achât du kg</label>
           <input type="number" name="price" [(ngModel)]="buyingPrice" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="">
         </div>
         <br>

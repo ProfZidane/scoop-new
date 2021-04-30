@@ -91,12 +91,12 @@
         <td>{{ chargement.poids_tonne }}</td>
         <td>{{ chargement.status }}</td>
         <td>
-          <button class="btn btn-outline-info" (click)="goToDetail(id)">
+          <button class="btn btn-outline-info" (click)="goToDetail(chargement.id)">
             Détails
           </button>
         </td>
         <td>
-          <button class="btn btn-outline-warning" (click)="OpenModalUpdate(chargement)">
+          <button class="btn btn-outline-warning" (click)="OpenUpdate(chargement.id)">
             Modifier
           </button>
         </td>
@@ -106,7 +106,7 @@
           </button>
         </td>
         <td>
-          <button class="btn btn-outline-danger" data-toggle="modal" data-target="#exampleModal27" (click)="OpenModalDelete(chargement.id)">
+          <button class="btn btn-outline-danger" data-toggle="modal" data-target="#exampleModal29" (click)="OpenModalDelete(chargement.id)">
             Annuler
           </button>
         </td>
@@ -250,10 +250,10 @@
 </div>-->
 
 
-<!-- Modal 6
-<div class="modal fade" id="exampleModal13" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<!-- Modal 6 -->
+<div class="modal fade" id="exampleModal29" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-lg" role="document">
-    <form method="POST" (ngSubmit)="DeleteFinance($event)">
+    <form method="POST" (ngSubmit)="DeleteChargement($event)">
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title" id="exampleModalLabel">Motifs de désactivation</h5>
@@ -263,7 +263,7 @@
       </div>
       <div class="modal-body">
         <div class="clearfix" *ngIf="isLoading.close === true">
-          <span class="text-warning">Désactiver le financement .....</span>
+          <span class="text-warning">Annuler le chargement .....</span>
           <div class="spinner-border float-right text-warning" role="status">
             <span class="sr-only">Loading...</span>
           </div>
@@ -275,7 +275,7 @@
           <div class="row">
             <div class="col">
               <label for="">Motifs</label>
-              <textarea name="motifs" class="form-control" [(ngModel)]="financeDelete.motif" id="" cols="30" rows="5" ></textarea>
+              <textarea name="motifs" class="form-control" [(ngModel)]="chargementDelete.motif" id="" cols="30" rows="5" ></textarea>
             </div>
           </div>
           <br>
@@ -287,7 +287,7 @@
     </div>
   </form>
   </div>
-</div> -->
+</div>
 
 
 

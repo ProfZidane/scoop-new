@@ -73,17 +73,26 @@ ifpaid;
 
   SetTime() {
     const year = new Date().getFullYear();
-    const month = new Date().getMonth();
-    const day = new Date().getDate();
+    const month = new Date().toLocaleDateString();
+    // const t = month.getMonth();
+    console.log(month);
+    const t = month.split('/');
+    console.log(t);
+    const newDate = t[t.length - 1] + '-' + t[t.length - 2] + '-' + t[t.length - 3];
+    console.log(newDate);
+
+    this.date = newDate;
+
+    /*const day = new Date().getDate();
     let month2 = '';
     if (month < 10) {
       month2 = '0' + month;
     } else {
       month2 = month.toString();
-    }
-    const formatDate = year + '-' + month2 + '-' + day;
+    }*/
+    /*const formatDate = year + '-' + month2 + '-' + day;
     console.log(formatDate);
-    this.date = formatDate;
+    this.date = formatDate;*/
 
   }
 
@@ -93,6 +102,8 @@ ifpaid;
         console.log(data);
         this.compteList = data.data;
         this.compte = data.data[0];
+        console.log(this.compte);
+
       }, (err) => {
         console.log(err);
       }
@@ -130,28 +141,30 @@ ifpaid;
   }
 
   Validation(event) {
-    this.visibility.loadBtn = true;
-    console.log(this.finalAmount);
-    const data = {
-      prix_unitaire: Number(this.buyingPrice),
-      montant_total: Number(this.finalAmount),
-      date: this.date,
-      pesee_id: this.info.id,
-      compte_id: this.compte.id
-    };
+    if (confirm('Êtes-vous sur de vouloir valider ?')) {
+      this.visibility.loadBtn = true;
+      console.log(this.finalAmount);
+      const data = {
+        prix_unitaire: Number(this.buyingPrice),
+        montant_total: Number(this.finalAmount),
+        date_achat: this.date,
+        pesee_id: this.info.id,
+        compte_id: this.compte.id
+      };
 
-    console.log(data);
+      console.log(data);
 
-    this.salesService.ValidationPaid(data).subscribe(
-      (success) => {
-        console.log(success);
-        this.visibility.loadBtn = false;
-        this.router.navigateByUrl('/home/(child1:sales-manage;open=true)');
-      }, (err) => {
-        console.log(err);
-        this.visibility.loadBtn = false;
-      }
-    );
+      this.salesService.ValidationPaid(data).subscribe(
+        (success) => {
+          console.log(success);
+          this.visibility.loadBtn = false;
+          this.router.navigateByUrl('/home/(child1:sales-manage;open=true)');
+        }, (err) => {
+          console.log(err);
+          this.visibility.loadBtn = false;
+        }
+      );
+    }
   }
 
 }

@@ -9,6 +9,7 @@ import { environment } from '../../environments/environment.prod';
 export class SalesService {
 fullURL = environment.endPoint + 'stock';
 paidURL = environment.endPoint + 'achat';
+historyByDateURL = environment.endPoint + 'getHistoriqueAchats';
   constructor(private http: HttpClient) { }
 
   GetHeaders() {
@@ -36,6 +37,10 @@ paidURL = environment.endPoint + 'achat';
 
   GetHistorySales(): Observable<any> {
     return this.http.get(this.paidURL, { headers: this.GetHeaders() });
+  }
+
+  GetHistorySales2(data): Observable<any> {
+    return this.http.post(this.historyByDateURL, data, { headers: this.GetHeaders() });
   }
 
   ValidationPaid(data): Observable<any> {

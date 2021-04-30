@@ -52,6 +52,9 @@ button {
   color: white;
 }
 
+a.nav-link {
+  color: black;
+}
 
 a.nav-link.active {
   border: solid;

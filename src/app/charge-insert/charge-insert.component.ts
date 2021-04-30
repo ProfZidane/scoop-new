@@ -60,9 +60,21 @@ export class ChargeInsertComponent implements OnInit {
     name: '',
     description: ''
   };
+  warehouse = {
+    region: 'Choisir une région...',
+    departement: '',
+    sous_prefecture: '',
+    village: '',
+    adresse: '',
+    telephone: '',
+    status: 'active',
+    email: ''
+  };
   state = {
     partner: false,
-    partnerSuccess: false
+    partnerSuccess: false,
+    warehouse: false,
+    warehousSuccess: false
   };
   constructor(private router: Router, private userService: AuthService, private location: Location,
               private partenerService: PartnerService, private wareService: WarehouseService, private chargeService: ChargeService) { }
@@ -122,6 +134,26 @@ export class ChargeInsertComponent implements OnInit {
         console.log(success);
         this.isLoading.create = false;
         this.success.create = true;
+        this.chargement = {
+          numero_chargement: '',
+          date_chargement: '',
+          entrepot_id: '',
+          ville_destination: '',
+          partenaire_id: '',
+          acheteur_name: '',
+          acheteur_contact: '',
+          acheteur_code: '',
+          magasin: '',
+          produit: '',
+          nbre_sacs: '',
+          poids_tonne: '',
+          transporteur: '',
+          marque_camion: '',
+          immatriculation_camion: '',
+          avant_camion: '',
+          chauffeur: '',
+          num_permis: ''
+        };
       }, (err) => {
         console.log(err);
         this.isLoading.create = false;
@@ -144,6 +176,23 @@ export class ChargeInsertComponent implements OnInit {
       }, (err) => {
         console.log(err);
         this.isLoading.create2 = false;
+      }
+    );
+  }
+
+  CreateWarehouse(event) {
+    this.state.warehouse = true;
+    console.log(this.warehouse);
+    this.wareService.SetWarehouse(this.warehouse).subscribe(
+      (success) => {
+        console.log(success);
+        this.state.warehouse = false;
+        this.state.warehousSuccess = true;
+        this.GetWareHouses();
+        console.log('action finie');
+      }, (err) => {
+        console.log(err);
+        this.state.warehouse = false;
       }
     );
   }

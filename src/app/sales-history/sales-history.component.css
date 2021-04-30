@@ -13,7 +13,7 @@ button {
 }
 
 .table-user  {
-  height: 85vh;
+  height: 72.5vh;
   overflow-y: auto;
 
   padding: 0.5rem;
@@ -27,6 +27,10 @@ button {
 
 select > option {
   text-transform: capitalize;
+}
+
+.bord {
+  border: solid;
 }
 
 

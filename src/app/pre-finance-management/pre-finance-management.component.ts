@@ -17,7 +17,8 @@ export class PreFinanceManagementComponent implements OnInit {
     data : true,
     create : false,
     modify: false,
-    close: false
+    close: false,
+    simulate: false
   };
   error = {
     data : false,
@@ -52,6 +53,12 @@ export class PreFinanceManagementComponent implements OnInit {
   setTimer;
   accountList: any;
   trackers: any;
+  simulateData = {
+    state: false,
+    price: '',
+    montant: '',
+    sac: ''
+  };
   constructor(private router: Router, private userService: AuthService, private location: Location,
               private prefinancementService: PreFinanceService, private trackerService: TrackerService,
               private accountService: CompteService) { }
@@ -235,6 +242,18 @@ export class PreFinanceManagementComponent implements OnInit {
 
   OpenModalPieceJointe(pieceJoint) {
     this.prefinancementDetail = pieceJoint;
+  }
+
+  Simulation() {
+    this.isLoading.simulate = true;
+    this.simulateData.state = false;
+    console.log(this.simulateData);
+    const montant = Number(this.simulateData.montant) / Number(this.simulateData.price);
+    console.log(montant);
+
+    this.simulateData.sac = montant.toString();
+    this.isLoading.simulate = false;
+    this.simulateData.state = true;
   }
 
 }
