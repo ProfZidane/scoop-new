@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../services/auth.service';
 import { Router } from '@angular/router';
 import { MenuService } from '../services/menu.service';
+import { ObjectiveService } from '../services/objective.service';
 
 @Component({
   selector: 'app-mainpage',
@@ -11,12 +12,15 @@ import { MenuService } from '../services/menu.service';
 export class MainpageComponent implements OnInit {
 users;
 loading = true;
+loading2 = true;
 userConnected;
 right;
 state = false;
 favoris;
 trueFavoris = [];
-  constructor(private userService: AuthService, private router: Router, private menuService: MenuService) { }
+  objectives: any;
+  constructor(private userService: AuthService, private router: Router, private menuService: MenuService,
+              private objectifService: ObjectiveService) { }
 
   ngOnInit(): void {
     this.GetUsers();
@@ -35,6 +39,7 @@ trueFavoris = [];
     }
 
     this.GetFavoris();
+    this.GetObjectif();
   }
 
   GetUsers() {
@@ -46,6 +51,19 @@ trueFavoris = [];
       }, (err) => {
         console.log(err);
         this.loading = false;
+      }
+    );
+  }
+
+  GetObjectif() {
+    this.objectifService.GetObjectifs().subscribe(
+      (data) => {
+        console.log(data);
+        this.loading2 = false;
+        this.objectives = data.data.slice(0, 6);
+      }, (err) => {
+        console.log(err);
+        this.loading2 = false;
       }
     );
   }
@@ -70,6 +88,10 @@ trueFavoris = [];
   goToRoute(url) {
     console.log(url);
     this.router.navigateByUrl('/home/(child1:' + url + ';open=true)');
+  }
+
+  GoToObjectif() {
+    this.router.navigateByUrl('/home/(child1:objectif-manage;open=true)');
   }
 
   GoToUserManagement() {

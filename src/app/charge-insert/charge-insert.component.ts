@@ -25,7 +25,7 @@ export class ChargeInsertComponent implements OnInit {
     create : false,
     modify: false,
     close: false,
-    text: ''
+    text: 'Une erreur est survenue. Veuillez réessayez plus tard !'
   };
   success = {
     create: false
@@ -158,6 +158,11 @@ export class ChargeInsertComponent implements OnInit {
         console.log(err);
         this.isLoading.create = false;
         this.error.create = true;
+        if (err.status === 408) {
+          this.error.text = err.error.message;
+        } else if (err.status === 422) {
+          this.error.text = 'Veuillez saisir les informations correctement !';
+        }
       }
     );
   }

@@ -1,1 +1,312 @@
-<p>charge-detail works!</p>
+<div class="container-fluid principal">
+
+  <!--navbar-->
+  <nav class="navbar navbar-expand-lg navbar-lights p-4">
+    <a class="navbar-brand text-dark">
+      <i class="material-icons" style="cursor: pointer;font-size: 25px;" (click)="ComeBack()">
+        chevron_left
+      </i>
+      Détail Chargement
+    </a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav mr-auto">
+        <!--<li class="nav-item active">
+          <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">Link</a>
+        </li>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Dropdown
+          </a>
+          <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <a class="dropdown-item" href="#">Action</a>
+            <a class="dropdown-item" href="#">Another action</a>
+            <div class="dropdown-divider"></div>
+            <a class="dropdown-item" href="#">Something else here</a>
+          </div>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link disabled" href="#">Disabled</a>
+        </li>-->
+      </ul>
+      <form class="form-inline my-2 my-lg-0">
+        <button class="btn btn-outline-info my-2 my-sm-0 mr-5" type="button" data-toggle="modal" data-target="#exampleModal28">
+          + Incident
+        </button>
+        <button class="btn btn-outline-info my-2 my-sm-0 mr-5" type="button" data-toggle="modal" data-target="#exampleModal29">
+          + Charge
+        </button>
+        <div class="dropdown">
+          <button class="btn btn-success text-light dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" *ngIf="userConnected">
+            {{ userConnected.name }}
+          </button>
+          <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+            <a class="dropdown-item" href="#">Profile</a>
+            <a class="dropdown-item" href="#">Support</a>
+            <a class="dropdown-item text-danger" (click)="Logout()" style="cursor: pointer;">Déconnexion</a>
+          </div>
+        </div>
+      </form>
+    </div>
+  </nav>
+  <!--//nav bar -->
+
+
+<div class="container-fluid screen-profile ">
+  <div class="row">
+
+    <div class="col-md-5" style="height: 84vh; border-right: solid 1px; border-color: #ccc;" >
+      <div class="text-center" *ngIf="isLoading.charge === true">
+        <div class="spinner-border text-success" role="status">
+          <span class="sr-only">Loading...</span>
+        </div>
+      </div>
+      <div>
+        <div class="text-center mb-4" align="center" >
+          <!--<img src="https://cdn.pixabay.com/photo/2021/01/29/15/34/mask-5961374_960_720.png"  class="" alt="..."> -->
+          <div >
+            <i style="border: dashed 1px; border-radius: 100%;" class="large material-icons text-danger p-4" *ngIf='status === 0'>
+              local_shipping
+            </i>
+            <i style="border: dashed 1px; border-radius: 100%;" class="large material-icons text-warning p-4" *ngIf='status === 1'>
+              local_shipping
+            </i>
+            <i style="border: dashed 1px; border-radius: 100%;" class="large material-icons text-info p-4" *ngIf="status === 2">
+              local_shipping
+            </i>
+            <i style="border: dashed 1px; border-radius: 100%;" class="large material-icons text-success p-4" *ngIf='status === 3'>
+              local_shipping
+            </i>
+          </div>
+        </div>
+        <!--<h2 class="mt-2" style="text-transform: capitalize;">{{ planterInfo.nom + ' ' + planterInfo.prenom }}</h2>
+        <span style="text-transform: capitalize;"><b>{{ planterInfo.num_piece }}</b></span>
+        <ul class="list-group list-group-flush" style="text-transform: capitalize;">
+          <li class="list-group-item">{{ planterInfo.email }}</li>
+          <li class="list-group-item">{{ planterInfo.date_naissance }}</li>
+          <li class="list-group-item">{{ planterInfo.contact }}</li>
+          <li class="list-group-item">{{ planterInfo.sexe }}</li>
+          <li class="list-group-item">{{ planterInfo.adresse }}</li>
+        </ul> -->
+        <div class="list-data" *ngIf="charges">
+          <form>
+            <div class="row">
+              <div class="col">
+                <label for="">Numéro Chargement</label>
+                <input type="text" disabled class="form-control mb-4" placeholder="" value="{{ charges.numero_chargement }}">
+              </div>
+              <div class="col">
+                <label for="">Date Chargement</label>
+                <input type="text" disabled class="form-control mb-4" placeholder="" value="{{ charges.date_chargement }}">
+              </div>
+            </div>
+            <div class="row">
+              <div class="col">
+                <label for="">Acheteur</label>
+                <input type="text" disabled class="form-control mb-4" placeholder="" value="{{ charges.acheteur_name }}">
+              </div>
+              <div class="col">
+                <label for="">Code Acheteur</label>
+                <input type="text" disabled class="form-control mb-4" placeholder="" value="{{ charges.acheteur_code }}">
+              </div>
+            </div>
+            <div class="row">
+              <div class="col">
+                <label for="">Numéro Acheteur</label>
+                <input type="text" disabled class="form-control mb-4" placeholder="" value="{{ charges.acheteur_contact }}">
+              </div>
+              <div class="col">
+                <label for="">Chauffeur</label>
+                <input type="text" disabled class="form-control mb-4" placeholder="" value="{{ charges.chauffeur }}">
+              </div>
+            </div>
+            <div class="row">
+              <div class="col">
+                <label for="">Permis</label>
+                <input type="text" disabled class="form-control mb-4" placeholder="" value="{{ charges.num_permis }}">
+              </div>
+              <div class="col">
+                <label for="">Avant Camion</label>
+                <input type="text" disabled class="form-control mb-4" placeholder="" value="{{ charges.avant_camion }}">
+              </div>
+            </div>
+            <div class="row">
+              <div class="col">
+                <label for="">Immatriculation</label>
+                <input type="text" disabled class="form-control mb-4" placeholder="" value="{{ charges.immatriculation_camion }}">
+              </div>
+              <div class="col">
+                <label for="">Marque</label>
+                <input type="text" disabled class="form-control mb-4" placeholder="" value="{{ charges.marque_camion }}">
+              </div>
+            </div>
+            <div class="row">
+              <div class="col">
+                <label for="">Poids (en t) </label>
+                <input type="text" disabled class="form-control mb-4" placeholder="" value="{{ charges.poids_tonne }}">
+              </div>
+              <div class="col">
+                <label for="">Sacs</label>
+                <input type="text" disabled class="form-control mb-4" placeholder="" value="{{ charges.nbre_sacs }}">
+              </div>
+            </div>
+            <div class="row">
+              <div class="col">
+                <label for="">Produit </label>
+                <input type="text" disabled class="form-control mb-4" placeholder="" value="{{ charges.produit }}">
+              </div>
+              <div class="col">
+                <label for="">Destination</label>
+                <input type="text" disabled class="form-control mb-4" placeholder="" value="{{ charges.ville_destination }}">
+              </div>
+            </div>
+            <div class="row">
+              <div class="col">
+                <label for="">Transporteur </label>
+                <input type="text" disabled class="form-control mb-4" placeholder="" value="{{ charges.transporteur }}">
+              </div>
+              <div class="col">
+                <label for="">Status</label>
+                <input type="text" disabled class="form-control mb-4" placeholder="" value="{{ charges.status }}">
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="col-md-7" style="height: 84vh">
+      <div class="row">
+        <div class="col-md-12 p-3">
+          <ul class="nav nav-pills nav-justified mb-3" id="pills-tab" role="tablist">
+            <li class="nav-item">
+              <a class="nav-link active" id="pills-home-tab" data-toggle="pill" href="#pills-home" role="tab" aria-controls="pills-home" aria-selected="true">
+                  Déclarer Incidents
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" id="pills-profile-tab" data-toggle="pill" href="#pills-profile" role="tab" aria-controls="pills-profile" aria-selected="false">
+                Informations Déchargement
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" id="pills-contact-tab" data-toggle="pill" href="#pills-contact" role="tab" aria-controls="pills-contact" aria-selected="false">
+                Charges Afférentes
+              </a>
+            </li>
+          </ul>
+        </div>
+        <!--<div class="col-md-2 solde bord p-3">
+          <h5>Solde : {{ solde }} FCFA</h5>
+        </div>-->
+      </div>
+      <div class="tab-content" id="pills-tabContent">
+        <div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
+          Incident
+         <!-- <div class="container-fluid table-user">
+            <div class="text-center" *ngIf="isLoading.product === true">
+              <div class="spinner-border" role="status">
+                <span class="sr-only">Loading...</span>
+              </div>
+            </div>
+            <table datatable class="row-border hover" [dtTrigger]="dtTrigger" id="table" style="">
+              <thead>
+                <tr>
+                  <th>Poids Brut</th>
+                  <th>Poids Net</th>
+                  <th>Nbr Sacs</th>
+                  <th>Status</th>
+                  <th>Date</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let stock of stockage">
+                  <td>{{ stock.poids_brut }}</td>
+                  <td>{{ stock.poids_net }}</td>
+                  <td>{{ stock.sacs}}</td>
+                  <td>{{ stock.status}}</td>
+                  <td>{{ stock.created_at }}</td>
+                </tr>
+              </tbody>
+            </table>
+
+          </div> -->
+        </div>
+        <div class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">
+          Déchargement
+        </div>
+        <div class="tab-pane fade" id="pills-contact" role="tabpanel" aria-labelledby="pills-contact-tab">
+          Charge
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+</div>
+
+<!-- Modal 7 -->
+<div class="modal fade" id="exampleModal28" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <form action="" method="post">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Création d'Incident</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="clearfix mb-4">
+          <span class="text-warning">Enregistrement d'incident .....</span>
+          <div class="spinner-border float-right text-warning" role="status">
+            <span class="sr-only">Loading...</span>
+          </div>
+        </div>
+
+        <div class="alert alert-danger">
+          Une erreur s'est produite. Veuillez réessayer plus tard !
+        </div>
+
+        <div class="row mb-4">
+          <div class="col">
+            <input type="text" class="form-control" placeholder="First name">
+          </div>
+          <div class="col">
+            <input type="text" class="form-control" placeholder="Last name">
+          </div>
+        </div>
+        <div class="row mb-4">
+          <div class="col">
+            <input type="text" class="form-control" placeholder="First name">
+          </div>
+          <div class="col">
+            <input type="text" class="form-control" placeholder="Last name">
+          </div>
+        </div>
+        <div class="row mb-4">
+          <div class="col">
+            <input type="text" class="form-control" placeholder="First name">
+          </div>
+          <div class="col">
+            <select id="inputState" class="form-control">
+              <option selected>Choose...</option>
+              <option>...</option>
+            </select>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
+        <button type="button" class="btn btn-success">Enregistrer</button>
+      </div>
+    </div>
+  </div>
+</form>
+</div>

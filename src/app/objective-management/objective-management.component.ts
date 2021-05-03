@@ -75,7 +75,7 @@ export class ObjectiveManagementComponent implements OnInit {
     this.partenerService.GetPartners().subscribe(
       (data) => {
         console.log(data);
-        this.partners = data;
+        this.partners = data.data;
       }, (err) => {
         console.log(err);
       }

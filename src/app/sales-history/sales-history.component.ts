@@ -37,7 +37,7 @@ export class SalesHistoryComponent implements OnInit {
     if (localStorage.getItem('userData') !== null) {
       this.userConnected = JSON.parse(localStorage.getItem('userData'));
     }
-    this. GetHistory();
+    this.GetHistory();
   }
 
   ngOnDestroy(): void {

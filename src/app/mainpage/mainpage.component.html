@@ -126,7 +126,7 @@
       </div>
     </div>
     <div class="col-md-4 objectif-grille">
-      <div class="container" *ngIf="state === false">
+      <div class="container" *ngIf="state === true">
         <h2 style="font-weight: 700;">Listes des utilisateurs</h2>
         <div align="center" *ngIf="loading === true">
           <div class="spinner-grow justify-content-center" role="status">
@@ -161,6 +161,43 @@
         </div>
 
       </div>
+
+      <div class="container" *ngIf="state === false">
+        <h2 style="font-weight: 700;">Listes des objectifs</h2>
+        <div align="center" *ngIf="loading === true">
+          <div class="spinner-grow justify-content-center" role="status">
+            <span class="sr-only">Loading...</span>
+          </div>
+        </div>
+        <ul class="list-group" *ngFor="let objectif of objectives">
+          <li class="list-group-item d-flex justify-content-between align-items-center">
+           Faire {{ objectif.quantite }} kg du {{ objectif.date_debut }} au {{ objectif.date_fin }}
+            <span class="badge badge-pill" style="cursor: pointer;">
+              <i class="material-icons">more_vert</i>
+            </span>
+          </li>
+          <!--<li class="list-group-item d-flex justify-content-between align-items-center">
+            Dapibus ac facilisis in
+            <span class="badge badge-pill">
+              <i class="material-icons">more_vert</i>
+            </span>
+          </li>
+          <li class="list-group-item d-flex justify-content-between align-items-center">
+            Morbi leo risus
+            <span class="badge badge-pill">
+              <i class="material-icons">more_vert</i>
+            </span>
+          </li>-->
+        </ul>
+
+        <div class="mt-5" align="center" >
+          <button class="btn btn-success text-light" (click)="GoToObjectif()">
+            Voir tous les objectifs
+          </button>
+        </div>
+
+      </div>
+
     </div>
   </div>
 </div>

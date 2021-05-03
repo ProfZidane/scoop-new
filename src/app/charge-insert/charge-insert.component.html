@@ -154,7 +154,7 @@
         </div>
       </div>
       <div class="alert alert-danger" *ngIf="error.create === true">
-        Une erreur est survenue. Veuillez réessayez plus tard !
+        {{ error.text }}
       </div>
       <div class="alert alert-success" *ngIf="success.create === true">
         Opération réussie avec succès

@@ -1,0 +1,97 @@
+.principal {
+  height: 98vh;
+  border-radius: 20px;
+  background-color: white;
+}
+
+h5 {
+  font-size: medium;
+  font-family: 'Comfortaa', cursive;
+
+}
+
+button {
+  border-radius: 0;
+}
+
+.table-user  {
+  height: 69vh;
+  overflow-y: auto;
+
+  padding: 0.5rem;
+}
+
+.list-data {
+  height: 52vh;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding: 0.5rem;
+}
+
+.table-user > table {
+  height: 8vh;
+
+}
+
+
+.bord {
+  border: solid;
+}
+
+
+.screen-profile {
+  height: 84vh;
+}
+
+.text-center {
+  border-radius: 100%;
+}
+
+.text-center > img {
+  border-radius: 100%;
+  width: 100%;
+  height: 100%;
+}
+
+
+.solde {
+  background-color: #ababab;
+  color: white;
+}
+
+
+.large {
+  font-size: 150px;
+}
+
+a.nav-link.active {
+  border: solid;
+  background-color: #28a745;
+}
+
+a.nav-link {
+  color: black;
+}
+
+
+/* width */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  box-shadow: inset 0 0 5px grey;
+  border-radius: 10px;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #28a745;
+  border-radius: 10px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #28a745;
+}

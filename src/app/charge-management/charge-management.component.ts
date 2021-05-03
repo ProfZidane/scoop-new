@@ -27,7 +27,7 @@ export class ChargeManagementComponent implements OnInit {
     create : false,
     change: false,
     close: false,
-    text: ''
+    text: 'Une erreur s\'est produite. Veuillez réessayer plus tard svp !'
   };
   chargement = {};
   chargements;
@@ -55,6 +55,7 @@ export class ChargeManagementComponent implements OnInit {
   };
   partners: any;
   wareHouses: any;
+  sacs = 0;
   constructor(private router: Router, private userService: AuthService, private location: Location,
               private chargeService: ChargeService, private partenerService: PartnerService, private wareService: WarehouseService) { }
 
@@ -115,6 +116,10 @@ export class ChargeManagementComponent implements OnInit {
         console.log(data);
         this.chargements = data.data;
         console.log(this.chargement);
+        data.data.forEach(element => {
+          this.sacs += element.nbre_sacs;
+        });
+        console.log('nbr de sac : ' + this.sacs);
 
         this.isLoading.data = false;
         this.dtTrigger.next();
@@ -206,11 +211,14 @@ export class ChargeManagementComponent implements OnInit {
       (success) => {
         console.log(success);
         this.isLoading.close = false;
+        window.location.reload();
       }, (err) => {
         console.log(err);
         this.isLoading.close = false;
         this.error.close = true;
-
+        if (err.status === 408) {
+          this.error.text = err.error.message;
+        }
       }
     );
   }

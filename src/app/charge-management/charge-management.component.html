@@ -36,7 +36,7 @@
       </ul>
       <form class="form-inline my-2 my-lg-0">
         <button class="btn btn-outline-info my-2 my-sm-0 mr-5" type="button" disabled data-toggle="modal" data-target="#exampleModal16">
-          4500 <small>Sacs</small>
+          {{ sacs }} <small>Sacs</small>
         </button>
         <button class="btn btn-outline-info my-2 my-sm-0 mr-5" type="button" data-toggle="modal" data-target="#exampleModal16" (click)="goToEntry()">
           Entrée Stock
@@ -269,7 +269,7 @@
           </div>
         </div>
         <div class="alert alert-danger" *ngIf="error.close === true">
-          Une erreur s'est produite. Veuillez réessayer plus tard svp !
+          {{ error.text }}
         </div>
           <small class="text-muted">Notifier le motif</small>
           <div class="row">
