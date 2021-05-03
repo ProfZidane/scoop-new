@@ -78,7 +78,7 @@
         <td>{{ objectif.unite }}</td>
         <td>{{ objectif.date_debut | date }}</td>
         <td>{{ objectif.date_fin | date }}</td>
-        <td>{{ objectif.name.nom + ' ' + objectif.name.prenom }}</td>
+        <td>{{ objectif.name.name }}</td>
         <td>
           <button class="btn btn-outline-warning btn-sm" type="submit" data-toggle="modal" data-target="#exampleModal26" (click)="OpenModalUpdate(objectif)">
             Modifier

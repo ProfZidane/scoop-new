@@ -18,9 +18,11 @@ export class UserManagementComponent implements OnInit {
     adresse : '',
     photo : null,
     role : '',
+    is_super_admin: false,
     status : '',
     entrepot_id : '',
-    fonction : ''
+    fonction : '',
+    ville_service: ''
   };
   userUpdating = {
     id : '',
@@ -51,11 +53,19 @@ export class UserManagementComponent implements OnInit {
     modify : false,
     inactive : false
   };
+  stateAdmin = false;
+  stateDecharge = false;
+  stateCreareCity = false;
   success;
   successRequest = false;
   dtTrigger: Subject<any> = new Subject<any>();
   users;
   userConnected: any;
+  ville = {
+    isLoading : false,
+    city: ''
+  };
+  cities;
   constructor(private router: Router, private wareService: WarehouseService, private userService: AuthService,
               private location: Location) { }
 
@@ -78,6 +88,7 @@ export class UserManagementComponent implements OnInit {
     if (localStorage.getItem('userData') !== null) {
       this.userConnected = JSON.parse(localStorage.getItem('userData'));
     }
+    this.GetCity();
   }
 
   Back() {
@@ -133,7 +144,79 @@ export class UserManagementComponent implements OnInit {
     this.userDeleting.id = id;
   }
 
+  OnRole(event) {
+    console.log(event.target.value);
+    if (event.target.value === 'manager') {
+      this.stateAdmin = true;
+      this.stateDecharge = false;
+      this.userInfo.ville_service = '';
+    } else if (event.target.value === 'agent_externe') {
+      this.stateDecharge = true;
+      this.stateAdmin = false;
+      this.userInfo.ville_service = '';
+    } else {
+      this.stateAdmin = false;
+      this.stateDecharge = false;
+      this.userInfo.ville_service = '';
+    }
+  }
 
+  OnChoiceRadio(event) {
+    console.log(event.target.value);
+    if (event.target.value === 'oui') {
+      this.userInfo.is_super_admin = true;
+    } else {
+      this.userInfo.is_super_admin = false;
+    }
+  }
+
+  OnChangeCity(event) {
+    console.log(event.target.value);
+    this.userInfo.ville_service = event.target.value;
+    console.log(this.userInfo);
+
+  }
+
+  CreateCity() {
+    this.stateCreareCity = true;
+  }
+
+  closeCreate() {
+    this.stateCreareCity = false;
+    this.ville.isLoading = false;
+  }
+
+  GetCity() {
+    this.userService.GetParametre().subscribe(
+      (data) => {
+        console.log(data);
+        this.cities = data.data;
+      }, (err) => {
+        console.log(err);
+      }
+    );
+  }
+
+  SaveCity() {
+    console.log(this.ville);
+    this.ville.isLoading = true;
+    const data = {
+      name: this.ville.city
+    };
+    console.log(data);
+
+    this.userService.SetParametre(data).subscribe(
+      (success) => {
+        console.log(success);
+        this.ville.isLoading = false;
+        this.GetCity();
+      }, (err) => {
+        console.log(err);
+        this.ville.isLoading = false;
+      }
+    );
+
+  }
   UpdatingUser(event) {
     this.error.modify_error = false;
     this.error.email_error = false;

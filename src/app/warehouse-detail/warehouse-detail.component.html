@@ -6,7 +6,7 @@
       <i class="material-icons" style="cursor: pointer;font-size: 25px;" (click)="ComeBack()">
         chevron_left
       </i>
-      Informations Entrepôt
+      Informations Base
     </a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
@@ -35,7 +35,7 @@
         </li>-->
       </ul>
       <form class="form-inline my-2 my-lg-0">
-        <button class="btn btn-outline-info my-2 my-sm-0 mr-5" type="button" data-toggle="modal" data-target="#exampleModal0">
+        <button class="btn btn-outline-info my-2 my-sm-0 mr-5" type="button" data-toggle="modal" data-target="#exampleModa0">
           + Nouveau Utilisateurs
         </button>
         <div class="dropdown">
@@ -68,7 +68,7 @@
         <th>Status</th>
         <th>Numéro de téléphone</th>
         <th>Adresse</th>
-        <th>Entrepôt</th>
+        <th>Base</th>
         <th>Fonction</th>
       </tr>
     </thead>
@@ -89,4 +89,162 @@
 
 </div>
 
+</div>
+
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModa0" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg" role="document">
+    <form method="POST" (ngSubmit)="CreateUser($event)">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Création d'un Utilisateur</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="clearfix" *ngIf="isLoading.create === true">
+          <span class="text-warning">Création de l'utilisateur .....</span>
+          <div class="spinner-border float-right text-warning" role="status">
+            <span class="sr-only">Loading...</span>
+          </div>
+        </div>
+        <div class="alert alert-danger" *ngIf="error.create=== true">
+          Une erreur s'est produite. Veuillez vérifiez les informations inscrites svp !
+        </div>
+          <small class="text-muted">Inscrivez les informations suivantes</small>
+          <div class="row">
+            <div class="col">
+              <label for="">Entrez le nom</label>
+              <input type="text" name="name" [(ngModel)]="userInfo.name" class="form-control" placeholder="">
+            </div>
+            <div class="col">
+              <label for="">Entrez l'adresse</label>
+              <input type="text" name="adresse" [(ngModel)]="userInfo.adresse" class="form-control" placeholder="">
+            </div>
+          </div>
+          <br>
+          <div class="row">
+            <div class="col">
+              <label for="">Entrez le numéro de téléphone</label>
+              <input type="text" name="telephone" [(ngModel)]="userInfo.telephone" class="form-control" placeholder="">
+            </div>
+            <div class="col">
+              <label for="">Entrez l'adresse e-mail</label>
+              <input type="email" name="email" [(ngModel)]="userInfo.email" class="form-control" placeholder="">
+            </div>
+          </div>
+
+          <br>
+          <div class="row">
+            <div class="col">
+              <label for="">Attribuez le rôle</label>
+              <div class="input-group mb-3">
+                <select class="custom-select" name="role" [(ngModel)]="userInfo.role" id="inputGroupSelect01" (change)="OnRole($event)">
+                  <option value="admin">Admin</option>
+                  <option value="manager">Manager</option>
+                  <option value="financier">Responsable Financier</option>
+                  <option value="responsable_stock">Responsable Stock</option>
+                  <option value="responsable_pese">Responsable Pesée</option>
+                  <option value="agent_externe">Responsable Déchargement</option>
+                </select>
+              </div>
+            </div>
+            <div class="col">
+              <label for="">Attribuez le status</label>
+              <div class="input-group mb-3">
+                <select class="custom-select" name="status" [(ngModel)]="userInfo.status" id="inputGroupSelect01">
+                  <option value="active">Active</option>
+                  <option value="inactive">Inactive</option>
+                </select>
+              </div>
+            </div>
+          </div>
+          <br>
+          <div class="row" *ngIf="stateAdmin === true">
+            <div class="col">
+              Est-ce un super administrateur ?
+            <div class="custom-control custom-radio custom-control-inline">
+              <input type="radio" value="oui" id="customRadioInline1" name="customRadioInline1" (change)="OnChoiceRadio($event)" class="custom-control-input">
+              <label class="custom-control-label" for="customRadioInline1">Oui</label>
+            </div>
+            <div class="custom-control custom-radio custom-control-inline">
+              <input type="radio" value="non" id="customRadioInline2" name="customRadioInline1" (change)="OnChoiceRadio($event)" class="custom-control-input">
+              <label class="custom-control-label" for="customRadioInline2">Non</label>
+            </div>
+            </div>
+          </div>
+          <br>
+          <div class="row" *ngIf="stateDecharge === true">
+            <div class="col">
+              <label for="">Choisir la ville de service
+                <span class="badge badge-success ml-2" style="cursor: pointer;" (click)='CreateCity()'>Ajouter +</span>
+              </label>
+              <div class="input-group mb-3" >
+                <select class="custom-select" name="ville_service" [(ngModel)]="userInfo.ville_service" (change)='OnChangeCity($event)' id="inputGroupSelect01">
+                  <option *ngFor="let city of cities" value="{{ city.name }}">{{ city.name }}</option>
+                </select>
+              </div>
+            </div>
+          </div>
+          <br>
+            <div class="row p-3 bg-success" *ngIf="stateCreareCity === true">
+              <div class="col">
+                <label for="" class="text-light">Sélectionner votre ville
+
+                </label>
+                <div class="float-right">
+                  <i class="material-icons text-danger" style="cursor: pointer;" (click)="closeCreate()">
+                    clear
+                  </i>
+                </div>
+                <br><br>
+                <div class="input-group mb-3" >
+                  <select class="custom-select" name="ville_service" [(ngModel)]="ville.city" id="inputGroupSelect01">
+                    <!--<option style="text-transform: capitalize;" *ngFor="let city of cities" value="{{ city.name }}">{{ city.name }}</option>-->
+                    <option value="Tralala">Test</option>
+                  </select>
+                </div>
+              </div>
+              <button class="btn btn-block btn-light" (click)="SaveCity()" *ngIf="ville.isLoading === false">Enregister</button>
+              <button class="btn btn-block btn-light" type="button" disabled *ngIf="ville.isLoading === true">
+                <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                Enregistrement ...
+              </button>
+            </div>
+
+          <br>
+          <div class="row">
+            <!--<div class="col">
+              <label for="">Sélectionnez la base</label>
+              <div class="input-group mb-3" >
+                <select class="custom-select" name="entrepot_id" [(ngModel)]="userInfo.entrepot_id" id="inputGroupSelect01">
+                  <option *ngFor="let entrepot of entrepots" value="{{entrepot.id}}">{{ entrepot.sous_prefecture }}</option>
+                </select>
+              </div>
+            </div> -->
+            <div class="col">
+              <label for="">Sélectionnez la fonction exercée dans la base</label>
+              <div class="input-group mb-3" >
+                <select class="custom-select" name="fonction" [(ngModel)]="userInfo.fonction" id="inputGroupSelect01">
+                  <option value="gerand">Gérand de la base</option>
+                  <option value="manager">Manager de la base</option>
+                  <option value="employe">Employé de la base</option>
+                  <option value="intervenant">Intervenant</option>
+                </select>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+
+          </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
+        <button type="submit" class="btn btn-success">Enregistrer</button>
+      </div>
+    </div>
+  </form>
+  </div>
 </div>

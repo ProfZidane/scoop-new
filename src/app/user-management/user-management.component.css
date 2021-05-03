@@ -40,3 +40,8 @@ button {
 ::-webkit-scrollbar-thumb:hover {
   background: #28a745;
 }
+
+
+option {
+  text-transform: capitalize;
+}

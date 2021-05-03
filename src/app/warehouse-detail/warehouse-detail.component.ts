@@ -16,8 +16,35 @@ export class WarehouseDetailComponent implements OnInit {
 detailWarehouse;
 id;
 isLoading = {
-  data : false
+  data : false,
+  create: false
 };
+
+error = {
+  create: false,
+  text: ''
+};
+userInfo = {
+  name : '',
+    email : '',
+    telephone : '',
+    adresse : '',
+    photo : null,
+    role : '',
+    is_super_admin: false,
+    status : '',
+    entrepot_id : '',
+    fonction : '',
+    ville_service: ''
+};
+stateAdmin = false;
+  stateDecharge = false;
+  stateCreareCity = false;
+  ville = {
+    isLoading : false,
+    city: ''
+  };
+  cities;
 dtTrigger: Subject<any> = new Subject<any>();
   userConnected: any;
   constructor(private wareService: WarehouseService, private router: Router, private userService: AuthService,
@@ -31,6 +58,7 @@ dtTrigger: Subject<any> = new Subject<any>();
     );
     console.log(this.id);
     this.DetailToWarehouse(this.id);
+    this.userInfo.entrepot_id = this.id;
     if (localStorage.getItem('userData') !== null) {
       this.userConnected = JSON.parse(localStorage.getItem('userData'));
     }
@@ -61,6 +89,101 @@ dtTrigger: Subject<any> = new Subject<any>();
     if (this.userService.Logout()) {
       this.router.navigateByUrl('/');
     }
+
+  }
+
+  CreateUser(event) {
+    this.error.create = false;
+    this.isLoading.create = true;
+    console.log(this.userInfo);
+    this.userService.Register(this.userInfo).subscribe(
+      (success) => {
+        console.log(success);
+        this.isLoading.create = false;
+            // redirection to page
+        window.location.reload();
+      }, (err) => {
+        console.log(err);
+        if (err.status === 422) {
+          this.error.text = 'Adresse e-mail invalide ! Veuillez vérifiez votre adresse mail.';
+        } else {
+          this.error.text = 'Une erreur est survenue. Veuillez réessayez plus tard !';
+        }
+      }
+    );
+  }
+
+  OnRole(event) {
+    console.log(event.target.value);
+    if (event.target.value === 'manager') {
+      this.stateAdmin = true;
+      this.stateDecharge = false;
+      this.userInfo.ville_service = '';
+    } else if (event.target.value === 'agent_externe') {
+      this.stateDecharge = true;
+      this.stateAdmin = false;
+      this.userInfo.ville_service = '';
+    } else {
+      this.stateAdmin = false;
+      this.stateDecharge = false;
+      this.userInfo.ville_service = '';
+    }
+  }
+
+  OnChoiceRadio(event) {
+    console.log(event.target.value);
+    if (event.target.value === 'oui') {
+      this.userInfo.is_super_admin = true;
+    } else {
+      this.userInfo.is_super_admin = false;
+    }
+  }
+
+  OnChangeCity(event) {
+    console.log(event.target.value);
+    this.userInfo.ville_service = event.target.value;
+    console.log(this.userInfo);
+
+  }
+
+  CreateCity() {
+    this.stateCreareCity = true;
+  }
+
+  closeCreate() {
+    this.stateCreareCity = false;
+    this.ville.isLoading = false;
+  }
+
+  GetCity() {
+    this.userService.GetParametre().subscribe(
+      (data) => {
+        console.log(data);
+        this.cities = data.data;
+      }, (err) => {
+        console.log(err);
+      }
+    );
+  }
+
+  SaveCity() {
+    console.log(this.ville);
+    this.ville.isLoading = true;
+    const data = {
+      name: this.ville.city
+    };
+    console.log(data);
+
+    this.userService.SetParametre(data).subscribe(
+      (success) => {
+        console.log(success);
+        this.ville.isLoading = false;
+        this.GetCity();
+      }, (err) => {
+        console.log(err);
+        this.ville.isLoading = false;
+      }
+    );
 
   }
 

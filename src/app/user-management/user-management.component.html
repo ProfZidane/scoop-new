@@ -68,7 +68,7 @@
         <th>Status</th>
         <th>Téléphone</th>
         <th>Adresse</th>
-        <th>Entrepôt</th>
+        <th>Base</th>
         <th>Fonction</th>
         <th></th>
         <th></th>
@@ -166,13 +166,13 @@
             <div class="col">
               <label for="">Attribuez le rôle</label>
               <div class="input-group mb-3">
-                <select class="custom-select" name="role" [(ngModel)]="userInfo.role" id="inputGroupSelect01">
+                <select class="custom-select" name="role" [(ngModel)]="userInfo.role" id="inputGroupSelect01" (change)="OnRole($event)">
                   <option value="admin">Admin</option>
                   <option value="manager">Manager</option>
                   <option value="financier">Responsable Financier</option>
                   <option value="responsable_stock">Responsable Stock</option>
-                  <option value="superadmin">Super Admin</option>
                   <option value="responsable_pese">Responsable Pesée</option>
+                  <option value="agent_externe">Responsable Déchargement</option>
                 </select>
               </div>
             </div>
@@ -187,9 +187,62 @@
             </div>
           </div>
           <br>
+          <div class="row" *ngIf="stateAdmin === true">
+            <div class="col">
+              Est-ce un super administrateur ?
+            <div class="custom-control custom-radio custom-control-inline">
+              <input type="radio" value="oui" id="customRadioInline1" name="customRadioInline1" (change)="OnChoiceRadio($event)" class="custom-control-input">
+              <label class="custom-control-label" for="customRadioInline1">Oui</label>
+            </div>
+            <div class="custom-control custom-radio custom-control-inline">
+              <input type="radio" value="non" id="customRadioInline2" name="customRadioInline1" (change)="OnChoiceRadio($event)" class="custom-control-input">
+              <label class="custom-control-label" for="customRadioInline2">Non</label>
+            </div>
+            </div>
+          </div>
+          <br>
+          <div class="row" *ngIf="stateDecharge === true">
+            <div class="col">
+              <label for="">Choisir la ville de service
+                <span class="badge badge-success ml-2" style="cursor: pointer;" (click)='CreateCity()'>Ajouter +</span>
+              </label>
+              <div class="input-group mb-3" >
+                <select class="custom-select" name="ville_service" [(ngModel)]="userInfo.ville_service" (change)='OnChangeCity($event)' id="inputGroupSelect01">
+                  <option *ngFor="let city of cities" value="{{ city.name }}">{{ city.name }}</option>
+                </select>
+              </div>
+            </div>
+          </div>
+          <br>
+            <div class="row p-3 bg-success" *ngIf="stateCreareCity === true">
+              <div class="col">
+                <label for="" class="text-light">Sélectionner votre ville
+
+                </label>
+                <div class="float-right">
+                  <i class="material-icons text-danger" style="cursor: pointer;" (click)="closeCreate()">
+                    clear
+                  </i>
+                </div>
+                <br><br>
+                <div class="input-group mb-3" >
+                  <select class="custom-select" name="ville_service" [(ngModel)]="ville.city" id="inputGroupSelect01">
+                    <!--<option style="text-transform: capitalize;" *ngFor="let city of cities" value="{{ city.name }}">{{ city.name }}</option>-->
+                    <option value="Tralala">Test</option>
+                  </select>
+                </div>
+              </div>
+              <button class="btn btn-block btn-light" (click)="SaveCity()" *ngIf="ville.isLoading === false">Enregister</button>
+              <button class="btn btn-block btn-light" type="button" disabled *ngIf="ville.isLoading === true">
+                <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                Enregistrement ...
+              </button>
+            </div>
+
+          <br>
           <div class="row">
             <div class="col">
-              <label for="">Sélectionnez l'entrepôt</label>
+              <label for="">Sélectionnez la base</label>
               <div class="input-group mb-3" >
                 <select class="custom-select" name="entrepot_id" [(ngModel)]="userInfo.entrepot_id" id="inputGroupSelect01">
                   <option *ngFor="let entrepot of entrepots" value="{{entrepot.id}}">{{ entrepot.sous_prefecture }}</option>
@@ -197,12 +250,12 @@
               </div>
             </div>
             <div class="col">
-              <label for="">Sélectionnez la fonction dans l'entrepôt</label>
+              <label for="">Sélectionnez la fonction exercée dans la base</label>
               <div class="input-group mb-3" >
                 <select class="custom-select" name="fonction" [(ngModel)]="userInfo.fonction" id="inputGroupSelect01">
-                  <option value="gerand">Gérand d'entrepôt</option>
-                  <option value="manager">Manager d'entrepôt</option>
-                  <option value="employe">Employé d'entrepôt</option>
+                  <option value="gerand">Gérand de la base</option>
+                  <option value="manager">Manager de la base</option>
+                  <option value="employe">Employé de la base</option>
                   <option value="intervenant">Intervenant</option>
                 </select>
               </div>
@@ -294,7 +347,7 @@
           <br>
           <div class="row">
             <div class="col">
-              <label for="">Sélectionnez l'entrepôt</label>
+              <label for="">Sélectionnez la base</label>
               <div class="input-group mb-3" *ngIf="userUpdating.entrepot_id" >
                 <select class="custom-select" name="entrepot_id" [(ngModel)]="userUpdating.entrepot_id" id="inputGroupSelect01">
                   <option *ngFor="let entrepot of entrepots" value="{{entrepot.id}}">{{ entrepot.sous_prefecture }}</option>
@@ -302,12 +355,12 @@
               </div>
             </div>
             <div class="col">
-              <label for="">Sélectionnez la fonction dans l'entrepôt</label>
+              <label for="">Sélectionnez la fonction dans la base</label>
               <div class="input-group mb-3" *ngIf="userUpdating.fonction">
                 <select class="custom-select" name="fonction" [(ngModel)]="userUpdating.fonction" id="inputGroupSelect01">
-                  <option value="gerand">Gérand d'entrepôt</option>
-                  <option value="manager">Manager d'entrepôt</option>
-                  <option value="employe">Employé d'entrepôt</option>
+                  <option value="gerand">Gérand de la base</option>
+                  <option value="manager">Manager de la base</option>
+                  <option value="employe">Employé de la base</option>
                   <option value="intervenant">Intervenant</option>
                 </select>
               </div>

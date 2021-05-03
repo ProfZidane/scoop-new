@@ -29,13 +29,23 @@ trueFavoris = [];
     }
     if (localStorage.getItem('right') !== null) {
       this.right = JSON.parse(localStorage.getItem('right'));
-      this.right.forEach(element => {
+      for (let i = 0; i < this.right.length; i++) {
+        if (this.right[i].libelle === 'administration') {
+          this.state = true;
+          break;
+        } else {
+          this.state = false;
+          break;
+        }
+
+      }
+      /*this.right.forEach(element => {
         if (element.libelle === 'administration') {
           this.state = true;
         } else {
           this.state = false;
         }
-      });
+      });*/
     }
 
     this.GetFavoris();

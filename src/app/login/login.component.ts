@@ -13,7 +13,8 @@ userInfo = {
 };
 loading;
 error = {
-  error_404 : false
+  error_404 : false,
+  text: ''
 };
   constructor(private router: Router, private authService: AuthService) { }
 
@@ -36,9 +37,18 @@ error = {
         }, 1000);
       }, (err) => {
         console.log(err);
+
+        if (err.status === 401) {
+          this.error.text = 'Votre login ou mot de passe est incorrect !';
+        } else if (err.status === 422) {
+          this.error.text = 'Veuillez remplir toutes les informations !';
+        } else {
+          this.error.text = 'Une erreur est survenue. Veuillez réessayez ultérieurement !';
+        }
         setTimeout( () => {
           this.loading = true;
           this.error.error_404 = true;
+
         }, 1000);
       }
     );

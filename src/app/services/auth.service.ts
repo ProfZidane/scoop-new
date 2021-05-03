@@ -15,11 +15,13 @@ deleteURL = environment.endPoint + 'compteClosed/';
 getRightById = environment.endPoint + 'getDroitsUser/';
 assignURL = environment.endPoint + 'addDroit';
 logoutURL = environment.endPoint + 'logout';
+villeURL = environment.endPoint + 'parametre/ville';
 testLogin = {
   email : 'admin@gmail.com',
   password : '1111'
 };
 right;
+
   constructor(private http: HttpClient) { }
   GetHeaders() {
     if (localStorage.getItem('token') !== null) {
@@ -79,5 +81,13 @@ right;
 
   AssignRight(data): Observable<any> {
     return this.http.post(this.assignURL, data, { headers: this.GetHeaders() });
+  }
+
+  GetParametre(): Observable<any> {
+    return this.http.get(this.villeURL, { headers: this.GetHeaders() });
+  }
+
+  SetParametre(city): Observable<any> {
+    return this.http.post(this.villeURL, city, { headers: this.GetHeaders() });
   }
 }

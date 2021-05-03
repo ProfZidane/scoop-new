@@ -117,9 +117,9 @@ export class ChargeManagementComponent implements OnInit {
         this.chargements = data.data;
         console.log(this.chargement);
         data.data.forEach(element => {
-          this.sacs += element.nbre_sacs;
+          this.sacs += element.poids_tonne;
         });
-        console.log('nbr de sac : ' + this.sacs);
+        console.log('nbr de tonne : ' + this.sacs);
 
         this.isLoading.data = false;
         this.dtTrigger.next();
