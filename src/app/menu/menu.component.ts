@@ -165,7 +165,14 @@ export class MenuComponent implements OnInit {
   }
 
   ManageVente() {
-
+    this.router.navigateByUrl('/home/(child1:vente-manage;open=true)');
+    const indique = {
+      name: 'Ventes',
+      route: 'vente-manage',
+      icon: 'compare_arrows',
+      id: JSON.parse(localStorage.getItem('userData')).id
+    };
+    this.menuService.SetFavoris(indique);
   }
 
   Logout() {

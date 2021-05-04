@@ -29,6 +29,8 @@ import { ChargeDetailComponent } from './charge-detail/charge-detail.component';
 import { EntrystockManagementComponent } from './entrystock-management/entrystock-management.component';
 import { ChargeInsertComponent } from './charge-insert/charge-insert.component';
 import { ChargeModificationComponent } from './charge-modification/charge-modification.component';
+import { VenteManagementComponent } from './vente-management/vente-management.component';
+import { VenteHistoryComponent } from './vente-history/vente-history.component';
 
 
 const routes: Routes = [
@@ -170,6 +172,16 @@ const routes: Routes = [
       {
         path: 'charge-modify/:id',
         component: ChargeModificationComponent,
+        outlet: 'child1'
+      },
+      {
+        path: 'vente-manage',
+        component: VenteManagementComponent,
+        outlet: 'child1'
+      },
+      {
+        path: 'vente-history',
+        component: VenteHistoryComponent,
         outlet: 'child1'
       }
     ]
