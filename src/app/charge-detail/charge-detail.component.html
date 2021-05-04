@@ -239,7 +239,51 @@
           </div> -->
         </div>
         <div class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">
-          Déchargement
+          <!-- table -->
+          <table class="table">
+            <thead>
+              <tr>
+                <th>Date</th>
+                <th>Heure</th>
+                <th scope="col">Controleur</th>
+                <th>Magasin</th>
+                <th>Poids brut</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngIf="charges">
+                <td>{{ charges.date_dechargement }}</td>
+                <td>{{ charges.heure_dechargement }}</td>
+                <td>{{ charges.controleur_th }}</td>
+                <td>{{ charges.magasin_dechargement }}</td>
+                <td>{{ charges.poids_brut_dechargement }}</td>
+              </tr>
+            </tbody>
+          </table>
+          <!-- end table -->
+          <br><br>
+          <!-- table -->
+          <table class="table">
+            <thead>
+              <tr>
+                <th>Poids Net</th>
+                <th>Nbr Sacs</th>
+                <th>Sacs Remboursés</th>
+                <th>Tarre</th>
+                <th>Taux d'humidité</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngIf="charges">
+                <td>{{ charges.poids_net_dechargement }}</td>
+                <td>{{ charges.sacs_decharges }}</td>
+                <td>{{ charges.sacs_rembourses }}</td>
+                <td>{{ charges.tarre }}</td>
+                <td>{{ charges.taux_humidite }}</td>
+              </tr>
+            </tbody>
+          </table>
+          <!-- end table -->
         </div>
         <div class="tab-pane fade" id="pills-contact" role="tabpanel" aria-labelledby="pills-contact-tab">
           Charge

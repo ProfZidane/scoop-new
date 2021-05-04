@@ -76,6 +76,7 @@ export class ChargeInsertComponent implements OnInit {
     warehouse: false,
     warehousSuccess: false
   };
+  cities;
   constructor(private router: Router, private userService: AuthService, private location: Location,
               private partenerService: PartnerService, private wareService: WarehouseService, private chargeService: ChargeService) { }
 
@@ -85,6 +86,7 @@ export class ChargeInsertComponent implements OnInit {
     }
     this.GetPartner();
     this.GetWareHouses();
+    this.GetCity();
   }
 
   ComeBack() {
@@ -120,6 +122,17 @@ export class ChargeInsertComponent implements OnInit {
           localStorage.removeItem('token');
           this.router.navigateByUrl('/');
         }
+      }
+    );
+  }
+
+  GetCity() {
+    this.userService.GetParametre().subscribe(
+      (data) => {
+        console.log(data);
+        this.cities = data.data;
+      }, (err) => {
+        console.log(err);
       }
     );
   }

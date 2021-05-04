@@ -69,7 +69,7 @@ export class ChargeDetailComponent implements OnInit {
           this.status = 1;
         } else if (this.charges.status === 'vendu') {
           this.status = 3;
-        } else if (this.charges.status === 'déchargé') {
+        } else if (this.charges.status === 'decharger') {
           this.status = 2;
         }
         console.log(this.status);

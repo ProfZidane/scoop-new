@@ -74,7 +74,9 @@
         </div>
         <div class="form-group col-md-6">
           <label for="inputEmail4">Entrez la ville de destination</label>
-          <input type="text" name="ville" [(ngModel)]="chargement.ville_destination" class="form-control" id="inputEmail4" placeholder="" required>
+          <select class="custom-select" name="ville" [(ngModel)]="chargement.ville_destination" id="inputGroupSelect01" required *ngIf="cities">
+            <option *ngFor="let city of cities" value="{{ city.name }}">{{ city.name }}</option>
+          </select>
         </div>
         <div class="form-group col-md-6">
           <label for="inputPassword4">Entrez l'exportateur <span class="badge badge-success ml-2" style="cursor: pointer;" data-toggle="modal" data-target="#exampleModal27">Ajouter +</span> (<span class="text-danger" style="font-size: larger;">*</span>)</label>

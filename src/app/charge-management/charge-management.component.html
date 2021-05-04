@@ -91,22 +91,22 @@
         <td>{{ chargement.poids_tonne }}</td>
         <td>{{ chargement.status }}</td>
         <td>
-          <button class="btn btn-outline-info" (click)="goToDetail(chargement.id)">
+          <button class="btn btn-sm btn-outline-info" (click)="goToDetail(chargement.id)">
             Détails
           </button>
         </td>
         <td>
-          <button class="btn btn-outline-warning" (click)="OpenUpdate(chargement.id)">
+          <button class="btn btn-sm btn-outline-warning" (click)="OpenUpdate(chargement.id)">
             Modifier
           </button>
         </td>
         <td>
-          <button class="btn btn-outline-primary" data-toggle="modal" data-target="#exampleModal26" (click)="OpenModalChange(chargement.id)">
+          <button class="btn btn-sm btn-outline-primary" data-toggle="modal" data-target="#exampleModal26" (click)="OpenModalChange(chargement.id)">
             Changer destination
           </button>
         </td>
         <td>
-          <button class="btn btn-outline-danger" data-toggle="modal" data-target="#exampleModal29" (click)="OpenModalDelete(chargement.id)">
+          <button class="btn btn-sm btn-outline-danger" data-toggle="modal" data-target="#exampleModal29" (click)="OpenModalDelete(chargement.id)">
             Annuler
           </button>
         </td>
