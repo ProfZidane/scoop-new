@@ -36,7 +36,7 @@
       </ul>
       <form class="form-inline my-2 my-lg-0">
         <button class="btn btn-outline-info my-2 my-sm-0 mr-5" disabled *ngIf="compte && compte.solde !== null">
-          {{ compte.solde }} FCFA
+          {{ compte.solde  | number }} FCFA
         </button>
         <button class="btn btn-outline-info my-2 my-sm-0 mr-5" disabled *ngIf="compte && compte.solde === null">
           0 FCFA
