@@ -5,7 +5,9 @@ import { Observable, Subject, Subscriber, timer } from 'rxjs';
 import { Router } from '@angular/router';
 import { SalesService } from '../services/sales.service';
 import { DataTableDirective } from 'angular-datatables';
-
+import { registerLocaleData } from '@angular/common';
+import localeFr from '@angular/common/locales/fr';
+registerLocaleData(localeFr, 'fr');
 @Component({
   selector: 'app-sales-history',
   templateUrl: './sales-history.component.html',

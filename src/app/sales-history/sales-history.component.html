@@ -36,7 +36,7 @@
       </ul>
       <form class="form-inline my-2 my-lg-0">
         <button class="btn btn-outline-warning my-2 my-sm-0 mr-5" type="button">
-          {{ montant | number }} Fcfa
+          {{ montant | currency:'Fcfa':'symbol':'4.2-2':'fr' }}
         </button>
         <div class="dropdown">
           <button class="btn btn-success text-light dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" *ngIf="userConnected">
@@ -103,7 +103,7 @@
         <td>{{ history.poids_brut}}</td>
         <td>{{ history.sacs}}</td>
         <td>{{ history.prix_unitaire}}</td>
-        <td>{{ history.montant_total | number }}</td>
+        <td>{{ history.montant_total | currency:'Fcfa':'symbol':'4.2-2':'fr' }}</td>
         <td>{{ history.date }}</td>
       </tr>
     </tbody>
