@@ -16,33 +16,45 @@ export class UserChmodComponent implements OnInit {
   manager = {
     read : false,
     write : false,
-    delete : false
+    delete : false,
+    update: false
   };
   default = {
     read : false,
     write : false,
-    delete : false
+    delete : false,
+    update: false
   };
   administration = {
     read : false,
     write : false,
-    delete : false
+    delete : false,
+    update: false
   };
   finance = {
     read : false,
     write : false,
-    delete : false
+    delete : false,
+    update: false
   };
   stock = {
     read : false,
     write : false,
-    delete : false
+    delete : false,
+    update: false
   };
   pesee = {
     read : false,
     write : false,
-    delete : false
-  }
+    delete : false,
+    update: false
+  };
+  chargeur = {
+    read: false,
+    write: false,
+    delete: false,
+    update: false
+  };
   rightDefault;
   constructor(private router: Router, private userService: AuthService, private route: ActivatedRoute, private location: Location) { }
 
@@ -92,6 +104,11 @@ export class UserChmodComponent implements OnInit {
             } else {
               this.default.delete = false;
             }
+            if (element.update === 1) {
+              this.default.update = true;
+            } else {
+              this.default.update = false;
+            }
           }
 
           if (element.libelle === 'administration') {
@@ -109,6 +126,11 @@ export class UserChmodComponent implements OnInit {
               this.administration.delete = true;
             } else {
               this.administration.delete = false;
+            }
+            if (element.update === 1) {
+              this.administration.update = true;
+            } else {
+              this.administration.update = false;
             }
           }
 
@@ -128,6 +150,11 @@ export class UserChmodComponent implements OnInit {
             } else {
               this.finance.delete = false;
             }
+            if (element.update === 1) {
+              this.finance.update = true;
+            } else {
+              this.finance.update = false;
+            }
           }
 
           if (element.libelle === 'stocks') {
@@ -145,6 +172,11 @@ export class UserChmodComponent implements OnInit {
               this.stock.delete = true;
             } else {
               this.stock.delete = false;
+            }
+            if (element.update === 1) {
+              this.stock.update = true;
+            } else {
+              this.stock.update = false;
             }
           }
 
@@ -164,6 +196,11 @@ export class UserChmodComponent implements OnInit {
             } else {
               this.manager.delete = false;
             }
+            if (element.update === 1) {
+              this.manager.update = true;
+            } else {
+              this.manager.update = false;
+            }
           }
 
           if (element.libelle === 'pesees') {
@@ -181,6 +218,34 @@ export class UserChmodComponent implements OnInit {
               this.pesee.delete = true;
             } else {
               this.pesee.delete = false;
+            }
+            if (element.update === 1) {
+              this.pesee.update = true;
+            } else {
+              this.pesee.update = false;
+            }
+          }
+
+          if (element.libelle === 'chargeur') {
+            if (element.create === 1) {
+              this.chargeur.write = true;
+            } else {
+              this.chargeur.write = false;
+            }
+            if (element.read === 1) {
+              this.chargeur.read = true;
+            } else {
+              this.chargeur.read = false;
+            }
+            if (element.delete === 1) {
+              this.chargeur.delete = true;
+            } else {
+              this.chargeur.delete = false;
+            }
+            if (element.update === 1) {
+              this.chargeur.update = true;
+            } else {
+              this.chargeur.update = false;
             }
           }
         });
@@ -207,7 +272,8 @@ export class UserChmodComponent implements OnInit {
       libelle : 'default',
       create : this.default.write,
       read : this.default.read,
-      delete : this.default.delete
+      delete : this.default.delete,
+      update: this.default.update
     };
     console.log(data);
     this.userService.AssignRight(data).subscribe(
@@ -235,7 +301,8 @@ export class UserChmodComponent implements OnInit {
       libelle : 'administration',
       create : this.administration.write,
       read : this.administration.read,
-      delete : this.administration.delete
+      delete : this.administration.delete,
+      update: this.administration.update
     };
     console.log(data);
     this.userService.AssignRight(data).subscribe(
@@ -263,7 +330,8 @@ export class UserChmodComponent implements OnInit {
       libelle : 'finances',
       create : this.finance.write,
       read : this.finance.read,
-      delete : this.finance.delete
+      delete : this.finance.delete,
+      update: this.finance.update
     };
     console.log(data);
     this.userService.AssignRight(data).subscribe(
@@ -291,7 +359,8 @@ export class UserChmodComponent implements OnInit {
       libelle : 'stocks',
       create : this.stock.write,
       read : this.stock.read,
-      delete : this.stock.delete
+      delete : this.stock.delete,
+      update: this.stock.update
     };
     console.log(data);
     this.userService.AssignRight(data).subscribe(
@@ -319,7 +388,8 @@ export class UserChmodComponent implements OnInit {
       libelle : 'manager',
       create : this.manager.write,
       read : this.manager.read,
-      delete : this.manager.delete
+      delete : this.manager.delete,
+      update: this.manager.update
     };
     console.log(data);
     this.userService.AssignRight(data).subscribe(
@@ -347,7 +417,8 @@ export class UserChmodComponent implements OnInit {
       libelle : 'pesees',
       create : this.pesee.write,
       read : this.pesee.read,
-      delete : this.pesee.delete
+      delete : this.pesee.delete,
+      update: this.pesee.update
     };
     console.log(data);
     this.userService.AssignRight(data).subscribe(
@@ -358,4 +429,34 @@ export class UserChmodComponent implements OnInit {
       }
     );
   }
+
+  eventChargeur(event, action) {
+    console.log('l\'action solicitée est : ' + action);
+    console.log(event);
+    console.log(this.chargeur);
+    if (this.chargeur.write === true || this.chargeur.delete === true) {
+      this.chargeur.read = true;
+    }
+    if (this.chargeur.read === false) {
+      this.chargeur.write = false;
+      this.chargeur.delete = false;
+    }
+    const data = {
+      user_id : this.id,
+      libelle : 'chargeur',
+      create : this.chargeur.write,
+      read : this.chargeur.read,
+      delete : this.chargeur.delete,
+      update: this.chargeur.update
+    };
+    console.log(data);
+    this.userService.AssignRight(data).subscribe(
+      (success) => {
+        console.log(success);
+      }, (err) => {
+        console.log(err);
+      }
+    );
+  }
+
 }

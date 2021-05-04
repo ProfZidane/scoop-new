@@ -62,14 +62,17 @@
         <div class="col-md-3">
           <h2>Droits & Actions</h2>
         </div>
-        <div class="col-md-3">
+        <div class="col-md-2">
           <h4>Lecture</h4>
         </div>
-        <div class="col-md-3">
+        <div class="col-md-2">
           <h4>Ecriture</h4>
         </div>
-        <div class="col-md-3">
+        <div class="col-md-2">
           <h4>Suppression</h4>
+        </div>
+        <div class="col-md-2">
+          <h4>Modification</h4>
         </div>
 
       </div>
@@ -81,21 +84,27 @@
             Par défaut
           </h3>
         </div>
-        <div class="col-md-3">
+        <div class="col-md-2">
           <label class="switch">
             <input type="checkbox" name="option" [(ngModel)]="default.read" (change)="eventDefault($event,'read')">
             <span class="slider round"></span>
           </label>
         </div>
-        <div class="col-md-3">
+        <div class="col-md-2">
           <label class="switch">
             <input type="checkbox" name="option" [(ngModel)]="default.write" (change)="eventDefault($event,'write')">
             <span class="slider round"></span>
           </label>
         </div>
-        <div class="col-md-3">
+        <div class="col-md-2">
           <label class="switch">
             <input type="checkbox" name="option" [(ngModel)]="default.delete" (change)="eventDefault($event,'delete')">
+            <span class="slider round"></span>
+          </label>
+        </div>
+        <div class="col-md-2">
+          <label class="switch">
+            <input type="checkbox" name="option" [(ngModel)]="default.update" (change)="eventDefault  ($event, 'update')">
             <span class="slider round"></span>
           </label>
         </div>
@@ -109,21 +118,27 @@
             Administration
           </h3>
         </div>
-        <div class="col-md-3">
+        <div class="col-md-2">
           <label class="switch">
             <input type="checkbox" name="option" [(ngModel)]="administration.read" (change)="eventAdministration($event,'read')">
             <span class="slider round"></span>
           </label>
         </div>
-        <div class="col-md-3">
+        <div class="col-md-2">
           <label class="switch">
             <input type="checkbox" name="option" [(ngModel)]="administration.write" (change)="eventAdministration($event,'write')">
             <span class="slider round"></span>
           </label>
         </div>
-        <div class="col-md-3">
+        <div class="col-md-2">
           <label class="switch">
             <input type="checkbox" name="option" [(ngModel)]="administration.delete" (change)="eventAdministration($event,'delete')">
+            <span class="slider round"></span>
+          </label>
+        </div>
+        <div class="col-md-2">
+          <label class="switch">
+            <input type="checkbox" name="option" [(ngModel)]="administration.update" (change)="eventAdministration($event, 'update')">
             <span class="slider round"></span>
           </label>
         </div>
@@ -137,21 +152,27 @@
             Finances
           </h3>
         </div>
-        <div class="col-md-3">
+        <div class="col-md-2">
           <label class="switch">
             <input type="checkbox" name="option" [(ngModel)]="finance.read" (change)="eventFinance($event,'read')">
             <span class="slider round"></span>
           </label>
         </div>
-        <div class="col-md-3">
+        <div class="col-md-2">
           <label class="switch">
             <input type="checkbox" name="option" [(ngModel)]="finance.write" (change)="eventFinance($event,'write')">
             <span class="slider round"></span>
           </label>
         </div>
-        <div class="col-md-3">
+        <div class="col-md-2">
           <label class="switch">
             <input type="checkbox" name="option" [(ngModel)]="finance.delete" (change)="eventFinance($event,'delete')">
+            <span class="slider round"></span>
+          </label>
+        </div>
+        <div class="col-md-2">
+          <label class="switch">
+            <input type="checkbox" name="option" [(ngModel)]="finance.update" (change)="eventFinance($event, 'update')">
             <span class="slider round"></span>
           </label>
         </div>
@@ -163,21 +184,27 @@
         <div class="col-md-3">
           <h3> Stocks</h3>
         </div>
-        <div class="col-md-3">
+        <div class="col-md-2">
           <label class="switch">
             <input type="checkbox" name="option" [(ngModel)]="stock.read" (change)="eventStock($event,'read')">
             <span class="slider round"></span>
           </label>
         </div>
-        <div class="col-md-3">
+        <div class="col-md-2">
           <label class="switch">
             <input type="checkbox" name="option" [(ngModel)]="stock.write" (change)="eventStock($event,'write')">
             <span class="slider round"></span>
           </label>
         </div>
-        <div class="col-md-3">
+        <div class="col-md-2">
           <label class="switch">
             <input type="checkbox" name="option" [(ngModel)]="stock.delete" (change)="eventStock($event,'delete')">
+            <span class="slider round"></span>
+          </label>
+        </div>
+        <div class="col-md-2">
+          <label class="switch">
+            <input type="checkbox" name="option" [(ngModel)]="stock.update" (change)="eventStock($event, 'update')">
             <span class="slider round"></span>
           </label>
         </div>
@@ -191,21 +218,27 @@
             Manager
           </h3>
         </div>
-        <div class="col-md-3">
+        <div class="col-md-2">
           <label class="switch">
             <input type="checkbox" name="option" [(ngModel)]="manager.read" (change)="eventManager($event, 'read')">
             <span class="slider round"></span>
           </label>
         </div>
-        <div class="col-md-3">
+        <div class="col-md-2">
           <label class="switch">
             <input type="checkbox" name="option" [(ngModel)]="manager.write" (change)="eventManager($event, 'write')">
             <span class="slider round"></span>
           </label>
         </div>
-        <div class="col-md-3">
+        <div class="col-md-2">
           <label class="switch">
             <input type="checkbox" name="option" [(ngModel)]="manager.delete" (change)="eventManager($event, 'delete')">
+            <span class="slider round"></span>
+          </label>
+        </div>
+        <div class="col-md-2">
+          <label class="switch">
+            <input type="checkbox" name="option" [(ngModel)]="manager.update" (change)="eventManager($event, 'update')">
             <span class="slider round"></span>
           </label>
         </div>
@@ -219,27 +252,66 @@
             Pesée
           </h3>
         </div>
-        <div class="col-md-3">
+        <div class="col-md-2">
           <label class="switch">
             <input type="checkbox" name="option" [(ngModel)]="pesee.read" (change)="eventPesee($event, 'read')">
             <span class="slider round"></span>
           </label>
         </div>
-        <div class="col-md-3">
+        <div class="col-md-2">
           <label class="switch">
             <input type="checkbox" name="option" [(ngModel)]="pesee.write" (change)="eventPesee($event, 'write')">
             <span class="slider round"></span>
           </label>
         </div>
-        <div class="col-md-3">
+        <div class="col-md-2">
           <label class="switch">
             <input type="checkbox" name="option" [(ngModel)]="pesee.delete" (change)="eventPesee($event, 'delete')">
+            <span class="slider round"></span>
+          </label>
+        </div>
+        <div class="col-md-2">
+          <label class="switch">
+            <input type="checkbox" name="option" [(ngModel)]="pesee.update" (change)="eventPesee($event, 'update')">
             <span class="slider round"></span>
           </label>
         </div>
 
       </div>
 
+      <div class="row">
+
+        <div class="col-md-3">
+          <h3>
+            Chargeur
+          </h3>
+        </div>
+        <div class="col-md-2">
+          <label class="switch">
+            <input type="checkbox" name="option" [(ngModel)]="chargeur.read" (change)="eventChargeur($event, 'read')">
+            <span class="slider round"></span>
+          </label>
+        </div>
+        <div class="col-md-2">
+          <label class="switch">
+            <input type="checkbox" name="option" [(ngModel)]="chargeur.write" (change)="eventChargeur($event, 'write')">
+            <span class="slider round"></span>
+          </label>
+        </div>
+        <div class="col-md-2">
+          <label class="switch">
+            <input type="checkbox" name="option" [(ngModel)]="chargeur.delete" (change)="eventChargeur($event, 'delete')">
+            <span class="slider round"></span>
+          </label>
+        </div>
+        <div class="col-md-2">
+          <label class="switch">
+            <input type="checkbox" name="option" [(ngModel)]="chargeur.update" (change)="eventChargeur($event, 'update')">
+            <span class="slider round"></span>
+          </label>
+        </div>
+
+      </div>
 
     </div>
   </div>

@@ -68,7 +68,7 @@
         <th>Status</th>
         <th>Numéro de téléphone</th>
         <th>Adresse</th>
-        <th>Base</th>
+        <th>Ville</th>
         <th>Fonction</th>
       </tr>
     </thead>
@@ -81,7 +81,8 @@
         <td class="text-danger" *ngIf="user.status === 'inactive'">{{ user.status }}</td>
         <td>{{ user.telephone }}</td>
         <td>{{ user.adresse }}</td>
-        <td>{{ user.ville }}</td>
+        <td *ngIf='user.ville_service'>{{ user.ville_service }}</td>
+        <td *ngIf="!user.ville_service" class="text-danger">NEANT</td>
         <td>{{ user.fonction }}</td>
       </tr>
     </tbody>

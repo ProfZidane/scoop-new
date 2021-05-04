@@ -164,6 +164,10 @@ export class MenuComponent implements OnInit {
     this.menuService.SetFavoris(indique);
   }
 
+  ManageVente() {
+
+  }
+
   Logout() {
     if (this.userService.Logout()) {
       this.router.navigateByUrl('/');
