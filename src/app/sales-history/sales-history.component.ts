@@ -94,6 +94,7 @@ export class SalesHistoryComponent implements OnInit {
   }
 
   Trie() {
+    this.montant = 0;
     console.log(this.trie);
     this.state.trie = true;
     this.error.data = false;

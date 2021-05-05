@@ -6,6 +6,8 @@ import { Router } from '@angular/router';
 import { DataTableDirective } from 'angular-datatables';
 import { registerLocaleData } from '@angular/common';
 import localeFr from '@angular/common/locales/fr';
+import { VenteService } from '../services/vente.service';
+
 registerLocaleData(localeFr, 'fr');
 @Component({
   selector: 'app-vente-history',
@@ -32,12 +34,14 @@ export class VenteHistoryComponent implements OnInit {
     date_debut: '',
     date_fin: ''
   };
-  constructor(private router: Router, private userService: AuthService, private location: Location) { }
+  constructor(private router: Router, private userService: AuthService, private location: Location,
+              private venteService: VenteService) { }
 
   ngOnInit(): void {
     if (localStorage.getItem('userData') !== null) {
       this.userConnected = JSON.parse(localStorage.getItem('userData'));
     }
+    this.getHistoriqueVente();
   }
 
   ngOnDestroy(): void {
@@ -65,5 +69,53 @@ export class VenteHistoryComponent implements OnInit {
     }
   }
 
+  getHistoriqueVente() {
+    const data = {
+      date_debut: null,
+      date_fin: null
+    };
+    this.error.data = false;
+    this.venteService.GetHistoryVente(data).subscribe(
+      (data) => {
+        console.log(data);
+        this.histories = data.data;
+        this.isLoading.data = false;
+        this.histories.forEach(element => {
+          this.montant += element.montant_total;
+        });
+        this.dtTrigger.next();
+      }, (err) => {
+        console.log(err);
+        this.isLoading.data = false;
+        this.error.data = true;
+      }
+    );
+  }
+
+  Trie() {
+    this.montant = 0;
+    console.log(this.trie);
+    this.state.trie = true;
+    this.error.data = false;
+    this.venteService.GetHistoryVente(this.trie).subscribe(
+      (data) => {
+        console.log(data);
+        this.isLoading.data = false;
+        this.histories = data.data;
+        this.histories.forEach(element => {
+          this.montant += element.montant_total;
+        });
+        console.log(this.montant);
+        this.state.trie = false;
+        this.rerender();
+        // this.dtTrigger.next();
+      }, (err) => {
+        console.log(err);
+        this.isLoading.data = false;
+        this.error.data = true;
+        this.state.trie = false;
+      }
+    );
+  }
 
 }

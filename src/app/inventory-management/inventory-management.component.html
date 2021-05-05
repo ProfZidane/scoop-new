@@ -6,7 +6,7 @@
       <i class="material-icons" style="cursor: pointer;font-size: 25px;" (click)="ComeBack()">
         chevron_left
       </i>
-      Historiques des ventes
+      Inventaires Stock
     </a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
@@ -35,9 +35,9 @@
         </li>-->
       </ul>
       <form class="form-inline my-2 my-lg-0">
-        <button class="btn btn-outline-warning my-2 my-sm-0 mr-5" type="button">
+        <!--<button class="btn btn-outline-warning my-2 my-sm-0 mr-5" type="button">
           {{ montant | currency:'Fcfa':'symbol':'4.2-2':'fr' }}
-        </button>
+        </button> -->
         <div class="dropdown">
           <button class="btn btn-success text-light dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" *ngIf="userConnected">
             {{ userConnected.name }}
@@ -52,7 +52,7 @@
     </div>
   </nav>
   <!--//nav bar -->
-  <div class="row">
+  <!--<div class="row">
     <div class="col-md-2">
       <label>Date début</label>
       <input type="date" name="date_debut" [(ngModel)]="trie.date_debut" id="" class="form-control" style="width: 100%">
@@ -70,7 +70,7 @@
         recherche ...
       </button>
     </div>
-  </div>
+  </div>-->
   <br>
 <div class="container-fluid table-user">
   <div class="text-center" *ngIf="isLoading.data === true">
@@ -82,29 +82,38 @@
     Une erreur est survenue. Veuillez réessayer s'il vous plait !
   </div>
 
-  <table datatable [dtTrigger]="dtTrigger" class="row-border hover" align="center">
+  <table datatable [dtTrigger]="dtTrigger" [dtOptions]="dtOptions" class="row-border hover" align="center">
     <thead>
       <tr>
-        <th>Date Chargement</th>
-        <th>Date Vente</th>
-        <th>Poids Net</th>
-        <th>Poids Brut</th>
-        <th>Nbr Sacs</th>
-        <th>Prix unitaire</th>
-        <th>Montant total</th>
-        <th>Num Chargement</th>
+        <th>N°</th>
+        <th>Départ</th>
+        <th>Arrivée</th>
+        <th>Exportateur</th>
+        <th>Nbr Sacs Chargés</th>
+        <th>Nbr Sacs Déchargés</th>
+        <th>Sacs Remboursés</th>
+        <th>Poids Net Chargés</th>
+        <th>Poids Net Déchargés</th>
+        <th>Ecart</th>
+        <th>Taux</th>
+        <th>Destination</th>
       </tr>
     </thead>
     <tbody align="center">
-      <tr *ngFor="let history of histories">
-        <td>{{ history.date_chargement }}</td>
-        <td>{{ history.date_vente }}</td>
-        <td>{{ history.poids_net_dechargement }}</td>
-        <td>{{ history.poids_brut_dechargement }}</td>
-        <td>{{ history.sacs_decharges}}</td>
-        <td>{{ history.prix_unitaire}}</td>
-        <td>{{ history.montant_total | currency:'Fcfa':'symbol':'4.2-2':'fr' }}</td>
-        <td>{{ history.numero_chargement }}</td>
+      <tr *ngFor="let inventory of inventories">
+        <td>{{ inventory.numero_chargement }}</td>
+        <td>{{ inventory.depart }}</td>
+        <td>{{ inventory.arrive }}</td>
+        <td>{{ inventory.exportateur }}</td>
+        <td>{{ inventory.nbre_sacs_charge }}</td>
+        <td>{{ inventory.sacs_decharges }}</td>
+        <td>{{ inventory.sacs_rembourses }}</td>
+        <td>{{ inventory.poids_charges }}</td>
+        <td>{{ inventory.poids_net_dechargement }}</td>
+        <td>{{ inventory.ecart }}</td>
+        <td>{{ inventory.taux }}</td>
+        <td>{{ inventory.ville_destination }}</td>
+        <!--<td>{{ inventory. }}</td>-->
       </tr>
     </tbody>
   </table>
