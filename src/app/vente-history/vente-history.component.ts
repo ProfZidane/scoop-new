@@ -3,17 +3,18 @@ import { AuthService } from '../services/auth.service';
 import {Location} from '@angular/common';
 import { Observable, Subject, Subscriber, timer } from 'rxjs';
 import { Router } from '@angular/router';
-import { SalesService } from '../services/sales.service';
 import { DataTableDirective } from 'angular-datatables';
 import { registerLocaleData } from '@angular/common';
 import localeFr from '@angular/common/locales/fr';
+import { VenteService } from '../services/vente.service';
+
 registerLocaleData(localeFr, 'fr');
 @Component({
-  selector: 'app-sales-history',
-  templateUrl: './sales-history.component.html',
-  styleUrls: ['./sales-history.component.css']
+  selector: 'app-vente-history',
+  templateUrl: './vente-history.component.html',
+  styleUrls: ['./vente-history.component.css']
 })
-export class SalesHistoryComponent implements OnInit {
+export class VenteHistoryComponent implements OnInit {
   @ViewChild(DataTableDirective, {static: false})
   dtElement: DataTableDirective;
   userConnected;
@@ -33,13 +34,14 @@ export class SalesHistoryComponent implements OnInit {
     date_debut: '',
     date_fin: ''
   };
-  constructor(private router: Router, private userService: AuthService, private location: Location, private salesService: SalesService) { }
+  constructor(private router: Router, private userService: AuthService, private location: Location,
+              private venteService: VenteService) { }
 
   ngOnInit(): void {
     if (localStorage.getItem('userData') !== null) {
       this.userConnected = JSON.parse(localStorage.getItem('userData'));
     }
-    this.GetHistory();
+    this.getHistoriqueVente();
   }
 
   ngOnDestroy(): void {
@@ -67,23 +69,20 @@ export class SalesHistoryComponent implements OnInit {
     }
   }
 
-
-
-  GetHistory() {
+  getHistoriqueVente() {
     const data = {
       date_debut: null,
       date_fin: null
     };
     this.error.data = false;
-    this.salesService.GetHistorySales2(data).subscribe(
+    this.venteService.GetHistoryVente(data).subscribe(
       (data) => {
         console.log(data);
-        this.isLoading.data = false;
         this.histories = data.data;
+        this.isLoading.data = false;
         this.histories.forEach(element => {
           this.montant += element.montant_total;
         });
-        console.log(this.montant);
         this.dtTrigger.next();
       }, (err) => {
         console.log(err);
@@ -98,7 +97,7 @@ export class SalesHistoryComponent implements OnInit {
     console.log(this.trie);
     this.state.trie = true;
     this.error.data = false;
-    this.salesService.GetHistorySales2(this.trie).subscribe(
+    this.venteService.GetHistoryVente(this.trie).subscribe(
       (data) => {
         console.log(data);
         this.isLoading.data = false;

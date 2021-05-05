@@ -23,3 +23,7 @@ p, label, small, button, span, li {
 td {
   text-transform: capitalize;
 }
+
+.dropdown > button {
+  text-transform: capitalize;
+}

@@ -165,7 +165,25 @@ export class MenuComponent implements OnInit {
   }
 
   ManageVente() {
+    this.router.navigateByUrl('/home/(child1:vente-manage;open=true)');
+    const indique = {
+      name: 'Ventes',
+      route: 'vente-manage',
+      icon: 'shopping_cart',
+      id: JSON.parse(localStorage.getItem('userData')).id
+    };
+    this.menuService.SetFavoris(indique);
+  }
 
+  ManageInventory() {
+    this.router.navigateByUrl('/home/(child1:inventory-manage;open=true)');
+    const indique = {
+      name: 'Inventaires Stock',
+      route: 'inventory-manage',
+      icon: 'chrome_reader_mode',
+      id: JSON.parse(localStorage.getItem('userData')).id
+    };
+    this.menuService.SetFavoris(indique);
   }
 
   Logout() {
