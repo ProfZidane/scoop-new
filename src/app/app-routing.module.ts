@@ -32,6 +32,8 @@ import { ChargeModificationComponent } from './charge-modification/charge-modifi
 import { VenteManagementComponent } from './vente-management/vente-management.component';
 import { VenteHistoryComponent } from './vente-history/vente-history.component';
 import { InventoryManagementComponent } from './inventory-management/inventory-management.component';
+import { ProfilManagementComponent } from './profil-management/profil-management.component';
+import { SupportManagementComponent } from './support-management/support-management.component';
 
 
 const routes: Routes = [
@@ -188,6 +190,16 @@ const routes: Routes = [
       {
         path: 'inventory-manage',
         component: InventoryManagementComponent,
+        outlet: 'child1'
+      },
+      {
+        path: 'profil-manage',
+        component: ProfilManagementComponent,
+        outlet: 'child1'
+      },
+      {
+        path: 'support-manage',
+        component: SupportManagementComponent,
         outlet: 'child1'
       }
     ]

@@ -45,6 +45,8 @@ import { ChargeModificationComponent } from './charge-modification/charge-modifi
 import { VenteManagementComponent } from './vente-management/vente-management.component';
 import { VenteHistoryComponent } from './vente-history/vente-history.component';
 import { InventoryManagementComponent } from './inventory-management/inventory-management.component';
+import { ProfilManagementComponent } from './profil-management/profil-management.component';
+import { SupportManagementComponent } from './support-management/support-management.component';
 
 @NgModule({
   declarations: [
@@ -83,7 +85,9 @@ import { InventoryManagementComponent } from './inventory-management/inventory-m
     ChargeModificationComponent,
     VenteManagementComponent,
     VenteHistoryComponent,
-    InventoryManagementComponent
+    InventoryManagementComponent,
+    ProfilManagementComponent,
+    SupportManagementComponent
   ],
   imports: [
     BrowserModule,

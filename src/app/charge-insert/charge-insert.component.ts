@@ -100,6 +100,10 @@ export class ChargeInsertComponent implements OnInit {
     }
   }
 
+  GoToProfil() {
+    this.router.navigateByUrl('/home/(child1:profil-manage;open=true)');
+  }
+
   GetPartner() {
     this.partenerService.GetPartners().subscribe(
       (data) => {

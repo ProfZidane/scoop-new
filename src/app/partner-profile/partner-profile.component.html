@@ -128,10 +128,17 @@
         <h2 class="mt-2" style="text-transform: capitalize;">{{ partner.info.name }}</h2>
         <span style="text-transform: capitalize;"><b>{{ partner.info.type }}</b></span>
         <ul class="list-group list-group-flush" style="text-transform: capitalize;">
-          <li class="list-group-item">{{ partner.info.code }}</li>
-          <li class="list-group-item">{{ partner.info.categorie }}</li>
-          <li class="list-group-item">{{ partner.info.description }}</li>
-          <li class="list-group-item">{{ partner.info.status }}</li>
+          <li class="list-group-item" *ngIf="partner.info.code">{{ partner.info.code }}</li>
+          <li class="list-group-item text-danger" *ngIf="!partner.info.code">NEANT</li>
+
+          <li class="list-group-item" *ngIf="partner.info.categorie">{{ partner.info.categorie }}</li>
+          <li class="list-group-item text-danger" *ngIf="!partner.info.categorie">NEANT</li>
+
+          <li class="list-group-item" *ngIf="partner.info.description">{{ partner.info.description }}</li>
+          <li class="list-group-item text-danger" *ngIf="!partner.info.description">NEANT</li>
+
+          <li class="list-group-item" *ngIf="partner.info.status">{{ partner.info.status }}</li>
+          <li class="list-group-item text-danger" *ngIf="!partner.info.status">NEANT</li>
         </ul>
 
       </div>

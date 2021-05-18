@@ -43,7 +43,7 @@
             {{ userConnected.name }}
           </button>
           <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-            <a class="dropdown-item" href="#">Profile</a>
+            <a class="dropdown-item" (click)="GoToProfil()">Profile</a>
             <a class="dropdown-item" href="#">Support</a>
             <a class="dropdown-item text-danger" (click)="Logout()" style="cursor: pointer;">Déconnexion</a>
           </div>

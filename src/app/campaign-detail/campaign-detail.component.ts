@@ -62,6 +62,10 @@ export class CampaignDetailComponent implements OnInit {
     }
   }
 
+  GoToProfil() {
+    this.router.navigateByUrl('/home/(child1:profil-manage;open=true)');
+  }
+
   GetInfoCampaign() {
     this.error.data = false;
     this.campainService.GetCampaignById(this.id).subscribe(

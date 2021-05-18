@@ -192,6 +192,10 @@ export class MenuComponent implements OnInit {
     }
   }
 
+  GoToProfil() {
+    this.router.navigateByUrl('/home/(child1:profil-manage;open=true)');
+  }
+
   getRightUserConnected() {
     if (this.userService.GetRight() !== 0) {
       this.right = this.userService.GetRight();

@@ -46,7 +46,7 @@
             {{ userConnected.name }}
           </button>
           <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-            <a class="dropdown-item" href="#">Profile</a>
+            <a class="dropdown-item" (click)="GoToProfil()">Profile</a>
             <a class="dropdown-item" href="#">Support</a>
             <a class="dropdown-item text-danger" (click)="Logout()" style="cursor: pointer;">Déconnexion</a>
           </div>
@@ -122,7 +122,7 @@
           <small class="text-muted">Inscrivez les informations suivantes</small>
           <div class="row">
             <div class="col">
-              <label for="">Entrez le compteur récepteur</label>
+              <label for="">Entrez le compte récepteur</label>
               <div class="input-group mb-3" *ngIf="accountList">
                 <select class="custom-select" name="account" [(ngModel)]="finance.compte_id" id="inputGroupSelect01" required >
                   <option *ngFor="let account of accountList" value="{{ account.id }}">{{ account.banque }}</option>
@@ -153,7 +153,7 @@
           <div class="row">
             <div class="col">
               <label for="">Entrez la preuve</label>
-              <input type="file" name="preuve" [(ngModel)]="finance.preuve" (change)="OnFileSelected($event)" id="" class="form-control">
+              <input type="file" name="preuve" [(ngModel)]="finance.piece_jointe" (change)="OnFileSelected($event)" id="" class="form-control">
             </div>
           </div>
       </div>

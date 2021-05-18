@@ -81,6 +81,10 @@ export class UserChmodComponent implements OnInit {
     }
   }
 
+  GoToProfil() {
+    this.router.navigateByUrl('/home/(child1:profil-manage;open=true)');
+  }
+
   // get right By id
   GetRightUser() {
     this.userService.GetRightById(this.id).subscribe(
@@ -226,7 +230,7 @@ export class UserChmodComponent implements OnInit {
             }
           }
 
-          if (element.libelle === 'chargeur') {
+          if (element.libelle === 'dechargeur') {
             if (element.create === 1) {
               this.chargeur.write = true;
             } else {
@@ -443,7 +447,7 @@ export class UserChmodComponent implements OnInit {
     }
     const data = {
       user_id : this.id,
-      libelle : 'chargeur',
+      libelle : 'dechargeur',
       create : this.chargeur.write,
       read : this.chargeur.read,
       delete : this.chargeur.delete,

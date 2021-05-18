@@ -108,6 +108,14 @@ trueFavoris = [];
     this.router.navigateByUrl('/home/(child1:user-manage;open=true)');
   }
 
+  GoToProfil() {
+    this.router.navigateByUrl('/home/(child1:profil-manage;open=true)');
+  }
+
+  GoToSupport() {
+    alert('No construct !');
+  }
+
   Logout() {
     if (this.userService.Logout()) {
       this.router.navigateByUrl('/');

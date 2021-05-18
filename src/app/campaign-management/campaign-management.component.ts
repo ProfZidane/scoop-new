@@ -64,6 +64,9 @@ export class CampaignManagementComponent implements OnInit {
     }
   }
 
+  GoToProfil() {
+    this.router.navigateByUrl('/home/(child1:profil-manage;open=true)');
+  }
 
   CreateCampaign(event) {
     this.isLoading.create = true;

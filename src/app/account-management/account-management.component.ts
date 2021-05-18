@@ -58,6 +58,10 @@ export class AccountManagementComponent implements OnInit {
     }
   }
 
+  GoToProfil() {
+    this.router.navigateByUrl('/home/(child1:profil-manage;open=true)');
+  }
+
   GetAccounts() {
     this.accountService.GetAccount().subscribe(
       (data) => {

@@ -4,7 +4,7 @@
       home
     </i>
   </div>
-  <div class="col-md-12 menu-home-option" id="user" (click)="isSelected('user')">
+  <div class="col-md-12 menu-home-option" id="user" (click)="isSelected('user')" *ngIf="rightContent.manager.state === true || rightContent.administration.state === true ">
     <i class="large material-icons">
       account_circle
     </i>

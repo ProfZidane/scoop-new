@@ -36,7 +36,7 @@ export class FinanceManagementComponent implements OnInit {
     partenaire_id : '',
     montant : '',
     date: '',
-    preuve : ''
+    piece_jointe : ''
   };
   financeFictious;
   financeDelete = {
@@ -71,6 +71,10 @@ export class FinanceManagementComponent implements OnInit {
     }
   }
 
+  GoToProfil() {
+    this.router.navigateByUrl('/home/(child1:profil-manage;open=true)');
+  }
+
 
 
   OnFileSelected(event) {
@@ -87,7 +91,7 @@ export class FinanceManagementComponent implements OnInit {
       this.readFile(file, subscriber);
     });
     observable.subscribe( (d) => {
-      this.finance.preuve = d;
+      this.finance.piece_jointe = d;
       console.log(d);
     });
   }

@@ -92,6 +92,10 @@ export class ChargeModificationComponent implements OnInit {
     }
   }
 
+  GoToProfil() {
+    this.router.navigateByUrl('/home/(child1:profil-manage;open=true)');
+  }
+
   GetById() {
     this.error.data = false;
     this.chargeService.GetChargementById(this.id).subscribe(

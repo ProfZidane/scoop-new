@@ -95,6 +95,10 @@ export class UserManagementComponent implements OnInit {
     this.router.navigateByUrl('/home');
   }
 
+  GoToProfil() {
+    this.router.navigateByUrl('/home/(child1:profil-manage;open=true)');
+  }
+
   GetUsers() {
     this.userService.GetAllUsers().subscribe(
       (data) => {

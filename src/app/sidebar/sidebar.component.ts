@@ -45,10 +45,12 @@ export class SidebarComponent implements OnInit {
       element.classList.remove('active');
     });
     document.getElementById(id).classList.add('active');
-    if (id === "menu") {
-      this.router.navigateByUrl("/home/(child1:menu;open=true)");
-    } else if (id === "home") {
-      this.router.navigateByUrl("/home)");
+    if (id === 'menu') {
+      this.router.navigateByUrl('/home/(child1:menu;open=true)');
+    } else if (id === 'home') {
+      this.router.navigateByUrl('/home)');
+    } else if (id === 'user') {
+      this.router.navigateByUrl('/home/(child1:user-manage;open=true)');
     }
 
   }

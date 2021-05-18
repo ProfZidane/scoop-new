@@ -36,8 +36,8 @@
             {{ userConnected.name }}
           </button>
           <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-            <a class="dropdown-item" href="#">Profile</a>
-            <a class="dropdown-item" href="#">Support</a>
+            <a class="dropdown-item" style="cursor: pointer;" (click)="GoToProfil()">Profile</a>
+            <a class="dropdown-item" style="cursor: pointer;" (click)="GoToSupport()">Support</a>
             <a class="dropdown-item text-danger" (click)="Logout()" style="cursor: pointer;">Déconnexion</a>
           </div>
         </div>
@@ -153,6 +153,9 @@
             </span>
           </li>-->
         </ul>
+        <p style="text-align: center; font-weight: 100;" *ngIf="users.length === 0">
+          Aucun utilisateurs créés !
+        </p>
 
         <div class="mt-5" align="center" >
           <button class="btn btn-success text-light" (click)="GoToUserManagement()">
@@ -189,6 +192,9 @@
             </span>
           </li>-->
         </ul>
+        <p style="text-align: center; font-weight: 100;" *ngIf="objectives.length === 0">
+          Aucun objectifs définis !
+        </p>
 
         <div class="mt-5" align="center" >
           <button class="btn btn-success text-light" (click)="GoToObjectif()">

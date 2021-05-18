@@ -55,6 +55,9 @@ export class ChargeDetailComponent implements OnInit {
     }
   }
 
+  GoToProfil() {
+    this.router.navigateByUrl('/home/(child1:profil-manage;open=true)');
+  }
 
   GetChargeById() {
     this.error.charge = false;

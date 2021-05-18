@@ -42,9 +42,9 @@ right;
 
   Logout() {
     if (localStorage.getItem('token') !== null) {
+      this.http.post(this.logoutURL, { headers: this.GetHeaders() });
       localStorage.removeItem('token');
       localStorage.removeItem('userData');
-      this.http.post(this.logoutURL, { headers: this.GetHeaders() });
       return true;
     } else {
       return false;
