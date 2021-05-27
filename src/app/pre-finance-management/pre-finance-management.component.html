@@ -290,7 +290,15 @@
         <p *ngIf="!prefinancementDetail">
           En chargement ...
         </p>
-        <img *ngIf="prefinancementDetail" [src]=prefinancementDetail width="100%" height="500px" alt="">
+        <div *ngIf="prefinancementDetail && (prefinancementDetail[0] !== 'h' || prefinancementDetail === null)" align="center">
+          <img src="https://image.freepik.com/vecteurs-libre/panneau-signalisation-page-404-introuvable-illustration-plate_80328-232.jpg" width="90%  " height="90%" alt="">
+          <p>
+            <strong>
+              Image non disponible !
+            </strong>
+          </p>
+        </div>
+        <img *ngIf="prefinancementDetail && prefinancementDetail[0] === 'h'" [src]=prefinancementDetail width="100%" height="500px" alt="">
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">OK</button>

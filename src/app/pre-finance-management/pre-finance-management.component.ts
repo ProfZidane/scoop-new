@@ -242,6 +242,8 @@ export class PreFinanceManagementComponent implements OnInit {
 
   OpenModalPieceJointe(pieceJoint) {
     this.prefinancementDetail = pieceJoint;
+    console.log(this.prefinancementDetail);
+
   }
 
   Simulation() {
