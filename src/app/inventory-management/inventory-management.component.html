@@ -111,6 +111,7 @@
         <td>{{ inventory.poids_charges }}</td>
         <td>{{ inventory.poids_net_dechargement }}</td>
         <td>{{ inventory.ecart }}</td>
+        <td *ngIf="inventory.taux <= -10" class="text-success">{{ inventory.taux }}</td>
         <td *ngIf="inventory.taux >= -10 && inventory.taux <= 10" class="text-success">{{ inventory.taux }}</td>
         <td *ngIf="inventory.taux > 10" class="text-danger">{{ inventory.taux }}</td>
         <td>{{ inventory.ville_destination }}</td>

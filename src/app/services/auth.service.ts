@@ -6,7 +6,7 @@ import { environment } from '../../environments/environment.prod';
 @Injectable({
   providedIn: 'root'
 })
-export class AuthService {
+export class  AuthService {
 loginURL = environment.endPoint + 'login';
 registerURL = environment.endPoint + 'register';
 getURL = environment.endPoint + 'getAllUsers';

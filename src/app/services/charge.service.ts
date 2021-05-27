@@ -10,6 +10,7 @@ export class ChargeService {
 fullURL = environment.endPoint + 'chargement';
 changeURL = environment.endPoint + 'changeDestination/';
 disableURL = environment.endPoint + 'annulerChargement/';
+poundURL = environment.endPoint + 'getStockDisponible';
   constructor(private http: HttpClient) { }
 
   GetHeaders() {
@@ -29,6 +30,10 @@ disableURL = environment.endPoint + 'annulerChargement/';
 
 GetChargementById(id): Observable<any> {
   return this.http.get(this.fullURL + '/' + id, { headers: this.GetHeaders() });
+}
+
+GetPound(): Observable<any> {
+  return this.http.get(this.poundURL, { headers: this.GetHeaders() });
 }
 
   SetChargements(data): Observable<any> {

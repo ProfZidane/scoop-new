@@ -65,7 +65,7 @@
           <input type="date" name="date_chargement" [(ngModel)]="chargement.date_chargement" class="form-control" id="inputEmail4" placeholder="" required>
         </div>
         <div class="form-group col-md-6">
-          <label for="inputPassword4">Choisir l'entrepôt <span class="badge badge-success ml-2"  data-toggle="modal" data-target="#exampleModal28" style="cursor: pointer;">Ajouter +</span> (<span class="text-danger" style="font-size: larger;">*</span>)</label>
+          <label for="inputPassword4">Choisir la base <span class="badge badge-success ml-2"  data-toggle="modal" data-target="#exampleModal28" style="cursor: pointer;">Ajouter +</span> (<span class="text-danger" style="font-size: larger;">*</span>)</label>
           <div class="input-group mb-3">
             <select class="custom-select" name="entrepôt" [(ngModel)]="chargement.entrepot_id" id="inputGroupSelect01" required *ngIf="wareHouses">
               <option *ngFor="let warehouse of wareHouses" value="{{ warehouse.id }}">{{ warehouse.sous_prefecture }}</option>
@@ -73,7 +73,7 @@
           </div>
         </div>
         <div class="form-group col-md-6">
-          <label for="inputEmail4">Entrez la ville de destination</label>
+          <label for="inputEmail4">Entrez la ville de destination <span class="badge badge-success ml-2"  data-toggle="modal" data-target="#exampleModal028" style="cursor: pointer;">Ajouter +</span> </label>
           <select class="custom-select" name="ville" [(ngModel)]="chargement.ville_destination" id="inputGroupSelect01" required *ngIf="cities">
             <option *ngFor="let city of cities" value="{{ city.name }}">{{ city.name }}</option>
           </select>
@@ -323,5 +323,46 @@
       </div>
     </div>
   </form>
+  </div>
+</div>
+
+<!-- Modal create city -->
+<div class="modal fade" id="exampleModal028" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <form method="POST" (ngSubmit)="CreateCityDestination($event)">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Création Ville</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="alert alert-danger" *ngIf="error.create3">
+          {{ error.text }}
+        </div>
+        <div class="alert alert-success" *ngIf="success.create3">
+          La ville a été créée avec success !
+        </div>
+        <div class="clearfix" *ngIf="isLoading.create3  === true">
+          <span class="text-warning">Création de la ville  .....</span>
+          <div class="spinner-border float-right text-warning" role="status">
+            <span class="sr-only">Loading...</span>
+          </div>
+        </div>
+        <form>
+          <div class="form-group">
+            <label for="exampleInputEmail1">Entrez le nom de la ville</label>
+            <input type="text" name="name" [(ngModel)]="cityName" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+            <small class="form-text text-danger">Assurer de la conformité du nom</small>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
+        <button type="submit" class="btn btn-success">Enregister</button>
+      </div>
+    </div>
+    </form>
   </div>
 </div>

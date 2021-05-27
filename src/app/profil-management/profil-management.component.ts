@@ -26,8 +26,10 @@ export class ProfilManagementComponent implements OnInit {
   };
 
   state = {
-    modify: false
+    modify: false,
+    delete: false
   };
+
   constructor(private router: Router, private userService: AuthService, private location: Location) { }
 
   ngOnInit(): void {
@@ -57,6 +59,14 @@ export class ProfilManagementComponent implements OnInit {
     } else {
       this.state.modify = false;
     }
+  }
+
+  deleteHistory() {
+    this.state.delete = true;
+    localStorage.setItem('favoris', JSON.stringify([]));
+    setTimeout( () => {
+       this.state.delete = false;
+    }, 3000);
   }
 
 }

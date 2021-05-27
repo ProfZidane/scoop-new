@@ -56,7 +56,7 @@ export class MenuComponent implements OnInit {
   manageWarehouse() {
     this.router.navigateByUrl('/home/(child1:ware-manage;open=true)');
     const indique = {
-      name: 'Entrepôts',
+      name: 'Bases',
       route: 'ware-manage',
       icon: 'store_mall_directory',
       id: JSON.parse(localStorage.getItem('userData')).id

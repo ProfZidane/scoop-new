@@ -69,6 +69,7 @@ export class ChargeManagementComponent implements OnInit {
     this.GetChargement();
     this.GetPartner();
     this.GetWareHouses();
+    this.GetStock();
   }
 
   ComeBack() {
@@ -86,6 +87,18 @@ export class ChargeManagementComponent implements OnInit {
     this.router.navigateByUrl('/home/(child1:profil-manage;open=true)');
   }
 
+
+  GetStock() {
+    this.chargeService.GetPound().subscribe(
+      (data) => {
+        console.log(data);
+        this.sacs = data.data.poids;
+        this.sacs = this.sacs / 1000;
+      }, (err) => {
+        console.log(err);
+      }
+    );
+  }
 
   GetPartner() {
     this.partenerService.GetPartners().subscribe(
@@ -120,10 +133,6 @@ export class ChargeManagementComponent implements OnInit {
         console.log(data);
         this.chargements = data.data;
         console.log(this.chargement);
-        data.data.forEach(element => {
-          this.sacs += element.poids_tonne;
-        });
-        console.log('nbr de tonne : ' + this.sacs);
 
         this.isLoading.data = false;
         this.dtTrigger.next();

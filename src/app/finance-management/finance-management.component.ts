@@ -48,6 +48,7 @@ export class FinanceManagementComponent implements OnInit {
   financeList;
   timer = 30;
   setTimer;
+  pieceJointe;
   constructor(private router: Router, private userService: AuthService, private location: Location,
               private financeService: FinanceService, private accountService: CompteService, private partenerService: PartnerService) { }
 
@@ -227,6 +228,12 @@ export class FinanceManagementComponent implements OnInit {
 
   OpenModalDelete(id) {
     this.financeDelete.id = id;
+  }
+
+  OpenModalPieceJointe(piece) {
+    console.log(piece);
+
+    this.pieceJointe = piece;
   }
 
   DeleteFinance(event) {

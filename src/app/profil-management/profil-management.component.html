@@ -90,6 +90,14 @@
           edit
         </i>
       </button>
+
+      <button class="btn btn-outline-danger btn-block mt-4" (click)="deleteHistory()">
+        Vider Historiques
+      </button>
+
+      <p class="text-success mt-4" style="text-align: center;" *ngIf="state.delete">
+        Suppresion effectuée !
+      </p>
     </div>
 
     <div class="col-md-8 p-0">

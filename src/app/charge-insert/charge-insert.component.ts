@@ -18,17 +18,20 @@ export class ChargeInsertComponent implements OnInit {
   isLoading = {
     create : false,
     create2: false,
+    create3: false,
     modify: false,
     close: false
   };
   error = {
     create : false,
+    create3: false,
     modify: false,
     close: false,
     text: 'Une erreur est survenue. Veuillez réessayez plus tard !'
   };
   success = {
-    create: false
+    create: false,
+    create3: false
   };
   chargement = {
     numero_chargement: '',
@@ -77,6 +80,7 @@ export class ChargeInsertComponent implements OnInit {
     warehousSuccess: false
   };
   cities;
+  cityName;
   constructor(private router: Router, private userService: AuthService, private location: Location,
               private partenerService: PartnerService, private wareService: WarehouseService, private chargeService: ChargeService) { }
 
@@ -139,6 +143,29 @@ export class ChargeInsertComponent implements OnInit {
         console.log(err);
       }
     );
+  }
+
+  CreateCityDestination(event) {
+    this.error.create3 = false;
+    this.isLoading.create3 = true;
+    console.log(this.cityName);
+    this.userService.SetParametre({ name: this.cityName }).subscribe(
+      (success) => {
+        console.log(success);
+        this.isLoading.create3 = false;
+        this.success.create3 = true;
+        this.GetCity();
+      }, (err) => {
+        console.log(err);
+        this.isLoading.create3 = false;
+        this.error.create3 = true;
+        this.error.text = 'Une erreur est survenue. Veuillez réessayez plus tard !';
+      }
+    );
+
+    setTimeout( () => {
+      this.success.create3 = false;
+    }, 3000);
   }
 
   CreateChargement() {
