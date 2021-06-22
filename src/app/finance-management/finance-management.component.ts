@@ -6,6 +6,9 @@ import { Router } from '@angular/router';
 import { FinanceService } from '../services/finance.service';
 import { CompteService } from '../services/compte.service';
 import { PartnerService } from '../services/partner.service';
+import { PlanterService } from '../services/planter.service';
+import { TrackerService } from '../services/tracker.service';
+
 @Component({
   selector: 'app-finance-management',
   templateUrl: './finance-management.component.html',
@@ -49,8 +52,35 @@ export class FinanceManagementComponent implements OnInit {
   timer = 30;
   setTimer;
   pieceJointe;
+  state = {
+    question: {
+      receipt: false,
+      give: {
+        question: false,
+        state: false
+      }
+    },
+    entity: {
+      pisteur: false,
+      planteur: false
+    },
+    form: {
+      partner: false,
+      rest: false
+    }
+  };
+  pisteurs;
+  planters;
+  addInput = {
+    planteur: '',
+    pisteur: '',
+    partner: ''
+  };
+  trackers: any;
+  financing;
   constructor(private router: Router, private userService: AuthService, private location: Location,
-              private financeService: FinanceService, private accountService: CompteService, private partenerService: PartnerService) { }
+              private financeService: FinanceService, private accountService: CompteService, private partenerService: PartnerService,
+              private trackerService: TrackerService, private planterService: PlanterService) { }
 
   ngOnInit(): void {
     if (localStorage.getItem('userData') !== null) {
@@ -59,6 +89,8 @@ export class FinanceManagementComponent implements OnInit {
     this.GetFinances();
     this.GetAccounts();
     this.GetPartner();
+    this.GetPlanters();
+    this.GetTracker();
   }
 
   ComeBack() {
@@ -153,6 +185,28 @@ export class FinanceManagementComponent implements OnInit {
     );
   }
 
+  GetTracker() {
+    this.trackerService.GetTrackers().subscribe(
+      (data) => {
+        console.log(data);
+        this.trackers = data.data;
+      }, (err) => {
+        console.log(err);
+      }
+    );
+  }
+
+  GetPlanters() {
+    this.planterService.GetPlanter().subscribe(
+      (data) => {
+        console.log(data);
+        this.planters = data.data;
+      }, (err) => {
+        console.log(err);
+      }
+    );
+  }
+
   Timer() {
     setInterval( () => {
       if (this.timer !== 0) {
@@ -162,6 +216,9 @@ export class FinanceManagementComponent implements OnInit {
   }
 
   Previsualisation(event) {
+
+    this.financing = this.manageData();
+
     this.timer = 30;
     this.warning.registerBtn = true;
     this.warning.previsual = true;
@@ -182,13 +239,15 @@ export class FinanceManagementComponent implements OnInit {
   CreateFinance() {
     // annule action
     this.warning.previsual = false;
+    console.log(this.financing);
+
     // this.warning.registerBtn = false;
     clearInterval(this.setTimer);
 
     this.isLoading.create = true;
     this.error.create = false;
     console.log(this.finance);
-    this.financeService.SetFinancement(this.finance).subscribe(
+    this.financeService.SetFinancement(this.financing).subscribe(
       (success) => {
         this.isLoading.create = false;
         console.log(success);
@@ -242,6 +301,87 @@ export class FinanceManagementComponent implements OnInit {
     console.log(this.financeDelete);
 
   }
+
+  setChoiceOfFinancement(value) {
+    console.log(value);
+    if (value === 'octroyer') {
+      this.state.question.give.question = true;
+    } else {
+      this.state.question.receipt = true;
+    }
+  }
+
+  setChoiceGrantedPersonn(value) {
+    console.log(value);
+    this.state.question.give.state = true;
+
+    if (value === 'pisteur') {
+      this.state.entity.pisteur = true;
+      this.state.entity.planteur = false;
+    } else {
+      this.state.entity.pisteur = false;
+      this.state.entity.planteur = true;
+    }
+  }
+
+  manageData() {
+    let data = {
+      compte_id: this.finance.compte_id,
+      date: this.finance.date,
+      montant: this.finance.montant,
+      acteur: {
+        type: '',
+        acteur_id: '',
+        etat: ''
+      },
+      piece_jointe: this.finance.piece_jointe
+    };
+
+    if (this.state.question.receipt === true) {
+
+      data.acteur.etat = 'financement recu';
+
+    } else {
+
+      data.acteur.etat = 'financement octroyer';
+
+    }
+
+    if (this.state.entity.pisteur === true) {
+      data.acteur.acteur_id = this.addInput.pisteur;
+      data.acteur.type = 'pisteur';
+    } else if (this.state.entity.planteur === true) {
+      data.acteur.acteur_id = this.addInput.planteur;
+      data.acteur.type = 'planteur';
+    } else {
+      data.acteur.acteur_id = this.addInput.partner;
+      data.acteur.type = 'partenaire';
+    }
+
+    return data;
+
+  }
+
+  disabledCreation() {
+    this.state = {
+      question: {
+        receipt: false,
+        give: {
+          question: false,
+          state: false
+        }
+      },
+      entity: {
+        pisteur: false,
+        planteur: false
+      },
+      form: {
+        partner: false,
+        rest: false
+      }
+    };
+  }
+
 
 
 }

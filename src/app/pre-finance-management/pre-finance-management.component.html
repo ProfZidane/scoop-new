@@ -121,69 +121,167 @@
 <!-- Modal 4 -->
 <div class="modal fade" id="exampleModal18" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-lg" role="document">
-    <form method="POST" (ngSubmit)="Previsualisation($event)">
+    <form method="POST">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Création d'un financement</h5>
+        <h5 class="modal-title" id="exampleModalLabel">Création d'un pré-financement</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
       <div class="modal-body">
-        <div class="clearfix" *ngIf="isLoading.create === true">
-          <span class="text-warning">Création d'un pré-financement .....</span>
-          <div class="spinner-border float-right text-warning" role="status">
-            <span class="sr-only">Loading...</span>
+        <!-- element premier -->
+        <div *ngIf="state.question.receipt === false && state.question.give.question === false">
+          <label>
+            De quel type de pré-financement s'agit-il ?
+          </label>
+          <div align="center">
+
+            <div class="form-check form-check-inline">
+              <button class="btn btn-outline-info" (click)="setChoiceOfFinancement('octroyer')">Pré-financement Octroyé</button>
+            </div>
+            <div class="form-check form-check-inline">
+              <button class="btn btn-outline-info" (click)="setChoiceOfFinancement('recu')">Pré-financement Reçu</button>
+            </div>
+
           </div>
         </div>
-        <div class="alert alert-danger" *ngIf="error.create === true">
-          Une erreur s'est produite. Veuillez vérifiez les informations inscrites svp !
+        <!-- second step of statement -->
+        <div *ngIf="state.question.give.question === true && state.question.receipt === false" align="center" class="mt-4 mb-4">
+          <label class="mr-4">
+            A qui est destiné ce pré-financement ?
+          </label>
+          <div class="form-check form-check-inline">
+            <button class="btn btn-outline-info" (click)="setChoiceGrantedPersonn('pisteur')">Pisteurs</button>
+          </div>
+          <div class="form-check form-check-inline">
+            <button class="btn btn-outline-info" (click)="setChoiceGrantedPersonn('planteur')">Planteurs</button>
+          </div>
+          <br><br>
         </div>
-        <div class="alert alert-warning" *ngIf="warning.previsual === true">
-          {{ warning.text }} <small>{{this.timer }}</small>
-          <button class="btn btn-info btn-sm ml-5" (click)="CreatePrefinancement()">Valider</button>
-        </div>
-          <small class="text-muted">Inscrivez les informations suivantes</small>
-          <div class="row">
-            <div class="col">
-              <label for="">Sélectionnez le compteur récepteur</label>
-              <div class="input-group mb-3" *ngIf="accountList">
-                <select class="custom-select" name="account" [(ngModel)]="prefinances.compte_id" id="inputGroupSelect01" required >
-                  <option *ngFor="let account of accountList" value="{{ account.id }}">{{ account.banque }}</option>
-                </select>
+
+
+        <!-- element separatif si cest recu -->
+        <div *ngIf="state.question.receipt === true">
+          <div class="clearfix" *ngIf="isLoading.create === true">
+            <span class="text-warning">Création d'un pré-financement .....</span>
+            <div class="spinner-border float-right text-warning" role="status">
+              <span class="sr-only">Loading...</span>
+            </div>
+          </div>
+          <div class="alert alert-danger" *ngIf="error.create === true">
+            Une erreur s'est produite. Veuillez vérifiez les informations inscrites svp !
+          </div>
+          <div class="alert alert-warning" *ngIf="warning.previsual === true">
+            {{ warning.text }} <small>{{this.timer }}</small>
+            <button class="btn btn-info btn-sm ml-5" (click)="CreatePrefinancement()">Valider</button>
+          </div>
+            <small class="text-muted">Inscrivez les informations suivantes</small>
+            <div class="row">
+              <div class="col">
+                <label for="">Sélectionnez le compteur récepteur</label>
+                <div class="input-group mb-3" *ngIf="accountList">
+                  <select class="custom-select" name="account" [(ngModel)]="prefinances.compte_id" id="inputGroupSelect01" required >
+                    <option *ngFor="let account of accountList" value="{{ account.id }}">{{ account.banque }}</option>
+                  </select>
+                </div>
+              </div>
+              <div class="col">
+                <label for="">Le partenaire</label>
+                <div class="input-group mb-3" *ngIf='partnersData'>
+                  <select class="custom-select" name="partner" [(ngModel)]="addInput.partner" id="inputGroupSelect01" required>
+                    <option *ngFor="let partner of partnersData" value="{{ partner.id }}">{{ partner.name }}</option>
+                  </select>
+                </div>
               </div>
             </div>
-            <div class="col">
-              <label for="">Sélectionnez le pisteur</label>
-              <div class="input-group mb-3" *ngIf='trackers'>
-                <select class="custom-select" name="partner" [(ngModel)]="prefinances.pisteur_id" id="inputGroupSelect01" required>
-                  <option *ngFor="let tracker of trackers" value="{{ tracker.id }}">{{ tracker.nom + ' ' + tracker.prenom }}</option>
-                </select>
+            <br>
+            <div class="row">
+              <div class="col">
+                <label for="">Entrez le montant</label>
+                <input type="number" name="montant" [(ngModel)]="prefinances.montant" class="form-control">
+              </div>
+              <div class="col">
+                <label for="">Sélectionnez la date</label>
+                <input type="date" name="date" [(ngModel)]="prefinances.date" class="form-control" id="">
               </div>
             </div>
-          </div>
-          <br>
-          <div class="row">
-            <div class="col">
-              <label for="">Entrez le montant</label>
-              <input type="number" name="montant" [(ngModel)]="prefinances.montant" class="form-control">
+            <br>
+            <div class="row">
+              <div class="col">
+                <label for="">Entrez la preuve (pièce jointe)</label>
+                <input type="file" name="piece_jointe" [(ngModel)]="prefinances.piece_jointe" (change)="OnFileSelected($event)" id="" class="form-control">
+              </div>
             </div>
-            <div class="col">
-              <label for="">Sélectionnez la date</label>
-              <input type="date" name="date" [(ngModel)]="prefinances.date" class="form-control" id="">
+        </div>
+
+
+        <!-- element separatif si cest donner -->
+        <div *ngIf="state.question.give.state === true">
+          <div class="clearfix" *ngIf="isLoading.create === true">
+            <span class="text-warning">Création d'un pré-financement .....</span>
+            <div class="spinner-border float-right text-warning" role="status">
+              <span class="sr-only">Loading...</span>
             </div>
           </div>
-          <br>
-          <div class="row">
-            <div class="col">
-              <label for="">Entrez la preuve (pièce jointe)</label>
-              <input type="file" name="piece_jointe" [(ngModel)]="prefinances.piece_jointe" (change)="OnFileSelected($event)" id="" class="form-control">
-            </div>
+          <div class="alert alert-danger" *ngIf="error.create === true">
+            Une erreur s'est produite. Veuillez vérifiez les informations inscrites svp !
           </div>
+          <div class="alert alert-warning" *ngIf="warning.previsual === true">
+            {{ warning.text }} <small>{{this.timer }}</small>
+            <button class="btn btn-info btn-sm ml-5" (click)="CreatePrefinancement()">Valider</button>
+          </div>
+            <small class="text-muted">Inscrivez les informations suivantes</small>
+            <div class="row">
+              <div class="col">
+                <label for="">Sélectionnez le compteur récepteur</label>
+                <div class="input-group mb-3" *ngIf="accountList">
+                  <select class="custom-select" name="account" [(ngModel)]="prefinances.compte_id" id="inputGroupSelect01" required >
+                    <option *ngFor="let account of accountList" value="{{ account.id }}">{{ account.banque }}</option>
+                  </select>
+                </div>
+              </div>
+              <div class="col" *ngIf="state.entity.pisteur === true">
+                <label for="">Sélectionnez le pisteur</label>
+                <div class="input-group mb-3" *ngIf='trackers'>
+                  <select class="custom-select" name="tracker" [(ngModel)]="addInput.pisteur" id="inputGroupSelect01" required>
+                    <option *ngFor="let tracker of trackers" value="{{ tracker.id }}">{{ tracker.nom + ' ' + tracker.prenom }}</option>
+                  </select>
+                </div>
+              </div>
+              <div class="col" *ngIf="state.entity.planteur === true">
+                <label for="">Sélectionnez le planteur</label>
+                <div class="input-group mb-3" *ngIf='planters'>
+                  <select class="custom-select" name="planter" [(ngModel)]="addInput.planteur" id="inputGroupSelect02" required>
+                    <option *ngFor="let planter of planters" value="{{ planter.id }}">{{ planter.nom + ' ' + planter.prenom }}</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+            <br>
+            <div class="row">
+              <div class="col">
+                <label for="">Entrez le montant</label>
+                <input type="number" name="montant" [(ngModel)]="prefinances.montant" class="form-control">
+              </div>
+              <div class="col">
+                <label for="">Sélectionnez la date</label>
+                <input type="date" name="date" [(ngModel)]="prefinances.date" class="form-control" id="">
+              </div>
+            </div>
+            <br>
+            <div class="row">
+              <div class="col">
+                <label for="">Entrez la preuve (pièce jointe)</label>
+                <input type="file" name="piece_jointe" [(ngModel)]="prefinances.piece_jointe" (change)="OnFileSelected($event)" id="" class="form-control">
+              </div>
+            </div>
+        </div>
+
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" [disabled]="warning.registerBtn" data-dismiss="modal">Fermer</button>
-        <button type="submit" class="btn btn-success" [disabled]="warning.registerBtn">Enregistrer</button>
+        <button type="button" class="btn btn-secondary" [disabled]="warning.registerBtn" data-dismiss="modal" (click)="disabledCreation()">Fermer</button>
+        <button type="submit" class="btn btn-success" [disabled]="warning.registerBtn" (click)="Previsualisation($event)">Enregistrer</button>
       </div>
     </div>
   </form>

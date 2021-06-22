@@ -6,6 +6,8 @@ import { Router } from '@angular/router';
 import { PreFinanceService } from '../services/pre-finance.service';
 import { CompteService } from '../services/compte.service';
 import { TrackerService } from '../services/tracker.service';
+import { PartnerService } from '../services/partner.service';
+import { PlanterService } from '../services/planter.service';
 
 @Component({
   selector: 'app-pre-finance-management',
@@ -59,9 +61,35 @@ export class PreFinanceManagementComponent implements OnInit {
     montant: '',
     sac: ''
   };
+  state = {
+    question: {
+      receipt: false,
+      give: {
+        question: false,
+        state: false
+      }
+    },
+    entity: {
+      pisteur: false,
+      planteur: false
+    },
+    form: {
+      partner: false,
+      rest: false
+    }
+  };
+  partnersData;
+  planters;
+  addInput = {
+    planteur: '',
+    pisteur: '',
+    partner: ''
+  };
+
+  newPrefinancing;
   constructor(private router: Router, private userService: AuthService, private location: Location,
               private prefinancementService: PreFinanceService, private trackerService: TrackerService,
-              private accountService: CompteService) { }
+              private accountService: CompteService, private partenerService: PartnerService, private planterService: PlanterService) { }
 
   ngOnInit(): void {
     if (localStorage.getItem('userData') !== null) {
@@ -70,6 +98,8 @@ export class PreFinanceManagementComponent implements OnInit {
     this.GetPrefinancements();
     this.GetAccounts();
     this.GetTracker();
+    this.GetPartner();
+    this.GetPlanters();
   }
 
   ComeBack() {
@@ -116,6 +146,17 @@ export class PreFinanceManagementComponent implements OnInit {
     };
   }
 
+  GetPartner() {
+    this.partenerService.GetPartners().subscribe(
+      (data) => {
+        console.log(data);
+        this.partnersData = data.data;
+      }, (err) => {
+        console.log(err);
+      }
+    );
+  }
+
   GetAccounts() {
     this.accountService.GetAccount().subscribe(
       (data) => {
@@ -138,8 +179,24 @@ export class PreFinanceManagementComponent implements OnInit {
     );
   }
 
+  GetPlanters() {
+    this.planterService.GetPlanter().subscribe(
+      (data) => {
+        console.log(data);
+        this.planters = data.data;
+      }, (err) => {
+        console.log(err);
+      }
+    );
+  }
+
 
   Previsualisation(event) {
+
+    this.newPrefinancing = this.manageData();
+
+    // console.log(this.newPrefinancing);
+
     this.timer = 30;
     this.warning.registerBtn = true;
     this.warning.previsual = true;
@@ -155,6 +212,7 @@ export class PreFinanceManagementComponent implements OnInit {
       this.warning.registerBtn = false;
       clearInterval(this.setTimer);
     }, 60000);
+
   }
 
 
@@ -177,12 +235,14 @@ export class PreFinanceManagementComponent implements OnInit {
 
   CreatePrefinancement(event) {
     this.warning.previsual = false;
+    console.log(this.newPrefinancing);
+
     // this.warning.registerBtn = false;
     clearInterval(this.setTimer);
     this.isLoading.create = true;
     this.error.create = false;
 
-    this.prefinancementService.SetPrefinancement(this.prefinances).subscribe(
+    this.prefinancementService.SetPrefinancement(this.newPrefinancing).subscribe(
       (success) => {
         console.log(success);
         this.isLoading.create = false;
@@ -256,6 +316,86 @@ export class PreFinanceManagementComponent implements OnInit {
     this.simulateData.sac = montant.toString();
     this.isLoading.simulate = false;
     this.simulateData.state = true;
+  }
+
+  setChoiceOfFinancement(value) {
+    console.log(value);
+    if (value === 'octroyer') {
+      this.state.question.give.question = true;
+    } else {
+      this.state.question.receipt = true;
+    }
+  }
+
+  setChoiceGrantedPersonn(value) {
+    console.log(value);
+    this.state.question.give.state = true;
+
+    if (value === 'pisteur') {
+      this.state.entity.pisteur = true;
+      this.state.entity.planteur = false;
+    } else {
+      this.state.entity.pisteur = false;
+      this.state.entity.planteur = true;
+    }
+  }
+
+  manageData() {
+    let data = {
+      compte_id: this.prefinances.compte_id,
+      date: this.prefinances.date,
+      montant: this.prefinances.montant,
+      acteur: {
+        type: '',
+        acteur_id: '',
+        etat: ''
+      },
+      piece_jointe: this.prefinances.piece_jointe
+    };
+
+    if (this.state.question.receipt === true) {
+
+      data.acteur.etat = 'prefinancement recu';
+
+    } else {
+
+      data.acteur.etat = 'prefinancement octroyer';
+
+    }
+
+    if (this.state.entity.pisteur === true) {
+      data.acteur.acteur_id = this.addInput.pisteur;
+      data.acteur.type = 'pisteur';
+    } else if (this.state.entity.planteur === true) {
+      data.acteur.acteur_id = this.addInput.planteur;
+      data.acteur.type = 'planteur';
+    } else {
+      data.acteur.acteur_id = this.addInput.partner;
+      data.acteur.type = 'partenaire';
+    }
+
+    return data;
+
+  }
+
+  disabledCreation() {
+    this.state = {
+      question: {
+        receipt: false,
+        give: {
+          question: false,
+          state: false
+        }
+      },
+      entity: {
+        pisteur: false,
+        planteur: false
+      },
+      form: {
+        partner: false,
+        rest: false
+      }
+    };
   }
 
 }
