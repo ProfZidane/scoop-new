@@ -82,7 +82,7 @@
     Une erreur est survenue. Veuillez réessayer s'il vous plait !
   </div>
 
-  <table datatable [dtTrigger]="dtTrigger" [dtOptions]="dtOptions" class="row-border hover" align="center">
+  <table datatable [dtTrigger]="dtTrigger" [dtOptions]="dtOptions" class="row-border hover" align="center" *ngIf="rightState && rightState.read === 1">
     <thead>
       <tr>
         <th>N°</th>

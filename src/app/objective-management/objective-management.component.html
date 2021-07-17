@@ -35,7 +35,7 @@
         </li>-->
       </ul>
       <form class="form-inline my-2 my-lg-0">
-        <button class="btn btn-outline-info my-2 my-sm-0 mr-5" type="button" data-toggle="modal" data-target="#exampleModal25">
+        <button class="btn btn-outline-info my-2 my-sm-0 mr-5" type="button" data-toggle="modal" data-target="#exampleModal25" *ngIf="rightState && rightState.create === 1">
           + Nouveau objectif
         </button>
         <div class="dropdown">
@@ -58,7 +58,7 @@
       <span class="sr-only">Loading...</span>
     </div>
   </div>
-  <table datatable class="row-border hover" [dtTrigger]="dtTrigger" id="table" style="">
+  <table datatable class="row-border hover" [dtTrigger]="dtTrigger" id="table" style="" *ngIf="rightState && rightState.read === 1">
     <thead>
       <tr>
         <th>Type</th>
@@ -66,9 +66,10 @@
         <th>Unité</th>
         <th>Date début</th>
         <th>Date fin</th>
+        <th>Type Acteur</th>
         <th>Concerné</th>
-        <th></th>
-        <th></th>
+        <th *ngIf="rightState && rightState.update === 1"></th>
+        <th *ngIf="rightState && rightState.delete === 1"></th>
       </tr>
     </thead>
     <tbody>
@@ -78,13 +79,14 @@
         <td>{{ objectif.unite }}</td>
         <td>{{ objectif.date_debut | date }}</td>
         <td>{{ objectif.date_fin | date }}</td>
-        <td>{{ objectif.name.name }}</td>
-        <td>
+        <td>{{ objectif.type }}</td>
+        <td>{{ objectif.name.nom + ' ' + objectif.name.prenom }}</td>
+        <td *ngIf="rightState && rightState.update === 1">
           <button class="btn btn-outline-warning btn-sm" type="submit" data-toggle="modal" data-target="#exampleModal26" (click)="OpenModalUpdate(objectif)">
             Modifier
           </button>
         </td>
-        <td>
+        <td *ngIf="rightState && rightState.delete === 1">
           <button class="btn btn-outline-danger btn-sm" data-toggle="modal" data-target="#exampleModal13" (click)="OpenModalDelete(objectif.id)">Supprimer</button>
         </td>
       </tr>

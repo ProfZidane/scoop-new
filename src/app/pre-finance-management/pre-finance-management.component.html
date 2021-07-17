@@ -35,7 +35,7 @@
         </li>-->
       </ul>
       <form class="form-inline my-2 my-lg-0">
-        <button class="btn btn-outline-info my-2 my-sm-0 mr-5" type="button" data-toggle="modal" data-target="#exampleModal18">
+        <button class="btn btn-outline-info my-2 my-sm-0 mr-5" type="button" data-toggle="modal" data-target="#exampleModal18" *ngIf="rightState && rightState.create === 1">
           + Nouveau Pré-financement
         </button>
         <button class="btn btn-outline-warning my-2 my-sm-0 mr-5" type="button" data-toggle="modal" data-target="#exampleModal118">
@@ -61,17 +61,18 @@
       <span class="sr-only">Loading...</span>
     </div>
   </div>
-  <table datatable class="row-border hover" [dtTrigger]="dtTrigger" id="table" style="">
+  <table datatable class="row-border hover" [dtTrigger]="dtTrigger" id="table" style="" *ngIf="rightState && rightState.read === 1">
     <thead>
       <tr>
         <th>Banque</th>
         <th>Compte</th>
-        <th>Pisteur</th>
+        <th>Type Acteur</th>
+        <th>Acteur</th>
+        <th>Etat</th>
         <th>Montant</th>
         <th>Date</th>
         <th>Status</th>
-        <th></th>
-        <th></th>
+        <th *ngIf="rightState && rightState.update === 1"></th>
         <th></th>
       </tr>
     </thead>
@@ -79,30 +80,26 @@
       <tr *ngFor="let prefinance of data.default">
         <td>{{ prefinance.banque }}</td>
         <td>{{ prefinance.compte_number }}</td>
-        <td>{{ prefinance.nom + ' ' + prefinance.prenom }}</td>
-        <td>{{ prefinance.montant | number }}</td>
-        <td>{{ prefinance.created_at | date }}</td>
-        <td class="text-success" *ngIf="prefinance.status === 'active'">
+        <td>{{ prefinance.acteur_type }}</td>
+        <td>{{ prefinance.acteur }}</td>
+        <td>{{ prefinance.etat }}</td>
+        <td>{{ prefinance.montant | currency:'Fcfa':'symbol':'4.2-2':'fr' }}</td>
+        <td>{{ prefinance.date }}</td>
+        <td *ngIf="prefinance.status === 'valide'" class="text-success">
           {{ prefinance.status }}
         </td>
-        <td class="text-danger" *ngIf="prefinance.status === 'inactive'">
+        <td *ngIf="prefinance.status === 'en attente'" class="text-warning">
           {{ prefinance.status }}
         </td>
-        <td>
+        <td *ngIf="prefinance.status === 'rejete' || prefinance.status === 'annule'" class="text-danger">
+          {{ prefinance.status }}
+        </td>
+        <td *ngIf="rightState && rightState.update === 1">
           <button class="btn btn-outline-warning btn-sm" type="submit" data-toggle="modal" data-target="#exampleModal19" (click)="OpenModalUpdate(prefinance)">
             Modifier
           </button>
         </td>
-        <td *ngIf="prefinance.status === 'active'">
-          <button class="btn btn-outline-danger btn-sm" type="button" data-toggle="modal" data-target="#exampleModal20" (click)="OpenModalDelete(prefinance.id)">
-            Désactiver
-          </button>
-        </td>
-        <td *ngIf="prefinance.status === 'inactive'">
-          <button class="btn btn-outline-success btn-sm">
-            Activer
-          </button>
-        </td>
+
         <td>
           <button class="btn btn-outline-info btn-sm" type="button" data-toggle="modal" data-target="#exampleModal21" (click)="OpenModalPieceJointe(prefinance.piece_jointe)">
             Pièces
@@ -315,7 +312,7 @@
           <div class="row">
             <div class="col">
               <label for="">La pièce jointe</label>
-              <input type="file" name="piece_jointe" [(ngModel)]="prefinancementFictious.piece_jointe" class="form-control">
+              <input type="file" name="piece_jointe"  (change)='OnFileSelected2($event)' class="form-control">
             </div>
             <div class="col">
               <label for="">Sélectionnez la date</label>

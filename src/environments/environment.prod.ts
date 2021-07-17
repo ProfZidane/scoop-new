@@ -1,4 +1,4 @@
 export const environment = {
   production: true,
-  endPoint : 'http://scoop-coopraca.lce-test.fr/api/'
+  endPoint : 'http://localhost:8000/api/' // 'http://scoop-coopraca.lce-test.fr/api/'
 };

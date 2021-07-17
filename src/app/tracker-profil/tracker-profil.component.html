@@ -149,6 +149,11 @@
               </a>
             </li>
             <li class="nav-item">
+              <a class="nav-link" id="pills-home2-tab" data-toggle="pill" href="#pills-home2" role="tab" aria-controls="pills-home2" aria-selected="false">
+                Financements Reçus
+              </a>
+            </li>
+            <li class="nav-item">
               <a class="nav-link" id="pills-profile-tab" data-toggle="pill" href="#pills-profile" role="tab" aria-controls="pills-profile" aria-selected="false">
                 Produits Livrés
               </a>
@@ -159,7 +164,7 @@
           </ul>
         </div>
         <div class="col-md-2 solde bord p-3">
-          <h5><b>Solde</b> : {{ solde | number }} FCFA</h5>
+          <h5><b>Solde</b> : {{ solde | currency:'Fcfa':'symbol':'4.2-2':'fr'  }} FCFA</h5>
         </div>
       </div>
       <div class="tab-content" id="pills-tabContent">
@@ -180,9 +185,41 @@
                 </tr>
               </thead>
               <tbody>
+                <tr *ngFor="let prefinance of prefinances">
+                  <td>{{ prefinance.date }}</td>
+                  <td>{{ prefinance.montant | currency:'Fcfa':'symbol':'4.2-2':'fr'  }}</td>
+                  <td>
+                    <button class="btn btn-outline-info btn-sm" data-toggle="modal" data-target="#exampleModal24" (click)="OpenModelImage(prefinance.piece_jointe)">
+                       Pièces
+                    </button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+
+          </div>
+          <!-- end table -->
+        </div>
+        <div class="tab-pane fade" id="pills-home2" role="tabpanel" aria-labelledby="pills-home2-tab">
+          <!-- table -->
+          <div class="container-fluid table-user">
+            <div class="text-center" *ngIf="isLoading.finance === true">
+              <div class="spinner-border" role="status">
+                <span class="sr-only">Loading...</span>
+              </div>
+            </div>
+            <table datatable class="row-border hover" [dtTrigger]="dtTrigger" id="table" style="">
+              <thead>
+                <tr>
+                  <th>Date</th>
+                  <th>Montant</th>
+                  <th></th>
+                </tr>
+              </thead>
+              <tbody>
                 <tr *ngFor="let finance of finances">
                   <td>{{ finance.date }}</td>
-                  <td>{{ finance.montant | number }}</td>
+                  <td>{{ finance.montant | currency:'Fcfa':'symbol':'4.2-2':'fr'  }}</td>
                   <td>
                     <button class="btn btn-outline-info btn-sm" data-toggle="modal" data-target="#exampleModal24" (click)="OpenModelImage(finance.piece_jointe)">
                        Pièces
@@ -249,7 +286,7 @@
                 <tr *ngFor="let objectif of objectives">
                   <td>{{ objectif.date_debut | date }}</td>
                   <td>{{ objectif.date_fin | date }}</td>
-                  <td>{{ objectif.qte_demande }}</td>
+                  <td>{{ objectif.qte_demande }} {{ objectif.unite }}</td>
                   <td>{{ objectif.qte_produit }}</td>
                   <td>{{ objectif.poucentage }}%</td>
                 </tr>

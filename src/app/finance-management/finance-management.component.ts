@@ -78,6 +78,14 @@ export class FinanceManagementComponent implements OnInit {
   };
   trackers: any;
   financing;
+  pieceJointeUpdate;
+  right;
+  rightState = {
+    create: 0,
+    delete: 0,
+    read: 0,
+    update: 0
+  };
   constructor(private router: Router, private userService: AuthService, private location: Location,
               private financeService: FinanceService, private accountService: CompteService, private partenerService: PartnerService,
               private trackerService: TrackerService, private planterService: PlanterService) { }
@@ -91,6 +99,54 @@ export class FinanceManagementComponent implements OnInit {
     this.GetPartner();
     this.GetPlanters();
     this.GetTracker();
+    this.getRight();
+  }
+
+  getRight() {
+    this.right = JSON.parse(localStorage.getItem('right'));
+    let createCounter = 0;
+    let readCounter = 0;
+    let updateCounter = 0;
+    let deleteCounter = 0;
+    this.right.forEach(element => {
+      if (element.libelle === 'finances' || element.libelle === 'manager') {
+        if (element.create === 1) {
+          createCounter += 1;
+        }
+
+        if (element.read === 1) {
+          readCounter += 1;
+        }
+
+        if (element.update === 1) {
+          updateCounter += 1;
+        }
+
+        if (element.delete === 1) {
+          deleteCounter += 1;
+        }
+      }
+    });
+
+    console.log(createCounter);
+    console.log(readCounter);
+
+
+    if (createCounter >= 1) {
+      this.rightState.create = 1;
+    }
+    if (readCounter >= 1) {
+      this.rightState.read = 1;
+    }
+    if (updateCounter >= 1) {
+      this.rightState.update = 1;
+    }
+    if (deleteCounter >= 1) {
+      this.rightState.delete = 1;
+    }
+
+    console.log(this.rightState);
+
   }
 
   ComeBack() {
@@ -141,6 +197,25 @@ export class FinanceManagementComponent implements OnInit {
       subscriber.error(error);
       subscriber.complete();
     };
+  }
+
+  OnFileSelected2(event) {
+    console.log('Upload files ...');
+    const files = <File>event.target.files[0];
+    if (files) {
+      const file = files;
+      this.convertToBase642(file);
+    }
+  }
+
+  convertToBase642(file: File) {
+    const observable =  new Observable((subscriber: Subscriber<any>) => {
+      this.readFile(file, subscriber);
+    });
+    observable.subscribe( (d) => {
+      this.pieceJointeUpdate = d;
+      console.log(d);
+    });
   }
 
   ManageAccount() {
@@ -268,6 +343,7 @@ export class FinanceManagementComponent implements OnInit {
   UpdateFinance(event) {
     this.isLoading.modify = true;
     this.error.modify = false;
+    this.financeFictious.piece_jointe = this.pieceJointeUpdate;
     console.log(this.financeFictious);
     /*this.financeFictious.compte_id = this.financeFictious.compte_id.toString();
     this.financeFictious.partenaire_id = this.financeFictious.partenaire_id.toString();*/

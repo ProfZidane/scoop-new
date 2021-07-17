@@ -35,7 +35,7 @@
         </li>-->
       </ul>
       <form class="form-inline my-2 my-lg-0">
-        <button class="btn btn-outline-info my-2 my-sm-0 mr-5" type="button" data-toggle="modal" data-target="#exampleModal18" (click)="goToHistory()">
+        <button class="btn btn-outline-info my-2 my-sm-0 mr-5" type="button" data-toggle="modal" data-target="#exampleModal18" (click)="goToHistory()" *ngIf="rightState && rightState.read === 1">
           Historiques
         </button>
         <div class="dropdown">
@@ -61,13 +61,13 @@
   <div class="alert alert-danger" *ngIf="error.data === true">
     Une erreur est survenue. Veuillez réessayer s'il vous plait !
   </div>
-  <table datatable [dtTrigger]="dtTrigger"  class="row-border hover">
+  <table datatable [dtTrigger]="dtTrigger"  class="row-border hover" *ngIf="rightState && rightState.read === 1">
     <thead>
       <tr>
         <th>Fournisseur</th>
         <th>Type Fournisseur</th>
         <th>Poids Net (kg)</th>
-        <th>Action</th>
+        <th *ngIf="rightState && rightState.create === 1">Action</th>
       </tr>
     </thead>
     <tbody>
@@ -75,7 +75,7 @@
         <td>{{ info.name }}</td>
         <td>{{ info.type }}</td>
         <td>{{ info.poids_net }}</td>
-        <td>
+        <td *ngIf="rightState && rightState.create === 1">
           <button class="btn btn-outline-info btn-sm" (click)="goToDetail(info.id)">
             Traiter
           </button>

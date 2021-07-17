@@ -35,7 +35,7 @@
         </li>-->
       </ul>
       <form class="form-inline my-2 my-lg-0">
-        <button class="btn btn-outline-info my-2 my-sm-0 mr-5" type="button" data-toggle="modal" data-target="#exampleModal8">
+        <button class="btn btn-outline-info my-2 my-sm-0 mr-5" type="button" data-toggle="modal" data-target="#exampleModal8" *ngIf="rightState && rightState.create === 1">
           + Nouveau pisteur
         </button>
         <div class="dropdown">
@@ -58,7 +58,7 @@
       <span class="sr-only">Loading...</span>
     </div>
   </div>
-  <table datatable class="row-border hover" [dtTrigger]="dtTrigger" id="table" style="">
+  <table datatable class="row-border hover" [dtTrigger]="dtTrigger" id="table" style="" *ngIf="rightState && rightState.read === 1">
     <thead>
       <tr>
         <th>Nom & Prénoms</th>
@@ -70,8 +70,8 @@
         <th>Numéro Pièce</th>
         <th>Status</th>
         <th></th>
-        <th></th>
-        <th></th>
+        <th *ngIf="rightState && rightState.update === 1"></th>
+        <th *ngIf="rightState && rightState.delete === 1"></th>
         <th></th>
       </tr>
     </thead>
@@ -91,15 +91,15 @@
             Profil
           </button>
         </td>
-        <td>
+        <td *ngIf="rightState && rightState.update === 1">
           <button class="btn btn-outline-warning btn-sm" type="submit" data-toggle="modal" data-target="#exampleModal9" (click)="OpenModelUpdated(tracker)">
             Modifier
           </button>
         </td>
-        <td *ngIf="tracker.status === 'active'">
+        <td *ngIf="tracker.status === 'active' && (rightState && rightState.delete === 1)">
           <button class="btn btn-outline-danger btn-sm" data-toggle="modal" data-target="#exampleModal10" (click)="OpenModelDelete(tracker.id)">Banir</button>
         </td>
-        <td *ngIf="tracker.status === 'inactive'">
+        <td *ngIf="tracker.status === 'inactive' && (rightState && rightState.delete === 1)">
           <button class="btn btn-outline-success btn-sm" data-toggle="modal" data-target="#exampleModal3">Accueillir</button>
         </td>
         <td>
@@ -287,7 +287,7 @@
             </div>
             <div class="col">
               <label for="">Photo ou scan de pièce d'identité</label>
-              <input type="file" name="piece_scan" [(ngModel)]="trackerFictious.piece_scan" (change)="OnFileSelectedInUpload($event)" class="form-control">
+              <input type="file" name="piece_scan" [(ngModel)]="trackerFictious.piece_scan" (change)="OnFileSelected2($event)" class="form-control">
             </div>
           </div>
       </div>

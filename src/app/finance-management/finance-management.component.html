@@ -38,7 +38,7 @@
         <button class="btn btn-outline-info my-2 my-sm-0 mr-5" type="button" (click)="ManageAccount()">
           Gestion Compte
         </button>
-        <button class="btn btn-outline-info my-2 my-sm-0 mr-5" type="button" data-toggle="modal" data-target="#exampleModal14">
+        <button class="btn btn-outline-info my-2 my-sm-0 mr-5" type="button" data-toggle="modal" data-target="#exampleModal14" *ngIf="rightState && rightState.create === 1">
           + Nouveau financement
         </button>
         <div class="dropdown">
@@ -61,15 +61,18 @@
       <span class="sr-only">Loading...</span>
     </div>
   </div>
-  <table datatable class="row-border hover" [dtTrigger]="dtTrigger" id="table" style="">
+  <table datatable class="row-border hover" [dtTrigger]="dtTrigger" id="table" style="" *ngIf="rightState && rightState.read === 1">
     <thead>
       <tr>
         <th>Banque</th>
         <th>Compte</th>
-        <th>Partenaire</th>
+        <th>Type Acteur</th>
+        <th>Acteur</th>
+        <th>Etat</th>
         <th>Montant</th>
         <th>Date</th>
-        <th></th>
+        <th>Status</th>
+        <th *ngIf="rightState && rightState.update === 1"></th>
         <th></th>
       </tr>
     </thead>
@@ -77,10 +80,21 @@
       <tr *ngFor="let finance of financeList">
         <td>{{ finance.banque }}</td>
         <td>{{ finance.compte_number }}</td>
-        <td>{{ finance.partenaire }}</td>
-        <td>{{ finance.montant }}</td>
-        <td>{{ finance.created_at | date }}</td>
-        <td>
+        <td>{{ finance.acteur_type }}</td>
+        <td>{{ finance.acteur }}</td>
+        <td>{{ finance.etat }}</td>
+        <td>{{ finance.montant | currency:'Fcfa':'symbol':'4.2-2':'fr' }}</td>
+        <td>{{ finance.date }}</td>
+        <td *ngIf="finance.status === 'valide'" class="text-success">
+          {{ finance.status }}
+        </td>
+        <td *ngIf="finance.status === 'en attente'" class="text-warning">
+          {{ finance.status }}
+        </td>
+        <td *ngIf="finance.status === 'rejete' || finance.status === 'annule'" class="text-danger">
+          {{ finance.status }}
+        </td>
+        <td *ngIf="rightState && rightState.update === 1">
           <button class="btn btn-outline-warning btn-sm" type="button" data-toggle="modal" data-target="#exampleModal15" (click)="OpenModalUpdate(finance)">
             Modifier
           </button>
@@ -171,7 +185,7 @@
             <div class="col">
               <label for="">Entrez le partenaire</label>
               <div class="input-group mb-3" *ngIf='partnersData'>
-                <select class="custom-select" name="partner" [(ngModel)]="finance.partenaire_id" id="inputGroupSelect01" required>
+                <select class="custom-select" name="partner" [(ngModel)]="addInput.partner" id="inputGroupSelect01" required>
                   <option *ngFor="let partner of partnersData" value="{{ partner.id }}">{{ partner.name }}</option>
                 </select>
               </div>
@@ -294,27 +308,8 @@
           <small class="text-muted">Inscrivez les informations suivantes</small>
           <div class="row">
             <div class="col">
-              <label for="">Le compte récepteur</label>
-              <div class="input-group mb-3" >
-                <select class="custom-select" name="account" [(ngModel)]="financeFictious.compte_id" id="inputGroupSelect01" required *ngIf="accountList" >
-                  <option *ngFor="let account of accountList" value="{{ account.id }}">{{ account.banque }}</option>
-                </select>
-              </div>
-            </div>
-            <div class="col">
-              <label for="">Le partenaire</label>
-              <div class="input-group mb-3" *ngIf='partnersData'>
-                <select class="custom-select" name="partner" [(ngModel)]="financeFictious.partenaire_id" id="inputGroupSelect01" required>
-                  <option *ngFor="let partner of partnersData" value="{{ partner.id }}">{{ partner.name }}</option>
-                </select>
-              </div>
-            </div>
-          </div>
-          <br>
-          <div class="row">
-            <div class="col">
-              <label for="">Le montant</label>
-              <input type="number" name="montant" [(ngModel)]="financeFictious.montant" class="form-control">
+              <label for="">La pièce jointe</label>
+              <input type="file" name="piece_jointe"  (change)='OnFileSelected2($event)' class="form-control">
             </div>
             <div class="col">
               <label for="">Sélectionnez la date</label>

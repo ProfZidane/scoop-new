@@ -35,7 +35,7 @@
         </li>-->
       </ul>
       <form class="form-inline my-2 my-lg-0">
-        <button class="btn btn-outline-info my-2 my-sm-0 mr-5" type="button" (click)="goToHistory()">
+        <button class="btn btn-outline-info my-2 my-sm-0 mr-5" type="button" (click)="goToHistory()" *ngIf="rightState && rightState.read === 1">
           Historiques
         </button>
         <div class="dropdown">
@@ -61,7 +61,7 @@
   <div class="alert alert-danger" *ngIf="error.data === true">
     Une erreur est survenue. Veuillez réessayer s'il vous plait !
   </div>
-  <table datatable [dtTrigger]="dtTrigger"  class="row-border hover">
+  <table datatable [dtTrigger]="dtTrigger"  class="row-border hover" *ngIf="rightState && rightState.read === 1">
     <thead>
       <tr>
         <th>Date Chargement</th>
@@ -72,7 +72,7 @@
         <th>Poids Net</th>
         <th>Sacs Déchargés</th>
         <th>Sacs Remboursés</th>
-        <th>Action</th>
+        <th *ngIf="rightState && rightState.create === 1">Action</th>
       </tr>
     </thead>
     <tbody>
@@ -85,7 +85,7 @@
         <td>{{ vente.poids_net_dechargement }}</td>
         <td>{{ vente.sacs_decharges }}</td>
         <td>{{ vente.sacs_rembourses }}</td>
-        <td>
+        <td *ngIf="rightState && rightState.create === 1">
           <button class="btn btn-outline-info btn-sm" type="button" data-toggle="modal" data-target="#exampleModal30" (click)="OpenModal(vente.id, vente.sacs_decharges)">
             Payer
           </button>

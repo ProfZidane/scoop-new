@@ -46,6 +46,14 @@ detailPiece = {
   id : '',
   image : ''
 };
+pieceJointeUpdate;
+right;
+  rightState = {
+    create: 0,
+    delete: 0,
+    read: 0,
+    update: 0
+  };
   constructor(private router: Router, private userService: AuthService,
               private location: Location, private trackerService: TrackerService) { }
 
@@ -54,6 +62,54 @@ detailPiece = {
       this.userConnected = JSON.parse(localStorage.getItem('userData'));
     }
     this.GetTracker();
+    this.getRight();
+  }
+
+  getRight() {
+    this.right = JSON.parse(localStorage.getItem('right'));
+    let createCounter = 0;
+    let readCounter = 0;
+    let updateCounter = 0;
+    let deleteCounter = 0;
+    this.right.forEach(element => {
+      if (element.libelle === 'finances' || element.libelle === 'manager' || element.libelle === 'stocks') {
+        if (element.create === 1) {
+          createCounter += 1;
+        }
+
+        if (element.read === 1) {
+          readCounter += 1;
+        }
+
+        if (element.update === 1) {
+          updateCounter += 1;
+        }
+
+        if (element.delete === 1) {
+          deleteCounter += 1;
+        }
+      }
+    });
+
+    console.log(createCounter);
+    console.log(readCounter);
+
+
+    if (createCounter >= 1) {
+      this.rightState.create = 1;
+    }
+    if (readCounter >= 1) {
+      this.rightState.read = 1;
+    }
+    if (updateCounter >= 1) {
+      this.rightState.update = 1;
+    }
+    if (deleteCounter >= 1) {
+      this.rightState.delete = 1;
+    }
+
+    console.log(this.rightState);
+
   }
 
   ComeBack() {
@@ -72,13 +128,7 @@ detailPiece = {
     const files = <File>event.target.files[0];
     if (files) {
       this.file = files;
-      this.imageName = files.name;
       this.convertToBase64(this.file);
-      setTimeout( () => {
-        if (this.myimage) {
-          console.log(this.myimage);
-        }
-      }, 2000);
     }
   }
 
@@ -96,7 +146,7 @@ detailPiece = {
       this.readFile(file, subscriber);
     });
     observable.subscribe( (d) => {
-      this.trackerFictious.piece_scan = this.trackerFictious.piece_scan;
+      this.myimage = d;
       console.log(d);
 
     });
@@ -114,6 +164,25 @@ detailPiece = {
       subscriber.error(error);
       subscriber.complete();
     };
+  }
+
+  OnFileSelected2(event) {
+    console.log('Upload files ...');
+    const files = <File>event.target.files[0];
+    if (files) {
+      const file = files;
+      this.convertToBase642(file);
+    }
+  }
+
+  convertToBase642(file: File) {
+    const observable =  new Observable((subscriber: Subscriber<any>) => {
+      this.readFile(file, subscriber);
+    });
+    observable.subscribe( (d) => {
+      this.pieceJointeUpdate = d;
+      console.log(d);
+    });
   }
 
   GetTracker() {
@@ -172,6 +241,7 @@ detailPiece = {
   Updatetracker(event) {
     this.isLoading.modify = true;
     this.errorModify_error = false;
+    this.trackerFictious.piece_scan = this.pieceJointeUpdate;
     console.log(this.trackerFictious);
     this.trackerService.UpdateTrackers(this.trackerFictious, this.trackerFictious.id).subscribe(
       (success) => {

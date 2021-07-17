@@ -20,6 +20,13 @@ export class SalesBuyingManagementComponent implements OnInit {
     data: false
   };
   infos;
+  right;
+  rightState = {
+    create: 0,
+    delete: 0,
+    read: 0,
+    update: 0
+  };
   constructor(private router: Router, private userService: AuthService, private location: Location, private salesService: SalesService) { }
 
   ngOnInit(): void {
@@ -28,10 +35,57 @@ export class SalesBuyingManagementComponent implements OnInit {
     }
 
     this.GetWeightingInfo();
-
+    this.getRight();
     setTimeout( () => {
       this.isLoading.data = false;
     }, 1000);
+  }
+
+  getRight() {
+    this.right = JSON.parse(localStorage.getItem('right'));
+    let createCounter = 0;
+    let readCounter = 0;
+    let updateCounter = 0;
+    let deleteCounter = 0;
+    this.right.forEach(element => {
+      if (element.libelle === 'finances' || element.libelle === 'manager') {
+        if (element.create === 1) {
+          createCounter += 1;
+        }
+
+        if (element.read === 1) {
+          readCounter += 1;
+        }
+
+        if (element.update === 1) {
+          updateCounter += 1;
+        }
+
+        if (element.delete === 1) {
+          deleteCounter += 1;
+        }
+      }
+    });
+
+    console.log(createCounter);
+    console.log(readCounter);
+
+
+    if (createCounter >= 1) {
+      this.rightState.create = 1;
+    }
+    if (readCounter >= 1) {
+      this.rightState.read = 1;
+    }
+    if (updateCounter >= 1) {
+      this.rightState.update = 1;
+    }
+    if (deleteCounter >= 1) {
+      this.rightState.delete = 1;
+    }
+
+    console.log(this.rightState);
+
   }
 
   ngOnDestroy(): void {

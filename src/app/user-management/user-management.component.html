@@ -35,7 +35,7 @@
         </li>-->
       </ul>
       <form class="form-inline my-2 my-lg-0">
-        <button class="btn btn-outline-info my-2 my-sm-0 mr-5" type="button" data-toggle="modal" data-target="#exampleModal0">
+        <button class="btn btn-outline-info my-2 my-sm-0 mr-5" type="button" data-toggle="modal" data-target="#exampleModal0" *ngIf="rightState && rightState.create === 1">
           + Nouveau Utilisateurs
         </button>
         <div class="dropdown">
@@ -59,7 +59,7 @@
       <span class="sr-only">Loading...</span>
     </div>
   </div>
-  <table datatable class="row-border hover" [dtTrigger]="dtTrigger">
+  <table datatable class="row-border hover" [dtTrigger]="dtTrigger" *ngIf="rightState && rightState.read === 1">
     <thead>
       <tr>
         <th>Nom</th>
@@ -70,9 +70,9 @@
         <th>Adresse</th>
         <th>Base</th>
         <th>Fonction</th>
-        <th></th>
-        <th></th>
-        <th></th>
+        <th *ngIf="rightState && rightState.update === 1"></th>
+        <th *ngIf="rightState && rightState.delete === 1"></th>
+        <th *ngIf="rightState && rightState.update === 1"></th>
       </tr>
     </thead>
     <tbody>
@@ -86,22 +86,22 @@
         <td>{{ user.adresse }}</td>
         <td>{{ user.sous_prefecture }}</td>
         <td>{{ user.fonction }}</td>
-        <td>
+        <td *ngIf="rightState && rightState.update === 1">
           <button class="btn btn-outline-warning btn-sm" data-toggle="modal" data-target="#exampleModal" (click)="OpenModalUpdating(user)">
             Modifier
           </button>
       </td>
-      <td *ngIf="user.status === 'active'">
+      <td *ngIf="user.status === 'active' && (rightState && rightState.delete === 1)">
         <button class="btn btn-outline-danger btn-sm" data-toggle="modal" data-target="#exampleModal2" (click)="OpenModalDeleting(user.id)">
           Désactiver
         </button>
       </td>
-      <td *ngIf="user.status === 'inactive'">
+      <td *ngIf="user.status === 'inactive' && (rightState && rightState.delete === 1)">
         <button class="btn btn-outline-success btn-sm" data-toggle="modal" data-target="#exampleModal3">
           Activer
         </button>
       </td>
-      <td>
+      <td *ngIf="rightState && rightState.update === 1">
         <button class="btn btn-outline-info" (click)="AssignRight(user.id)">
           Droits
         </button>

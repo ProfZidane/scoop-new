@@ -28,6 +28,7 @@ export class PlanterProfilComponent implements OnInit {
   id
   planterInfo;
   stockage;
+
   constructor(private planterService: PlanterService, private userService: AuthService, private location: Location,
               private router: Router, private route: ActivatedRoute) { }
 
@@ -48,6 +49,7 @@ export class PlanterProfilComponent implements OnInit {
   ComeBack() {
     this.location.back();
   }
+
 
 
   Logout() {

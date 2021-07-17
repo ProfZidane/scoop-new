@@ -28,6 +28,7 @@ dtTrigger: Subject<any> = new Subject<any>();
 dtTrigger2: Subject<any> = new Subject<any>();
 dtTrigger3: Subject<any> = new Subject<any>();
 finances;
+prefinances;
 products;
 objectives;
 solde = 0;
@@ -72,7 +73,8 @@ pieceJointe;
     this.trackerService.GetPrefinancementByTracker(this.id).subscribe(
       (data) => {
         console.log(data);
-        this.finances = data.data;
+        this.finances = data.financements;
+        this.prefinances = data.prefinancements;
         this.isLoading.finance = false;
         this.dtTrigger.next();
       }, (err) => {
