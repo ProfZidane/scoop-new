@@ -48,6 +48,7 @@ import { InventoryManagementComponent } from './inventory-management/inventory-m
 import { ProfilManagementComponent } from './profil-management/profil-management.component';
 import { SupportManagementComponent } from './support-management/support-management.component';
 import { ChartModule } from 'angular2-chartjs';
+import { LogManagementComponent } from './log-management/log-management.component';
 
 @NgModule({
   declarations: [
@@ -88,7 +89,8 @@ import { ChartModule } from 'angular2-chartjs';
     VenteHistoryComponent,
     InventoryManagementComponent,
     ProfilManagementComponent,
-    SupportManagementComponent
+    SupportManagementComponent,
+    LogManagementComponent
   ],
   imports: [
     BrowserModule,

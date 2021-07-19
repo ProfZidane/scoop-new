@@ -1,0 +1,108 @@
+<div class="container-fluid principal">
+
+  <!--navbar-->
+  <nav class="navbar navbar-expand-lg navbar-lights p-4">
+    <a class="navbar-brand text-dark">
+      <i class="material-icons" style="cursor: pointer;font-size: 25px;" (click)="ComeBack()">
+        chevron_left
+      </i>
+      Les Journaux d'Activités
+    </a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav mr-auto">
+        <!--<li class="nav-item active">
+          <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">Link</a>
+        </li>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Dropdown
+          </a>
+          <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <a class="dropdown-item" href="#">Action</a>
+            <a class="dropdown-item" href="#">Another action</a>
+            <div class="dropdown-divider"></div>
+            <a class="dropdown-item" href="#">Something else here</a>
+          </div>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link disabled" href="#">Disabled</a>
+        </li>-->
+      </ul>
+      <form class="form-inline my-2 my-lg-0">
+        <!--<button class="btn btn-outline-warning my-2 my-sm-0 mr-5" type="button">
+          {{ montant | currency:'Fcfa':'symbol':'4.2-2':'fr' }}
+        </button> -->
+        <div class="dropdown">
+          <button class="btn btn-success text-light dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" *ngIf="userConnected">
+            {{ userConnected.name }}
+          </button>
+          <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+            <a class="dropdown-item" href="#">Profile</a>
+            <a class="dropdown-item" href="#">Support</a>
+            <a class="dropdown-item text-danger" (click)="Logout()" style="cursor: pointer;">Déconnexion</a>
+          </div>
+        </div>
+      </form>
+    </div>
+  </nav>
+  <!--//nav bar -->
+  <!--<div class="row">
+    <div class="col-md-2">
+      <label>Date début</label>
+      <input type="date" name="date_debut" [(ngModel)]="trie.date_debut" id="" class="form-control" style="width: 100%">
+    </div>
+    <div class="col-md-2">
+      <label>Date Fin</label>
+      <input type="date" name="date_fin" [(ngModel)]="trie.date_fin" id="" class="form-control" style="width: 100%">
+    </div>
+    <div class="col-md-4">
+      <button class="btn mt-4 btn-outline-primary" *ngIf="state.trie === false" (click)="Trie()">
+        Triez
+      </button>
+      <button class="btn mt-4 btn-primary" type="button" disabled *ngIf="state.trie === true">
+        <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+        recherche ...
+      </button>
+    </div>
+  </div>-->
+  <br>
+<div class="container-fluid table-user">
+  <div class="text-center" *ngIf="isLoading.data === true">
+    <div class="spinner-border" role="status">
+      <span class="sr-only">Loading...</span>
+    </div>
+  </div>
+  <div class="alert alert-danger" *ngIf="error.data === true">
+    Une erreur est survenue. Veuillez réessayer s'il vous plait !
+  </div>
+
+  <table datatable [dtTrigger]="dtTrigger" [dtOptions]="dtOptions" class="row-border hover" align="center" *ngIf="rightState && rightState.read === 1">
+    <thead>
+      <tr>
+        <th>Utilisateur</th>
+        <th>Rôle utilisateur</th>
+        <th>Email utilisateur</th>
+        <th>Action</th>
+        <th>Date</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let log of loggers">
+        <td>{{ log.user_name_action }}</td>
+        <td>{{ log.user_role_action }}</td>
+        <td>{{ log.user_email_action }}</td>
+        <td>{{ log.request_type }} - {{ log.model_impacted }}</td>
+        <td>{{ log.date_action }}</td>
+      </tr>
+    </tbody>
+  </table>
+
+</div>
+
+</div>

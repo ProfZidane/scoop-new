@@ -34,6 +34,7 @@ import { VenteHistoryComponent } from './vente-history/vente-history.component';
 import { InventoryManagementComponent } from './inventory-management/inventory-management.component';
 import { ProfilManagementComponent } from './profil-management/profil-management.component';
 import { SupportManagementComponent } from './support-management/support-management.component';
+import { LogManagementComponent } from './log-management/log-management.component';
 
 
 const routes: Routes = [
@@ -200,6 +201,11 @@ const routes: Routes = [
       {
         path: 'support-manage',
         component: SupportManagementComponent,
+        outlet: 'child1'
+      },
+      {
+        path: 'log-manage',
+        component: LogManagementComponent,
         outlet: 'child1'
       }
     ]

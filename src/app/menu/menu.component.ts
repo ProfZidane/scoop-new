@@ -186,6 +186,17 @@ export class MenuComponent implements OnInit {
     this.menuService.SetFavoris(indique);
   }
 
+  ManageLogs() {
+    this.router.navigateByUrl('/home/(child1:log-manage;open=true)');
+    const indique = {
+      name: 'Logs d\'activité',
+      route: 'log-manage',
+      icon: 'receipt',
+      id: JSON.parse(localStorage.getItem('userData')).id
+    };
+    this.menuService.SetFavoris(indique);
+  }
+
   Logout() {
     if (this.userService.Logout()) {
       this.router.navigateByUrl('/');
