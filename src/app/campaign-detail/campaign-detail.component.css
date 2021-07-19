@@ -15,8 +15,8 @@ button {
 }
 
 .table-user  {
-  height: 85vh;
-  overflow-y: auto;
+  height: 74vh;
+  overflow-y: scroll;
 
   padding: 0.5rem;
 }
@@ -59,4 +59,26 @@ a.nav-link {
 a.nav-link.active {
   border: solid;
   background-color: #28a745;
+}
+
+/* width */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  box-shadow: inset 0 0 5px grey;
+  border-radius: 10px;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #28a745;
+  border-radius: 10px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #28a745;
 }

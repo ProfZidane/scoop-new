@@ -76,8 +76,10 @@
         <td>{{ campaign.title }}</td>
         <td>{{ campaign.date_debut }}</td>
         <td>{{ campaign.date_fin }}</td>
-        <td>{{ campaign.status }}</td>
-        <td>{{ campaign.created_at | date }}</td>
+        <td *ngIf="campaign.status === 'ouvert'" class="text-success">{{ campaign.status }}</td>
+        <td *ngIf="campaign.status === 'ferme'" class="text-danger">{{ campaign.status }}</td>
+        <td *ngIf="campaign.status === 'a venir'" class="text-warning">{{ campaign.status }}</td>
+        <td>{{ campaign.created_at | date:'shortDate' }}</td>
         <td>
           <button class="btn btn-outline-info btn-sm" (click)="GoToDetail(campaign.id)">
             Détails

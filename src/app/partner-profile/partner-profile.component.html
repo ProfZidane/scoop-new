@@ -151,17 +151,22 @@
           <ul class="nav nav-pills nav-justified mb-3" id="pills-tab" role="tablist">
             <li class="nav-item">
               <a class="nav-link active" id="pills-home-tab" data-toggle="pill" href="#pills-home" role="tab" aria-controls="pills-home" aria-selected="true">
-                Financements Reçus
+                Financements Octoyés
               </a>
             </li>
             <li class="nav-item">
+              <a class="nav-link" id="pills-home2-tab" data-toggle="pill" href="#pills-home2" role="tab" aria-controls="pills-home2" aria-selected="false">
+                Préfinancements Octoyés
+              </a>
+            </li>
+            <!-- <li class="nav-item">
               <a class="nav-link" id="pills-profile-tab" data-toggle="pill" href="#pills-profile" role="tab" aria-controls="pills-profile" aria-selected="false">
-                Produits Livrés
+                Produits Reçus
               </a>
-            </li>
-            <li class="nav-item">
+            </li> -->
+            <!-- <li class="nav-item">
               <a class="nav-link" id="pills-contact-tab" data-toggle="pill" href="#pills-contact" role="tab" aria-controls="pills-contact" aria-selected="false">Objectifs Attendus</a>
-            </li>
+            </li> -->
           </ul>
         </div>
         <!--<div class="col-md-2 solde bord p-3">
@@ -188,9 +193,41 @@
               <tbody>
                 <tr *ngFor="let finance of finances">
                   <td>{{ finance.date }}</td>
-                  <td>{{ finance.montant | number }}</td>
+                  <td>{{ finance.montant | currency:'Fcfa':'symbol':'4.2-2':'fr' }}</td>
                   <td>
                     <button class="btn btn-outline-info btn-sm" data-toggle="modal" data-target="#exampleModal25" (click)="OpenModelImage(finance.piece_jointe)">
+                       Pièces
+                    </button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+
+          </div>
+          <!-- // end table -->
+        </div>
+        <div class="tab-pane fade" id="pills-home2" role="tabpanel" aria-labelledby="pills-home2-tab">
+          <!-- table -->
+          <div class="container-fluid table-user">
+            <div class="text-center" *ngIf="isLoading.finance === true">
+              <div class="spinner-border" role="status">
+                <span class="sr-only">Loading...</span>
+              </div>
+            </div>
+            <table datatable class="row-border hover" [dtTrigger]="dtTrigger" id="table" style="">
+              <thead>
+                <tr>
+                  <th>Date</th>
+                  <th>Montant</th>
+                  <th></th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let prefinance of prefinances">
+                  <td>{{ prefinance.date }}</td>
+                  <td>{{ prefinance.montant | currency:'Fcfa':'symbol':'4.2-2':'fr' }}</td>
+                  <td>
+                    <button class="btn btn-outline-info btn-sm" data-toggle="modal" data-target="#exampleModal25" (click)="OpenModelImage(prefinance.piece_jointe)">
                        Pièces
                     </button>
                   </td>

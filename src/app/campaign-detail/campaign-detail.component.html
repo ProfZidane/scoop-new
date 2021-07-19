@@ -148,13 +148,13 @@
       <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
         <a class="nav-link active mb-4" id="v-pills-home-tab" data-toggle="pill" href="#v-pills-home" role="tab" aria-controls="v-pills-home" aria-selected="true">Préfinancements</a>
         <a class="nav-link mb-4" id="v-pills-profile-tab" data-toggle="pill" href="#v-pills-profile" role="tab" aria-controls="v-pills-profile" aria-selected="false">Financements</a>
-        <a class="nav-link mb-4" id="v-pills-messages-tab" data-toggle="pill" href="#v-pills-messages" role="tab" aria-controls="v-pills-messages" aria-selected="false">Messages</a>
-        <a class="nav-link mb-4" id="v-pills-settings-tab" data-toggle="pill" href="#v-pills-settings" role="tab" aria-controls="v-pills-settings" aria-selected="false">Settings</a>
+        <a class="nav-link mb-4" id="v-pills-messages-tab" data-toggle="pill" href="#v-pills-messages" role="tab" aria-controls="v-pills-messages" aria-selected="false">Achats</a>
+        <!-- <a class="nav-link mb-4" id="v-pills-settings-tab" data-toggle="pill" href="#v-pills-settings" role="tab" aria-controls="v-pills-settings" aria-selected="false">Settings</a> -->
       </div>
 
     </div>
 
-    <div class="col-md-9 " style="height: 75vh">
+    <div class="col-md-9 " style="height: 75vh;">
 
       <div class="tab-content" id="v-pills-tabContent">
         <div class="tab-pane fade show active" id="v-pills-home" role="tabpanel" aria-labelledby="v-pills-home-tab">
@@ -169,14 +169,20 @@
               <thead>
                 <tr>
                   <th>Date</th>
+                  <th>Type Acteur</th>
+                  <th>Acteur</th>
                   <th>Montant</th>
+                  <th>Etat</th>
                   <th></th>
                 </tr>
               </thead>
               <tbody>
                 <tr *ngFor="let prefinance of prefinances">
                   <td>{{ prefinance.date }}</td>
-                  <td>{{ prefinance.montant | number }}</td>
+                  <td>{{ prefinance.acteur_type }}</td>
+                  <td>{{ prefinance.acteur }}</td>
+                  <td>{{ prefinance.montant | currency:'Fcfa':'symbol':'4.2-2':'fr' }}</td>
+                  <td>{{ prefinance.etat }}</td>
                   <td>
                     <button class="btn btn-outline-info btn-sm" data-toggle="modal" data-target="#exampleModal26" (click)="OpenModalImage(prefinance.piece_jointe)">
                        Pièces
@@ -201,14 +207,20 @@
               <thead>
                 <tr>
                   <th>Date</th>
+                  <th>Type Acteur</th>
+                  <th>Acteur</th>
                   <th>Montant</th>
+                  <th>Etat</th>
                   <th></th>
                 </tr>
               </thead>
               <tbody>
                 <tr *ngFor="let finance of finances">
                   <td>{{ finance.date }}</td>
-                  <td>{{ finance.montant | number }}</td>
+                  <td>{{ finance.acteur_type }}</td>
+                  <td>{{ finance.acteur }}</td>
+                  <td>{{ finance.montant | currency:'Fcfa':'symbol':'4.2-2':'fr' }}</td>
+                  <td>{{ finance.etat }}</td>
                   <td>
                     <button class="btn btn-outline-info btn-sm" data-toggle="modal" data-target="#exampleModal26" (click)="OpenModalImage(finance.piece_jointe)">
                        Pièces
@@ -221,7 +233,34 @@
           </div>
           <!-- // end table 2 -->
         </div>
-        <div class="tab-pane fade" id="v-pills-messages" role="tabpanel" aria-labelledby="v-pills-messages-tab">..message.</div>
+        <div class="tab-pane fade" id="v-pills-messages" role="tabpanel" aria-labelledby="v-pills-messages-tab">
+          <!-- table 3 -->
+          <div class="container-fluid table-user">
+            <div class="text-center" *ngIf="isLoading.sales === true">
+              <div class="spinner-border" role="status">
+                <span class="sr-only">Loading...</span>
+              </div>
+            </div>
+            <table datatable class="row-border hover" [dtTrigger]="dtTrigger3" id="table" style="">
+              <thead>
+                <tr>
+                  <th>Date</th>
+                  <th>Poids Net</th>
+                  <th>Prix unitaire</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let sale of sales">
+                  <td>{{ sale.date_achat }}</td>
+                  <td>{{ sale.poids_net }} kg</td>
+                  <td>{{ sale.prix_unitaire }} Fcfa</td>
+                </tr>
+              </tbody>
+            </table>
+
+          </div>
+          <!-- // end table 3 -->
+        </div>
         <div class="tab-pane fade" id="v-pills-settings" role="tabpanel" aria-labelledby="v-pills-settings-tab">..setting.</div>
       </div>
 

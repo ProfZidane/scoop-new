@@ -14,6 +14,8 @@ import { Router } from '@angular/router';
 export class PlanterProfilComponent implements OnInit {
   userConnected;
   dtTrigger: Subject<any> = new Subject<any>();
+  dtTrigger2: Subject<any> = new Subject<any>();
+
   pieceJointe;
   isLoading = {
     info : true,
@@ -23,12 +25,15 @@ export class PlanterProfilComponent implements OnInit {
 
   error = {
     data : false,
-    product : false
+    product : false,
+    finance: false
   };
-  id
+
+  id;
   planterInfo;
   stockage;
-
+  finances;
+  prefinances;
   constructor(private planterService: PlanterService, private userService: AuthService, private location: Location,
               private router: Router, private route: ActivatedRoute) { }
 
@@ -44,6 +49,7 @@ export class PlanterProfilComponent implements OnInit {
     console.log(this.id);
     this.GetPlanterInfo();
     this.GetStock();
+    this.GetFinances();
   }
 
   ComeBack() {
@@ -86,6 +92,31 @@ export class PlanterProfilComponent implements OnInit {
         this.error.product = true;
       }
     );
+  }
+
+
+  GetFinances() {
+    this.isLoading.finance = true;
+    this.error.finance = false;
+    this.planterService.GetFinancingById(this.id).subscribe(
+      (data) => {
+        console.log(data);
+        this.isLoading.finance = false;
+        this.finances = data.financements;
+        this.prefinances = data.prefinancements;
+        this.dtTrigger2.next();
+      }, (err) => {
+        console.log(err);
+        this.error.finance = true;
+        this.isLoading.finance = false;
+      }
+    );
+  }
+
+  // tslint:disable-next-line:typedef
+  OpenModelImage(piece_jointe) {
+    console.log(piece_jointe);
+    this.pieceJointe = piece_jointe;
   }
 
 }

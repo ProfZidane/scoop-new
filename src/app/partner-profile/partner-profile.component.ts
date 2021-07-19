@@ -29,6 +29,7 @@ export class PartnerProfileComponent implements OnInit {
   };
   solde = 0;
   finances;
+  prefinances;
   pieceJointe;
   constructor(private router: Router, private userService: AuthService, private location: Location,
               private partenerService: PartnerService, private route: ActivatedRoute) { }
@@ -77,7 +78,8 @@ export class PartnerProfileComponent implements OnInit {
     this.partenerService.GetFinancementByTracker(this.id).subscribe(
       (data) => {
         console.log(data);
-        this.finances = data.data;
+        this.finances = data.financements;
+        this.prefinances = data.prefinancements;
         this.isLoading.finance = false;
         this.dtTrigger.next();
       }, (err) => {

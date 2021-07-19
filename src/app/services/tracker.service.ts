@@ -15,9 +15,15 @@ export class TrackerService {
   getPrefinance = environment.endPoint + 'getPrefinancementsPisteur/';
   getProductFinal = environment.endPoint + 'getStocksPisteur/';
   getBilanURL = environment.endPoint + 'getBilansPisteur/';
+  getCostURL = environment.endPoint + 'getMeanCost/';
+  getTimeURL = environment.endPoint + 'getTimeApprovision/';
+  getSalesByMonthURL = environment.endPoint + 'sortAchatByMonthAndByTracker/';
   trackers;
+  sortByMonthURL = environment.endPoint + 'sortAchatByMonth';
+
   constructor(private http: HttpClient) { }
 
+  // tslint:disable-next-line:typedef
   GetHeaders() {
     if (localStorage.getItem('token') !== null) {
       const headers = new HttpHeaders({
@@ -74,6 +80,22 @@ export class TrackerService {
 
   GetObjectifByTracker(id): Observable<any> {
     return this.http.get(this.getBilanURL + id, { headers: this.GetHeaders() });
+  }
+
+  getMeanCost(id): Observable<any> {
+    return this.http.get(this.getCostURL + id, { headers: this.GetHeaders() });
+  }
+
+  getTimeAprovisionnement(id): Observable<any> {
+    return this.http.get(this.getTimeURL + id, { headers: this.GetHeaders() });
+  }
+
+  getSalesByMonthAndTracker(id): Observable<any> {
+      return this.http.get(this.getSalesByMonthURL + id, { headers: this.GetHeaders() });
+  }
+
+  GetSalesByMonth(): Observable<any> {
+    return this.http.get(this.sortByMonthURL, { headers: this.GetHeaders() });
   }
 
 }

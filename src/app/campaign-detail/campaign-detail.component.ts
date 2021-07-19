@@ -16,22 +16,26 @@ export class CampaignDetailComponent implements OnInit {
     info : true,
     prefinance: true,
     finance : false,
-    product : false
+    product : false,
+    sales: false
   };
 
   error = {
     data : false,
     prefinance: false,
     finance: false,
+    sales: false
   };
   dtTrigger: Subject<any> = new Subject<any>();
   dtTrigger2: Subject<any> = new Subject<any>();
+  dtTrigger3: Subject<any> = new Subject<any>();
   id;
   infos = {
     basic : {}
   };
   prefinances;
   finances;
+  sales;
   pieceJointe;
   constructor(private router: Router, private userService: AuthService, private location: Location, private route: ActivatedRoute,
               private campainService: CampaignService) { }
@@ -49,6 +53,7 @@ export class CampaignDetailComponent implements OnInit {
     this.GetInfoCampaign();
     this.GetPrefinancements();
     this.GetFinancements();
+    this.GetAchat();
   }
 
   ComeBack() {
@@ -112,6 +117,24 @@ export class CampaignDetailComponent implements OnInit {
         console.log(err);
         this.isLoading.finance = false;
         this.error.finance = true;
+      }
+    );
+  }
+
+
+  GetAchat() {
+    this.error.sales = false;
+    this.isLoading.sales = true;
+    this.campainService.GetAchatByCampaign(this.id).subscribe(
+      (data) => {
+        console.log(data);
+        this.sales = data.data;
+        this.isLoading.sales = false;
+        this.dtTrigger3.next();
+      }, (err) => {
+        console.log(err);
+        this.error.sales = true;
+        this.isLoading.sales = false;
       }
     );
   }

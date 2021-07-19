@@ -63,6 +63,7 @@
       <tr>
         <th>Banque</th>
         <th>Numéro Compte</th>
+        <th>Solde</th>
         <th>Details</th>
         <th>Date</th>
         <th>Status</th>
@@ -74,8 +75,9 @@
       <tr *ngFor="let account of accountList">
         <td>{{ account.banque }}</td>
         <td>{{ account.compte_number }}</td>
+        <td>{{ account.solde | currency:'Fcfa':'symbol':'4.2-2':'fr' }}</td>
         <td>{{ account.details }}</td>
-        <td>{{ account.created_at | date }}</td>
+        <td>{{ account.created_at | date:'shortDate' }}</td>
         <td class="text-success" *ngIf="account.status === 'active'">{{ account.status }}</td>
         <td class="text-danger" *ngIf="account.status === 'inactive'">{{ account.status }}</td>
         <td>

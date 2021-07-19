@@ -9,7 +9,7 @@ import { MainpageComponent } from './mainpage/mainpage.component';
 import { MenuComponent } from './menu/menu.component';
 import { UserManagementComponent } from './user-management/user-management.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { DataTablesModule } from "angular-datatables";
+import { DataTablesModule } from 'angular-datatables';
 import { WarehouseManagementComponent } from './warehouse-management/warehouse-management.component';
 import { LoginComponent } from './login/login.component';
 import { HttpClientModule } from '@angular/common/http';
@@ -47,6 +47,7 @@ import { VenteHistoryComponent } from './vente-history/vente-history.component';
 import { InventoryManagementComponent } from './inventory-management/inventory-management.component';
 import { ProfilManagementComponent } from './profil-management/profil-management.component';
 import { SupportManagementComponent } from './support-management/support-management.component';
+import { ChartModule } from 'angular2-chartjs';
 
 @NgModule({
   declarations: [
@@ -96,7 +97,8 @@ import { SupportManagementComponent } from './support-management/support-managem
     DataTablesModule,
     HttpClientModule,
     FormsModule,
-    MatProgressBarModule
+    MatProgressBarModule,
+    ChartModule
   ],
   providers: [
     AuthService,

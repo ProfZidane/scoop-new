@@ -76,9 +76,10 @@
       <tr *ngFor="let partner of partnersData">
         <td>{{ partner.name }}</td>
         <td>{{ partner.type }}</td>
-        <td>{{ partner.categorie }}</td>
+        <td *ngIf="partner.categorie">{{ partner.categorie }}</td>
+        <td *ngIf="!partner.categorie" class="text-danger">N/A</td>
         <td>{{ partner.description }}</td>
-        <td>{{ partner.created_at | date }}</td>
+        <td>{{ partner.created_at | date:'shortDate' }}</td>
         <td class="text-success" *ngIf="partner.status === 'active'">{{ partner.status }}</td>
         <td class="text-danger" *ngIf="partner.status === 'inactive'">{{ partner.status }}</td>
         <td>
@@ -105,82 +106,35 @@
 
 </div>
 
-
-
-<!-- Modal 4 -->
-<div class="modal fade" id="exampleModal11" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<!-- Modal 6 -->
+<div class="modal fade" id="exampleModal13" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-lg" role="document">
-    <form method="POST" (ngSubmit)="CreatePartner($event)">
+    <form method="POST" (ngSubmit)="ClosedPartner($event)">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Création d'un partenaire</h5>
+        <h5 class="modal-title" id="exampleModalLabel">Motifs de désactivation</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
       <div class="modal-body">
-        <div class="clearfix" *ngIf="isLoading.create === true">
-          <span class="text-warning">Création d'un partenaire .....</span>
+        <div class="clearfix" *ngIf="isLoading.close === true">
+          <span class="text-warning">Désactiver le partenaire .....</span>
           <div class="spinner-border float-right text-warning" role="status">
             <span class="sr-only">Loading...</span>
           </div>
         </div>
-        <div class="alert alert-danger" *ngIf="error.create === true">
-          Une erreur s'est produite. Veuillez vérifiez les informations inscrites svp !
+        <div class="alert alert-danger" *ngIf="error.close === true">
+          Une erreur s'est produite. Veuillez réessayer plus tard svp !
         </div>
-          <small class="text-muted">Inscrivez les informations suivantes</small>
+          <small class="text-muted">Notifier le motif</small>
           <div class="row">
             <div class="col">
-              <label for="">Choisir le type</label>
-              <div class="input-group mb-3">
-                <select class="custom-select" name="type" [(ngModel)]="partners.type" id="inputGroupSelect01"  required>
-                  <option value="personne physique">Personne Physique</option>
-                  <option value="personne morale">Personne Morale</option>
-                </select>
-              </div>
-            </div>
-            <div class="col">
-              <label for="">Choisir la catégorie</label>
-              <div class="input-group mb-3">
-                <select class="custom-select" name="categorie" [(ngModel)]="partners.categorie" id="inputGroupSelect01" (change)="OnTyped($event)" required>
-                  <option value="particulier" *ngIf="partners.type === 'personne physique'">Particulier</option>
-                  <option value="organisme de financement" *ngIf="partners.type === 'personne morale'">Organisme de financement</option>
-                  <option value="exportateur" *ngIf="partners.type === 'personne morale'">Exportateur</option>
-                  <option value="autres" *ngIf="partners.type === 'personne morale'">Autres</option>
-                </select>
-              </div>
+              <label for="">Motifs</label>
+              <textarea name="motifs" class="form-control" [(ngModel)]="partnerDesactif.motif" id="" cols="30" rows="5" ></textarea>
             </div>
           </div>
           <br>
-          <div class="row" *ngIf="stateCode === true">
-            <div class="col">
-              <label for="">Inscrivez le code de l'exportateur</label>
-              <input type="text" name="code" [(ngModel)]="partners.code" class="form-control" id="">
-            </div>
-          </div>
-          <br>
-          <div class="row">
-            <div class="col">
-              <label for="">Choisir un status</label>
-              <div class="input-group mb-3">
-                <select class="custom-select" name="status" [(ngModel)]="partners.status" id="inputGroupSelect01" required>
-                  <option value="active">Active</option>
-                  <option value="inactive">Inactive</option>
-                </select>
-              </div>
-            </div>
-            <div class="col">
-              <label for="">Entrez le nom</label>
-              <input type="text" name="name" [(ngModel)]="partners.name" class="form-control" placeholder="" required>
-            </div>
-          </div>
-          <br><br>
-          <div class="row">
-            <div class="col">
-              <label for="">Entrez la description</label>
-              <textarea type="text" name="description" [(ngModel)]="partners.description" class="form-control" placeholder="" required>
-            </div>
-          </div>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
@@ -278,8 +232,95 @@
   </div>
 </div>
 
+<!-- Modal 4 -->
+<div class="modal fade" id="exampleModal11" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg" role="document">
+    <form method="POST" (ngSubmit)="CreatePartner($event)">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Création d'un partenaire</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="clearfix" *ngIf="isLoading.create === true">
+          <span class="text-warning">Création d'un partenaire .....</span>
+          <div class="spinner-border float-right text-warning" role="status">
+            <span class="sr-only">Loading...</span>
+          </div>
+        </div>
+        <div class="alert alert-danger" *ngIf="error.create === true">
+          Une erreur s'est produite. Veuillez vérifiez les informations inscrites svp !
+        </div>
+          <small class="text-muted">Inscrivez les informations suivantes</small>
+          <div class="row">
+            <div class="col">
+              <label for="">Choisir le type</label>
+              <div class="input-group mb-3">
+                <select class="custom-select" name="type" [(ngModel)]="partners.type" id="inputGroupSelect01"  required>
+                  <option value="personne physique">Personne Physique</option>
+                  <option value="personne morale">Personne Morale</option>
+                </select>
+              </div>
+            </div>
+            <div class="col">
+              <label for="">Choisir la catégorie</label>
+              <div class="input-group mb-3">
+                <select class="custom-select" name="categorie" [(ngModel)]="partners.categorie" id="inputGroupSelect01" (change)="OnTyped($event)" required>
+                  <option value="particulier" *ngIf="partners.type === 'personne physique'">Particulier</option>
+                  <option value="organisme de financement" *ngIf="partners.type === 'personne morale'">Organisme de financement</option>
+                  <option value="exportateur" *ngIf="partners.type === 'personne morale'">Exportateur</option>
+                  <option value="autres" *ngIf="partners.type === 'personne morale'">Autres</option>
+                </select>
+              </div>
+            </div>
+          </div>
+          <br>
+          <div class="row" *ngIf="stateCode === true">
+            <div class="col">
+              <label for="">Inscrivez le code de l'exportateur</label>
+              <input type="text" name="code" [(ngModel)]="partners.code" class="form-control" id="">
+            </div>
+          </div>
+          <br>
+          <div class="row">
+            <div class="col">
+              <label for="">Choisir un status</label>
+              <div class="input-group mb-3">
+                <select class="custom-select" name="status" [(ngModel)]="partners.status" id="inputGroupSelect01" required>
+                  <option value="active">Active</option>
+                  <option value="inactive">Inactive</option>
+                </select>
+              </div>
+            </div>
+            <div class="col">
+              <label for="">Entrez le nom</label>
+              <input type="text" name="name" [(ngModel)]="partners.name" class="form-control" placeholder="" required>
+            </div>
+          </div>
+          <br><br>
+          <div class="row">
+            <div class="col">
+              <label for="">Entrez la description</label>
+              <textarea type="text" name="description" [(ngModel)]="partners.description" class="form-control" placeholder="" required>
+            </div>
+          </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
+        <button type="submit" class="btn btn-success">Enregistrer</button>
+      </div>
+    </div>
+  </form>
+  </div>
+</div>
 
-<!-- Modal 6 -->
+
+
+
+
+<!-- Modal 6
 <div class="modal fade" id="exampleModal13" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-lg" role="document">
     <form method="POST" (ngSubmit)="ClosedPartner($event)">
@@ -316,7 +357,7 @@
     </div>
   </form>
   </div>
-</div>
+</div> -->
 
 
 

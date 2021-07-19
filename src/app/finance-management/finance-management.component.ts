@@ -19,7 +19,8 @@ export class FinanceManagementComponent implements OnInit {
     data : true,
     create : false,
     modify: false,
-    close: false
+    close: false,
+    simulate: false
   };
   error = {
     data : false,
@@ -85,6 +86,12 @@ export class FinanceManagementComponent implements OnInit {
     delete: 0,
     read: 0,
     update: 0
+  };
+  simulateData = {
+    state: false,
+    price: '',
+    montant: '',
+    sac: ''
   };
   constructor(private router: Router, private userService: AuthService, private location: Location,
               private financeService: FinanceService, private accountService: CompteService, private partenerService: PartnerService,
@@ -458,6 +465,18 @@ export class FinanceManagementComponent implements OnInit {
     };
   }
 
+
+  Simulation() {
+    this.isLoading.simulate = true;
+    this.simulateData.state = false;
+    console.log(this.simulateData);
+    const montant = Number(this.simulateData.montant) / Number(this.simulateData.price);
+    console.log(montant);
+
+    this.simulateData.sac = montant.toString();
+    this.isLoading.simulate = false;
+    this.simulateData.state = true;
+  }
 
 
 }

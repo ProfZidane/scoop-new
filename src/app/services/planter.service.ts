@@ -10,6 +10,7 @@ export class PlanterService {
 fullURL = environment.endPoint + 'planteur';
 pieceURL = environment.endPoint + 'getPlanteurPieceScan/';
 stockURL = environment.endPoint + 'getStocksPlanteur/';
+getFinanceURL = environment.endPoint + 'getPrefinancementsPlanteur/';
   constructor(private http: HttpClient) { }
 
   GetHeaders() {
@@ -49,5 +50,9 @@ stockURL = environment.endPoint + 'getStocksPlanteur/';
 
   GetStockageById(id): Observable<any> {
     return this.http.get(this.stockURL + id, { headers: this.GetHeaders() });
+  }
+
+  GetFinancingById(id): Observable<any> {
+    return this.http.get(this.getFinanceURL + id, { headers: this.GetHeaders() });
   }
 }

@@ -161,6 +161,9 @@
             <li class="nav-item">
               <a class="nav-link" id="pills-contact-tab" data-toggle="pill" href="#pills-contact" role="tab" aria-controls="pills-contact" aria-selected="false">Objectifs</a>
             </li>
+            <li class="nav-item">
+              <a class="nav-link" id="pills-performance-tab" data-toggle="pill" href="#pills-performance" role="tab" aria-controls="pills-performance" aria-selected="false">Performance</a>
+            </li>
           </ul>
         </div>
         <div class="col-md-2 solde bord p-3">
@@ -284,14 +287,80 @@
               </thead>
               <tbody>
                 <tr *ngFor="let objectif of objectives">
-                  <td>{{ objectif.date_debut | date }}</td>
-                  <td>{{ objectif.date_fin | date }}</td>
+                  <td>{{ objectif.date_debut  }}</td>
+                  <td>{{ objectif.date_fin  }}</td>
                   <td>{{ objectif.qte_demande }} {{ objectif.unite }}</td>
                   <td>{{ objectif.qte_produit }}</td>
                   <td>{{ objectif.poucentage }}%</td>
                 </tr>
               </tbody>
             </table>
+
+          </div>
+          <!-- end table -->
+        </div>
+        <div class="tab-pane fade" id="pills-performance" role="tabpanel" aria-labelledby="pills-performance-tab">
+          <!-- table -->
+          <div class="container-fluid table-user">
+             <div class="row">
+               <div class="col-md-6">
+                <chart [type]="type" [data]="data1" [options]="options" style="width: 100%; height: 300px;"></chart>
+               </div>
+               <div class="col-md-6">
+                 <!-- card -->
+                  <div class="card" *ngIf="prixMoyen" style="width: 88%;">
+                    <div class="card-body">
+                      <h5 class="card-title" style="font-weight: bold;">
+                        Prix d'achat moyen
+                        <span style="float: right;">
+                          <i class="large material-icons" style="font-size: 40px; color: #28a745;">monetization_on</i>
+                        </span>
+                      </h5>
+                      <h5 class="card-subtitle mb-2 text-muted">{{ prixMoyen | number }} Fcfa</h5>
+                    </div>
+                  </div>
+               </div>
+             </div>
+             <!-- end -->
+             <div class="row mt-3 pt-3" style="border-top: dashed 1px;">
+              <div class="col-md-6">
+               <chart [type]="type" [data]="data" [options]="options" style="width: 100%; height: 300px;"></chart>
+              </div>
+              <div class="col-md-6">
+                <!-- card -->
+                 <div class="card" *ngIf="dureeMoyenne" style="width: 88%;">
+                   <div class="card-body">
+                     <h5 class="card-title" style="font-weight: bold;">
+                       Durée d'apprivosionnement moyenne
+                       <span style="float: right;">
+                         <i class="large material-icons" style="font-size: 40px; color: #28a745;">access_time</i>
+                       </span>
+                     </h5>
+                     <h5 class="card-subtitle mb-2 text-muted">{{ dureeMoyenne | number }} Jour(s)</h5>
+                   </div>
+                 </div>
+              </div>
+            </div>
+            <!-- end -->
+            <div class="row mt-3 pt-3" style="border-top: dashed 1px;">
+              <div class="col-md-6">
+               <chart [type]="type" [data]="data2" [options]="options" style="width: 100%; height: 300px;"></chart>
+              </div>
+              <div class="col-md-6">
+                <!-- card -->
+                 <div class="card" *ngIf="objectifMoyen" style="width: 88%;">
+                   <div class="card-body">
+                     <h5 class="card-title" style="font-weight: bold;">
+                       Pourcentage moyen d'objectifs atteint
+                       <span style="float: right;">
+                         <i class="large material-icons" style="font-size: 40px; color: #28a745;">star</i>
+                       </span>
+                     </h5>
+                     <h5 class="card-subtitle mb-2 text-muted">{{ objectifMoyen | number }} %</h5>
+                   </div>
+                 </div>
+              </div>
+            </div>
 
           </div>
           <!-- end table -->

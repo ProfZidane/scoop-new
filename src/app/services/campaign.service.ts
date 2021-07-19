@@ -12,6 +12,8 @@ export class CampaignService {
   postURL = environment.endPoint + 'campagne';
   getFinanceURL = environment.endPoint + 'getFinancementsCampagne/';
   getPrefinanceURL = environment.endPoint + 'getPrefinancementsCampagne/';
+  getAchatURL = environment.endPoint + 'getAchatsCampagne/';
+
   constructor(private http: HttpClient) { }
 
   GetHeaders() {
@@ -46,5 +48,9 @@ export class CampaignService {
 
   GetFinancementByCampaign(id): Observable<any> {
     return this.http.get(this.getFinanceURL + id, { headers: this.GetHeaders() });
+  }
+
+  GetAchatByCampaign(id): Observable<any> {
+    return this.http.get(this.getAchatURL + id, { headers: this.GetHeaders() });
   }
 }
